@@ -1,0 +1,9 @@
+# Folders
+
+/uploads
+/vendor
+
+# Files
+
+.env
+TODOLOCAL.md
