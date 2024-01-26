@@ -1,0 +1,7 @@
+# NOTICE: Apache's mod_rewrite is required for this to work. # 
+# Please ensure it is enabled before proceeding. #
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
