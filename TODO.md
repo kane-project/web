@@ -1,11 +1,17 @@
 # TODO List for KANE Web
 
-This is a comprehensive to-do list for all the pages and
-functionalities of the KANE Project website.
+For Prototype I:
 
-## Homepage
-
-- [ ] Marketing Text
-- [ ] Latest Listings
-
-`...`
+- Homepage: Show latest listings
+- Listings Page
+- Listing View
+- About Page
+- Contact Page
+- Legal Pages
+- Safety Page
+- Login
+- Registration
+- Account Settings
+- Messages
+- Password Reset
+- Email Templates
