@@ -1,7 +1,5 @@
 # TODO List for KANE Web
 
-For Prototype I:
-
 - Homepage: Show latest listings
 - Listings Page
 - Listing View
@@ -15,3 +13,10 @@ For Prototype I:
 - Messages
 - Password Reset
 - Email Templates
+- Portal: Dashboard
+- Portal: Authentication
+- Portal: Listing Management
+- Portal: Messaging
+- Admin: Dashboard
+- Admin: Manage Reports
+- Admin: Manage Users
