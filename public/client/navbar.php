@@ -30,7 +30,7 @@
                         <a class="nav-link <?php if($page == "Contact") echo "active"; ?>" href="contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn rounded-0 btn-dark" target="_blank" href="https://portal.kaneproject.ca/">List Your Property</a>
+                        <a class="btn rounded-0 btn-dark" target="_blank" href="portal/">List Your Property</a>
                     </li>
                 </ul>
             </div>

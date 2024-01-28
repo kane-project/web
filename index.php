@@ -6,12 +6,36 @@ use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
-    $r->addRoute('GET', '/kane-web[/]', '/home.php');
-    $r->addRoute('GET', '/kane-web/listings[/]', '/listings.php');
-    $r->addRoute('GET', '/kane-web/listing/{slug}[/]', '/viewlisting.php');
-    $r->addRoute('GET', '/kane-web/about[/]', '/about.php');
-    $r->addRoute('GET', '/kane-web/contact[/]', '/contact.php');
-    $r->addRoute('GET', '/kane-web/legal/{page}[/]', '/legal.php');
+
+    // Client (Public) Routes
+
+    $r->addRoute('GET', '/kane-web[/]', '/client/home.php');
+    $r->addRoute('GET', '/kane-web/listings[/]', '/client/listings.php');
+    $r->addRoute('GET', '/kane-web/listing/{slug}[/]', '/client/viewlisting.php');
+    $r->addRoute('GET', '/kane-web/about[/]', '/client/about.php');
+    $r->addRoute('GET', '/kane-web/contact[/]', '/client/contact.php');
+    $r->addRoute('GET', '/kane-web/account[/]', '/client/account.php');
+    $r->addRoute('GET', '/kane-web/account/login[/]', '/client/login.php');
+    $r->addRoute('GET', '/kane-web/account/register[/]', '/client/register.php');
+    $r->addRoute('GET', '/kane-web/account/messages[/]', '/client/messages.php');
+    $r->addRoute('GET', '/kane-web/account/chat/{slug}[/]', '/client/viewchat.php');
+    $r->addRoute('GET', '/kane-web/safety[/]', '/client/safety.php');
+    $r->addRoute('GET', '/kane-web/legal/{page}[/]', '/client/legal.php');
+
+    // Landlord Portal Routes
+
+    $r->addRoute('GET', '/kane-web/portal[/]', '/portal/dashboard.php');
+    $r->addRoute('GET', '/kane-web/portal/login[/]', '/portal/login.php');
+    $r->addRoute('GET', '/kane-web/portal/register[/]', '/portal/register.php');
+    $r->addRoute('GET', '/kane-web/portal/new[/]', '/portal/addlisting.php');
+    $r->addRoute('GET', '/kane-web/portal/my-listings[/]', '/portal/mylistings.php');
+    $r->addRoute('GET', '/kane-web/portal/listing/{slug}[/]', '/portal/listingview.php');
+
+    // Site Admin Routes
+
+    $r->addRoute('GET', '/kane-web/admin[/]', '/admin/dashboard.php');
+    $r->addRoute('GET', '/kane-web/admin/login[/]', '/admin/login.php');
+
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
