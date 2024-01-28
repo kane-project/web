@@ -9,14 +9,10 @@
             <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="">Home</a>
+                        <a class="nav-link <?php if($page == "Home") echo "active"; ?>" href="">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="about">About</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link " href="listings">All Listings</a>
+                        <a class="nav-link <?php if($page == "All Listings") echo "active"; ?>" href="listings">All Listings</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,10 +24,13 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="contact">Contact</a>
+                        <a class="nav-link <?php if($page == "About") echo "active"; ?>" href="about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="contact">List Your Property</a>
+                        <a class="nav-link <?php if($page == "Contact") echo "active"; ?>" href="contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn rounded-0 btn-dark" target="_blank" href="https://portal.kaneproject.ca/">List Your Property</a>
                     </li>
                 </ul>
             </div>
