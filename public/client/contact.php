@@ -1,37 +1,24 @@
-<?php $page = "Contact"; include("header.php"); ?>
+<?php $page = "Contact";
+include("header.php"); ?>
+
 <body>
 
 	<?php include("navbar.php"); ?>
 
 	<main id="main">
 
-		<!-- ======= Intro Single ======= -->
 		<section class="intro-single">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 col-lg-8">
 						<div class="title-single-box">
-							<h1 class="title-single">Contact US</h1>
-							<span class="color-text-a">Aut voluptas consequatur unde sed omnis ex placeat quis eos. Aut natus officia corrupti qui autem fugit consectetur quo. Et ipsum eveniet laboriosam voluptas beatae possimus qui ducimus. Et voluptatem deleniti. Voluptatum voluptatibus amet. Et esse sed omnis inventore hic culpa.</span>
+							<h1 class="title-single">Contact Us</h1>
 						</div>
-					</div>
-					<div class="col-md-12 col-lg-4">
-						<nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item">
-									<a href="index.html">Home</a>
-								</li>
-								<li class="breadcrumb-item active" aria-current="page">
-									Contact
-								</li>
-							</ol>
-						</nav>
 					</div>
 				</div>
 			</div>
-		</section><!-- End Intro Single-->
+		</section>
 
-		<!-- ======= Contact Single ======= -->
 		<section class="contact">
 			<div class="container">
 				<div class="row">
@@ -45,7 +32,7 @@
 					<div class="col-sm-12 section-t8">
 						<div class="row">
 							<div class="col-md-7">
-								<form action="forms/contact.php" method="post" role="form" class="php-email-form">
+								<form action="contact" method="post" role="form" class="php-email-form">
 									<div class="row">
 										<div class="col-md-6 mb-3">
 											<div class="form-group">
@@ -122,7 +109,7 @@
 									</div>
 									<div class="icon-box-content table-cell">
 										<div class="icon-box-title">
-											<h4 class="icon-title">Social networks</h4>
+											<h4 class="icon-title">Let's Connect</h4>
 										</div>
 										<div class="icon-box-content">
 											<div class="socials-footer">
@@ -157,9 +144,9 @@
 					</div>
 				</div>
 			</div>
-		</section><!-- End Contact Single-->
+		</section>
 
-	</main><!-- End #main -->
+	</main>
 
 	<?php include("footer.php"); ?>
 
