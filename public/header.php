@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>The KANE Project - Home</title>
-    <base href="/kane/">
+    <base href="/kane-web/">
     <meta content="The KANE Project is a rental listing service catering to newcomers in Canada." name="description">
     <meta content="newcomers, for rent canada, international students for rent canada" name="keywords">
     <link href="assets/img/favicon.png" rel="icon">

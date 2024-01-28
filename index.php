@@ -6,12 +6,12 @@ use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
-    $r->addRoute('GET', '/kane[/]', '/home.php');
-    $r->addRoute('GET', '/kane/listings[/]', '/listings.php');
-    $r->addRoute('GET', '/kane/listing/{slug}[/]', '/viewlisting.php');
-    $r->addRoute('GET', '/kane/about[/]', '/about.php');
-    $r->addRoute('GET', '/kane/contact[/]', '/contact.php');
-    $r->addRoute('GET', '/kane/legal/{page}[/]', '/legal.php');
+    $r->addRoute('GET', '/kane-web[/]', '/home.php');
+    $r->addRoute('GET', '/kane-web/listings[/]', '/listings.php');
+    $r->addRoute('GET', '/kane-web/listing/{slug}[/]', '/viewlisting.php');
+    $r->addRoute('GET', '/kane-web/about[/]', '/about.php');
+    $r->addRoute('GET', '/kane-web/contact[/]', '/contact.php');
+    $r->addRoute('GET', '/kane-web/legal/{page}[/]', '/legal.php');
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
