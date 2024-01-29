@@ -1,22 +1,22 @@
 # TODO List for KANE Web
 
-- Homepage: Show latest listings
-- Listings Page
-- Listing View
-- About Page
-- Contact Page
-- Legal Pages
-- Safety Page
-- Login
-- Registration
-- Account Settings
-- Messages
-- Password Reset
-- Email Templates
-- Portal: Dashboard
-- Portal: Authentication
-- Portal: Listing Management
-- Portal: Messaging
-- Admin: Dashboard
-- Admin: Manage Reports
-- Admin: Manage Users
+- [ ] Homepage: Show latest listings
+- [ ] Listings Page
+- [ ] Listing View
+- [ ] About Page
+- [ ] Contact Page
+- [ ] Legal Pages
+- [ ] Safety Page
+- [ ] Login
+- [ ] Registration
+- [ ] Account Settings
+- [ ] Messages
+- [ ] Password Reset
+- [ ] Email Templates
+- [ ] Portal: Dashboard
+- [ ] Portal: Authentication
+- [ ] Portal: Listing Management
+- [ ] Portal: Messaging
+- [ ] Admin: Dashboard
+- [ ] Admin: Manage Reports
+- [ ] Admin: Manage Users

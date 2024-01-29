@@ -4,7 +4,7 @@
 // Handles site administration functions
 // Author: kiduswb
 
-require_once 'Database.php';
+require_once("Database.php");
 
 /**
  * admin_login

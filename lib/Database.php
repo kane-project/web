@@ -4,7 +4,7 @@
 // This script handles database connection and queries
 // Author: kiduswb
 
-require_once 'Utils.php';
+require_once("Utils.php");
 
 /**
  * sqlQuery
