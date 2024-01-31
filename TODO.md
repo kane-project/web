@@ -1,5 +1,6 @@
 # TODO List for KANE Web
 
+- [ ] Uniform UI Design
 - [ ] Homepage: Show latest listings
 - [ ] Listings Page
 - [ ] Listing View
