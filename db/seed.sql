@@ -39,6 +39,14 @@ CREATE TABLE `listings` (
   `sponsored_tier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `listing_reports` (
+  `listingid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `timestamp` bigint(20) NOT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL,
   `sender_id` int(11) DEFAULT NULL,
@@ -47,14 +55,6 @@ CREATE TABLE `messages` (
   `timestamp` bigint(20) DEFAULT NULL,
   `content` text DEFAULT NULL,
   `is_read` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE `reports` (
-  `listingid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `timestamp` bigint(20) NOT NULL,
-  `reason` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `users` (
@@ -68,8 +68,19 @@ CREATE TABLE `users` (
   `is_phone_verified` tinyint(1) DEFAULT NULL,
   `is_email_verified` tinyint(1) DEFAULT NULL,
   `profile_photo` varchar(255) DEFAULT NULL,
-  `timestamp` bigint(20) DEFAULT NULL
+  `timestamp` bigint(20) DEFAULT NULL,
+  `is_banned` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `user_reports` (
+  `report_id` int(11) NOT NULL,
+  `reporter_id` int(11) DEFAULT NULL,
+  `reported_user_id` int(11) DEFAULT NULL,
+  `timestamp` bigint(20) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`username`);
@@ -83,18 +94,23 @@ ALTER TABLE `listingphotos`
 ALTER TABLE `listings`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `listing_reports`
+  ADD PRIMARY KEY (`listingid`,`userid`,`timestamp`),
+  ADD KEY `userid` (`userid`);
+
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`message_id`),
   ADD KEY `sender_id` (`sender_id`),
   ADD KEY `receiver_id` (`receiver_id`),
   ADD KEY `listing_id` (`listing_id`);
 
-ALTER TABLE `reports`
-  ADD PRIMARY KEY (`listingid`,`userid`,`timestamp`),
-  ADD KEY `userid` (`userid`);
-
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `user_reports`
+  ADD PRIMARY KEY (`report_id`),
+  ADD KEY `reporter_id` (`reporter_id`),
+  ADD KEY `reported_user_id` (`reported_user_id`);
 
 ALTER TABLE `emailist`
   ADD CONSTRAINT `emailist_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`);
@@ -102,16 +118,16 @@ ALTER TABLE `emailist`
 ALTER TABLE `listingphotos`
   ADD CONSTRAINT `listingphotos_ibfk_1` FOREIGN KEY (`listingid`) REFERENCES `listings` (`id`);
 
+ALTER TABLE `listing_reports`
+  ADD CONSTRAINT `listing_reports_ibfk_1` FOREIGN KEY (`listingid`) REFERENCES `listings` (`id`),
+  ADD CONSTRAINT `listing_reports_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `users` (`id`);
+
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`listing_id`) REFERENCES `listings` (`id`);
 
-ALTER TABLE `reports`
-  ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`listingid`) REFERENCES `listings` (`id`),
-  ADD CONSTRAINT `reports_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `users` (`id`);
+ALTER TABLE `user_reports`
+  ADD CONSTRAINT `user_reports_ibfk_1` FOREIGN KEY (`reporter_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `user_reports_ibfk_2` FOREIGN KEY (`reported_user_id`) REFERENCES `users` (`id`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
