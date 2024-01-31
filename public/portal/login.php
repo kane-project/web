@@ -18,17 +18,18 @@
 	<main id="main">
 
 		<div class="container py-5">
-			<div class="row py-5 justify-content-center">
-				<div class="col-md-9 py-3 mx-auto">
+			<div class="row justify-content-center">
+				<div class="col-lg-9 col-sm-12 py-5 mx-auto">
+
 					<div class="card p-3 rounded-0 shadow">
 						<div class="card-body">
 							<div class="row">
-								<div class="col-md-6 d-none d-md-block">
+								<div class="col-md-6 col-sm-12 d-none d-md-block">
 									<div class="mb-3 text-center">
 										<img src="assets/img/logo.png" class="img-fluid" alt="">
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6 col-sm-12">
 									<h5 class="card-title text-center">Portal Login</h5>
 									<form method="POST" action="portal/login">
 										<?php
@@ -70,15 +71,16 @@
 										<div class="mb-3 p-1 text-center">
 											<button name="submit" type="submit" class="btn col-6 rounded-0 btn-primary">Login</button>
 										</div>
-										<div class="mb-3 p-1">
+										<div class="mb-3 text-center">
 											<a href="portal/reset-password">Forgot Password?</a> |
-											<a href="portal/register">Register</a>
+											<a href="portal/register">Create Account</a>
 										</div>
 									</form>
 								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -86,7 +88,6 @@
 
 	</main>
 
-	<?php include("footer.php"); ?>
 
 </body>
 </html>
