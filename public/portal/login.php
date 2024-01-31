@@ -10,7 +10,7 @@
 	if(isset($_POST['submit']))
 	{
 		$user = user_login($_POST['email'], $_POST['password']);
-		if($user != null) {
+		if($user != null && $user->user_type == 1) {
 			$_SESSION['landlord_id'] = $user->id;
 			header("Location: /portal");
 		} 

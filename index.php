@@ -35,6 +35,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/portal/listing/{slug}[/]', '/portal/listingview.php');
     $r->addRoute('GET', '/portal/messages[/]', '/portal/messages.php');
     $r->addRoute('GET', '/portal/message/{id}[/]', '/portal/messageview.php');
+    $r->addRoute('GET', '/portal/settings[/]', '/portal/settings.php');
 
     // Site Admin Routes
 

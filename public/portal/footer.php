@@ -4,8 +4,7 @@ PORTAL
 FOOTER
 
 -->
-<div class="py-5"></div>
-<footer class="footer">
+<footer class="footer fixed-bottom">
     <div class="container">
         <div class="row">
             <div class="col-md-12">

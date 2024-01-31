@@ -8,7 +8,7 @@
     if(!isset($_SESSION['landlord_id']))
         die(header("Location: /portal/login"));
 
-    $page = "My Listings";
+    $page = "Account Settings";
     $user = new User($_SESSION['landlord_id']);
     include("header.php");
 
@@ -22,7 +22,7 @@
         <section class="container dashboard-counters py-5">
             <div class="row py-3">
                 <div class="col-lg-12 py-2 mx-auto text-center">
-                    <h1>My Listings</h1>
+                    <h1>Account Settings</h1>
                 </div>
             </div>
         </section>

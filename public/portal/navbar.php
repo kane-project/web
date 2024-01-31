@@ -17,6 +17,9 @@ NAVBAR
                     <a class="nav-link <?php if ($page == "Dashboard") echo "active"; ?>" href="portal">Dashboard</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?php if ($page == "New Listing") echo "active"; ?>" href="portal/new">Add New Listing</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?php if ($page == "My Listings") echo "active"; ?>" href="portal/listings">My Listings</a>
                 </li>
                 <li class="nav-item">
