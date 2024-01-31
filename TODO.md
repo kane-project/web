@@ -1,6 +1,7 @@
 # TODO List for KANE Web
 
 - [ ] Uniform UI Design
+- [ ] Edit Base Tags When Production!!!
 - [ ] Homepage: Show latest listings
 - [ ] Listings Page
 - [ ] Listing View

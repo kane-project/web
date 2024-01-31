@@ -30,7 +30,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/kane-web/portal/register[/]', '/portal/register.php');
     $r->addRoute('GET', '/kane-web/portal/logout[/]', '/portal/logout.php');
     $r->addRoute('GET', '/kane-web/portal/new[/]', '/portal/addlisting.php');
-    $r->addRoute('GET', '/kane-web/portal/my-listings[/]', '/portal/mylistings.php');
+    $r->addRoute('GET', '/kane-web/portal/listings[/]', '/portal/mylistings.php');
     $r->addRoute('GET', '/kane-web/portal/listing/{slug}[/]', '/portal/listingview.php');
     $r->addRoute('GET', '/kane-web/portal/messages[/]', '/portal/messages.php');
     $r->addRoute('GET', '/kane-web/portal/message/{id}[/]', '/portal/messageview.php');
