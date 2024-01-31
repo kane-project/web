@@ -9,48 +9,49 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
 
     // Client (Public) Routes
 
-    $r->addRoute('GET', '/kane-web[/]', '/client/home.php');
-    $r->addRoute('GET', '/kane-web/listings[/]', '/client/listings.php');
-    $r->addRoute('GET', '/kane-web/listing/{slug}[/]', '/client/viewlisting.php');
-    $r->addRoute('GET', '/kane-web/about[/]', '/client/about.php');
-    $r->addRoute('GET', '/kane-web/contact[/]', '/client/contact.php');
-    $r->addRoute('GET', '/kane-web/account[/]', '/client/account.php');
-    $r->addRoute('GET', '/kane-web/account/login[/]', '/client/login.php');
-    $r->addRoute('GET', '/kane-web/account/register[/]', '/client/register.php');
-    $r->addRoute('GET', '/kane-web/account/messages[/]', '/client/messages.php');
-    $r->addRoute('GET', '/kane-web/account/logout[/]', '/client/logout.php');
-    $r->addRoute('GET', '/kane-web/account/chat/{slug}[/]', '/client/viewchat.php');
-    $r->addRoute('GET', '/kane-web/safety[/]', '/client/safety.php');
-    $r->addRoute('GET', '/kane-web/legal/{page}[/]', '/client/legal.php');
+    $r->addRoute('GET', '[/]', '/client/home.php');
+    $r->addRoute('GET', '/listings[/]', '/client/listings.php');
+    $r->addRoute('GET', '/listing/{slug}[/]', '/client/viewlisting.php');
+    $r->addRoute('GET', '/about[/]', '/client/about.php');
+    $r->addRoute('GET', '/contact[/]', '/client/contact.php');
+    $r->addRoute('GET', '/account[/]', '/client/account.php');
+    $r->addRoute('GET', '/account/login[/]', '/client/login.php');
+    $r->addRoute('GET', '/account/register[/]', '/client/register.php');
+    $r->addRoute('GET', '/account/messages[/]', '/client/messages.php');
+    $r->addRoute('GET', '/account/logout[/]', '/client/logout.php');
+    $r->addRoute('GET', '/account/chat/{slug}[/]', '/client/viewchat.php');
+    $r->addRoute('GET', '/safety[/]', '/client/safety.php');
+    $r->addRoute('GET', '/legal/{page}[/]', '/client/legal.php');
 
     // Landlord Portal Routes
 
-    $r->addRoute('GET', '/kane-web/portal[/]', '/portal/dashboard.php');
-    $r->addRoute('GET', '/kane-web/portal/login[/]', '/portal/login.php');
-    $r->addRoute('GET', '/kane-web/portal/register[/]', '/portal/register.php');
-    $r->addRoute('GET', '/kane-web/portal/logout[/]', '/portal/logout.php');
-    $r->addRoute('GET', '/kane-web/portal/new[/]', '/portal/addlisting.php');
-    $r->addRoute('GET', '/kane-web/portal/listings[/]', '/portal/mylistings.php');
-    $r->addRoute('GET', '/kane-web/portal/listing/{slug}[/]', '/portal/listingview.php');
-    $r->addRoute('GET', '/kane-web/portal/messages[/]', '/portal/messages.php');
-    $r->addRoute('GET', '/kane-web/portal/message/{id}[/]', '/portal/messageview.php');
+    $r->addRoute('GET', '/portal[/]', '/portal/dashboard.php');
+    $r->addRoute('GET', '/portal/login[/]', '/portal/login.php');
+    $r->addRoute('POST', '/portal/login[/]', '/portal/login.php');
+    $r->addRoute('GET', '/portal/register[/]', '/portal/register.php');
+    $r->addRoute('GET', '/portal/logout[/]', '/portal/logout.php');
+    $r->addRoute('GET', '/portal/new[/]', '/portal/addlisting.php');
+    $r->addRoute('GET', '/portal/listings[/]', '/portal/mylistings.php');
+    $r->addRoute('GET', '/portal/listing/{slug}[/]', '/portal/listingview.php');
+    $r->addRoute('GET', '/portal/messages[/]', '/portal/messages.php');
+    $r->addRoute('GET', '/portal/message/{id}[/]', '/portal/messageview.php');
 
     // Site Admin Routes
 
-    $r->addRoute('GET', '/kane-web/admin[/]', '/admin/dashboard.php');
-    $r->addRoute('GET', '/kane-web/admin/login[/]', '/admin/login.php');
-    $r->addRoute('GET', '/kane-web/admin/users[/]', '/admin/users.php');
-    $r->addRoute('GET', '/kane-web/admin/user/{id}[/]', '/admin/viewuser.php');
-    $r->addRoute('GET', '/kane-web/admin/listings[/]', '/admin/listings.php');
-    $r->addRoute('GET', '/kane-web/admin/viewlisting/{id}[/]', '/admin/viewlisting.php');
-    $r->addRoute('GET', '/kane-web/admin/reports[/]', '/admin/reports.php');
-    $r->addRoute('GET', '/kane-web/admin/report/{id}[/]', '/admin/viewreport.php');
-    $r->addRoute('GET', '/kane-web/admin/logout[/]', '/admin/logout.php');
+    $r->addRoute('GET', '/admin[/]', '/admin/dashboard.php');
+    $r->addRoute('GET', '/admin/login[/]', '/admin/login.php');
+    $r->addRoute('GET', '/admin/users[/]', '/admin/users.php');
+    $r->addRoute('GET', '/admin/user/{id}[/]', '/admin/viewuser.php');
+    $r->addRoute('GET', '/admin/listings[/]', '/admin/listings.php');
+    $r->addRoute('GET', '/admin/viewlisting/{id}[/]', '/admin/viewlisting.php');
+    $r->addRoute('GET', '/admin/reports[/]', '/admin/reports.php');
+    $r->addRoute('GET', '/admin/report/{id}[/]', '/admin/viewreport.php');
+    $r->addRoute('GET', '/admin/logout[/]', '/admin/logout.php');
 
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
-$uri = $_SERVER['REQUEST_URI'];
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
 switch ($routeInfo[0]) 

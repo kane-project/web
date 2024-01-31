@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title><?php echo $page; ?> - The KANE Project</title>
-    <base href="/kane-web/">
     <meta content="The KANE Project is a rental listing service catering to newcomers in Canada." name="description">
     <meta content="newcomers, for rent canada, international students for rent canada" name="keywords">
+    <base href="/">
     <link href="assets/img/logo.png" rel="icon">
     <link href="assets/img/logo.png" rel="apple-touch-icon">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">

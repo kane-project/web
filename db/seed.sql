@@ -59,13 +59,13 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `user_type` tinyint(1) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `address` text DEFAULT NULL,
-  `is_phone_verified` tinyint(1) DEFAULT NULL,
   `is_email_verified` tinyint(1) DEFAULT NULL,
   `profile_photo` varchar(255) DEFAULT NULL,
   `timestamp` bigint(20) DEFAULT NULL,
@@ -111,6 +111,7 @@ ALTER TABLE `user_reports`
   ADD PRIMARY KEY (`report_id`),
   ADD KEY `reporter_id` (`reporter_id`),
   ADD KEY `reported_user_id` (`reported_user_id`);
+
 
 ALTER TABLE `emailist`
   ADD CONSTRAINT `emailist_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`);
