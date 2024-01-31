@@ -4,6 +4,9 @@
 // This script handles user authentication and management
 // Author: kiduswb
 
+require_once("Database.php");
+require_once("Utils.php");
+
 class User
 {
     public $id;
@@ -19,27 +22,94 @@ class User
     public $timestamp;
     public $is_banned;
 
-    function __construct($id = 0) {
-        //...
+    function __construct($id = -1) 
+    {
+        if($id != -1) 
+        {
+            $user = sqlQuery("SELECT * FROM users WHERE id = ?", [$id])->fetch(PDO::FETCH_OBJ);
+            $this->id = $user->id;
+            $this->user_type = $user->user_type;
+            $this->first_name = $user->first_name;
+            $this->last_name = $user->last_name;
+            $this->email = $user->email;
+            $this->password = $user->password;
+            $this->phone = $user->phone;
+            $this->address = $user->address;
+            $this->is_email_verified = $user->is_email_verified;
+            $this->profile_photo = $user->profile_photo;
+            $this->timestamp = $user->timestamp;
+            $this->is_banned = $user->is_banned;
+        }
     }
 }
 
+/**
+ * user_login
+ * Authenticates a user
+ * @param  string $email
+ * @param  string $password
+ * @return User
+ */
 function user_login($email, $password) {
-    //...
+    $email_check = sqlQuery("SELECT * FROM users WHERE email = ?", [$email]);
+    
+    if($email_check->rowCount() == 0)
+        return null;
+
+    else 
+    {
+        $user = $email_check->fetch(PDO::FETCH_OBJ);
+        if(password_verify($password, $user->password))
+            return new User($user->id);
+        else
+            return null;
+    }
 }
 
+/**
+ * update_user
+ * Updates user data
+ * @param  int $id
+ * @param  User $newdata
+ * @return void
+ */
 function update_user($id, $newdata) {
     //...
 }
 
-function fetch_users($start, $limit) {
+/**
+ * fetch_users
+ * Fetches a list of users
+ * @param  int $start
+ * @param  int $limit
+ * @param  int $type
+ * @param  int $verified
+ * @param  int $banned
+ * @return array
+ */
+function fetch_users($start, $limit, $type, $verified, $banned) {
     //...
 }
 
-function fetch_user_count() {
+
+/**
+ * fetch_user_count
+ * Fetches the number of registered users based on type, verified status and ban status
+ * @param  int $type
+ * @param  int $verified
+ * @param  int $banned
+ * @return void
+ */
+function fetch_user_count($type, $verified, $banned) {
     //...
 }
 
+/**
+ * delete_user
+ * Cleans up user data
+ * @param  mixed $id
+ * @return void
+ */
 function delete_user($id) {
     //...
 }

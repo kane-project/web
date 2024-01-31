@@ -1,11 +1,21 @@
 <?php
 
 	require_once("lib/Users.php");
+	session_start();
+
+	if(isset($_SESSION['landlord_id']))
+		die(header("Location: /portal"));
 
 	// Process Login
 	if(isset($_POST['submit']))
 	{
-		//...
+		$user = user_login($_POST['email'], $_POST['password']);
+		if($user != null) {
+			$_SESSION['landlord_id'] = $user->id;
+			header("Location: /portal");
+		} 
+		
+		else header("Location: /portal/login?le");
 	}
 
 	$page = "Portal Login";
@@ -56,6 +66,23 @@
 														Don\'t forget to check your spam folder!
 														<br><br>
 														<a href="portal/resend-email/{userid}">Resend Email</a>
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['ls'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert alert-success rounded-0">
+														You\'ve been logged out successfully.
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['rs'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert alert-success rounded-0">
+														You\'ve been registered successfully. Please verify your email address
+														to login. Don\'t forget to check your spam folder!
 													</div>
 												</div>';
 											}
