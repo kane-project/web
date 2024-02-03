@@ -1,21 +1,73 @@
 <?php
 
-require_once("lib/Users.php");
-require_once("lib/Listings.php");
-require_once("lib/Messaging.php");
+    require_once("lib/Users.php");
+    require_once("lib/Listings.php");
+    require_once("lib/Payments.php");
 
-session_start();
-if (!isset($_SESSION['landlord_id']))
-    die(header("Location: /portal/login"));
+    session_start();
+    if (!isset($_SESSION['landlord_id']))
+        die(header("Location: /portal/login"));
 
-if (isset($_POST['add_listing'])) {
-    //...
-}
+    if (isset($_POST['add_listing'])) 
+    {
+        // Initialize the Listing object to add it into DB:
 
-$page = "New Listing";
-$user = new User($_SESSION['landlord_id']);
-include("header.php");
-loadEnv();
+        $listing = new Listing();
+        $listing->id = generate_uuid();
+        $listing->userid = $_SESSION['landlord_id'];
+        $listing->slug = slugify($_POST['title']);
+        $listing->title = $_POST['title'];
+        $listing->address = $_POST['address'];
+        $listing->rental_type = $_POST['rental_type'];
+        $listing->price = $_POST['price'];
+        $listing->num_beds = $_POST['num_beds'];
+        $listing->num_baths = $_POST['num_baths'];
+        $listing->description = $_POST['description'];
+        $listing->is_furnished = $_POST['is_furnished'];
+        $listing->allows_pets = $_POST['allows_pets'];
+        $listing->has_parking = $_POST['has_parking'];
+        $listing->sponsored_tier = $_POST['sponsored_tier'];
+        $listing->timestamp = time();
+        $listing->view_count = 0;
+
+        // First, try to upload photos
+        if(!add_listing_photos($listing->id, $_FILES['images']))
+            die(header("Location: /portal/new?phe=1"));
+
+        // Then, check for payment processing, if it works, add the listing to the database
+        if ($_POST['sponsored_tier'] !== '0') 
+        {
+            $stripe_token = $_POST['stripeToken'];
+            $amount = 0;
+
+            switch ($_POST['sponsored_tier']) 
+            {
+                case '1':
+                    $amount = 299;
+                    break;
+                case '2':
+                    $amount = 499;
+                    break;
+                case '3':
+                    $amount = 999;
+                    break;
+            }
+
+            if (!process_payment($stripe_token, $amount))
+                die(header("Location: /portal/new?pye=1"));
+        }
+
+        if (!add_listing($listing))
+            die(header("Location: /portal/new?lfe=1"));
+        else
+            die(header("Location: /portal/listings?success=1"));
+
+    }
+
+    $page = "New Listing";
+    $user = new User($_SESSION['landlord_id']);
+    include("header.php");
+    loadEnv();
 ?>
 
 <body>
@@ -23,7 +75,6 @@ loadEnv();
     <?php include("navbar.php"); ?>
 
     <main>
-
         <section class="container dashboard-counters py-5">
             <div class="row py-3">
                 <div class="col-lg-12 py-2 mx-auto text-center">
@@ -35,21 +86,37 @@ loadEnv();
                 <div class="col-lg-8 mx-auto">
                     <div class="card p-2 shadow rounded-0">
                         <div class="card-body">
-                            <form method="post" action="/portal/addlisting" enctype="multipart/form-data">
+                            <form id="add_listing_form" method="POST" action="/portal/new" enctype="multipart/form-data">
 
-                                <div class="mb-3">
-                                    <div class="alert alert-warning alert-dismissible fade show rounded-0" role="alert">
-                                        Generic Error Message
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                </div>
+                                <?php
+                                    if(isset($_GET['phe'])) {
+                                        echo '<div class="mb-3">
+                                                <div class="alert alert-warning alert-dismissible fade show rounded-0" role="alert">
+                                                    Error uploading listing photos. Please upload image files only.
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            </div>';
+                                    }
 
-                                <div class="mb-3">
-                                    <div class="alert alert-danger alert-dismissible fade show rounded-0" role="alert">
-                                        General Fatal Error Message
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                </div>
+                                    if(isset($_GET['pye'])) {
+                                        echo '<div class="mb-3">
+                                                <div class="alert alert-warning alert-dismissible fade show rounded-0" role="alert">
+                                                    Error processing payment. Please try again or choose a different card.
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            </div>';
+                                    }
+
+                                    if(isset($_GET['lfe'])) {
+                                        echo '<div class="mb-3">
+                                                <div class="alert alert-danger alert-dismissible fade show rounded-0" role="alert">
+                                                    Error adding listing to the database. Please contact the site administrator.
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            </div>';
+                                    }
+
+                                ?>
 
                                 <div class="mb-3">
                                     <label for="title">Title</label>
@@ -61,7 +128,7 @@ loadEnv();
                                 </div>
                                 <div class="mb-3">
                                     <label for="type">Type</label>
-                                    <select class="form-control rounded-0" id="type" name="type" required>
+                                    <select class="form-control rounded-0" id="type" name="rental_type" required>
                                         <option value="Apartment">Apartment</option>
                                         <option value="Room">Room</option>
                                         <option value="House">House</option>
@@ -116,33 +183,38 @@ loadEnv();
                                 </div>
                                 <div class="mb-3">
                                     <label for="sponsored_tier" class="mb-2">Sponsored Tier</label>
-                                    <select class="form-control rounded-0" id="sponsored_tier" name="sponsored_tier" required>
+                                    <select class="form-control rounded-0" id="sponsored_tier" name="sponsored_tier" required onchange="handleSponsorshipChange()">
                                         <option value="0">None - $0.00</option>
                                         <option value="1">Bronze - $2.99 One-time Payment</option>
                                         <option value="2">Silver - $4.99 One-time Payment</option>
                                         <option value="3">Gold - $9.99 One-time Payment</option>
                                     </select>
-                                    <p class="py-2">To read more about sponsorship benefits, visit <a href="/portal/sponsorship">this page</a>.</p>
+                                    <p class="py-2">To read more about sponsorship benefits, visit <a target="_blank" class="text-primary" href="/sponsorship">this page</a>.</p>
+                                </div>
+                                <div id="payment-section" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="card-element" class="mb-1">Your Payment Details</label>
+                                        <div id="card-element" class="form-control rounded-0"></div>
+                                        <div id="card-errors" role="alert" class="text-danger"></div>
+                                    </div>
                                 </div>
                                 <div class="mb-4">
-                                    <button type="submit" class="btn col-12 btn-dark rounded-0" name="add_listing">Publish Listing</button>
+                                    <button type="submit" class="btn col-12 btn-dark rounded-0" id="submit-button" name="add_listing">Publish Listing</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
         </section>
-
     </main>
 
-    <?php
-    include("footer.php");
-    ?>
-
     <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>&libraries=places"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
+
+        // Google Maps API
+        
         function initialize() {
             var input = document.getElementById('address');
             var autocomplete = new google.maps.places.Autocomplete(input, {
@@ -154,7 +226,83 @@ loadEnv();
         }
 
         document.addEventListener('DOMContentLoaded', initialize);
+
+        // Payment Section
+
+        function handleSponsorshipChange() {
+            var selectedTier = document.getElementById('sponsored_tier').value;
+            var paymentSection = document.getElementById('payment-section');
+
+            if (selectedTier !== '0') {
+                paymentSection.style.display = 'block';
+            } else {
+                paymentSection.style.display = 'none';
+            }
+        }
+
+        var stripe = Stripe('<?php echo $_ENV['STRIPE_TEST_PKEY']; ?>');
+        var elements = stripe.elements();
+
+        var card = elements.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    color: '#32325d',
+                },
+            }
+        });
+
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission
+        var form = document.getElementById('add_listing_form');
+
+        form.addEventListener('submit', function (event) {
+            // Check if the sponsorship tier is 'None'
+            var selectedTier = document.getElementById('sponsored_tier').value;
+            if (selectedTier === '0') {
+                // If 'None' is selected, allow the form to submit without processing payment
+                return;
+            }
+
+            // If a sponsorship tier other than 'None' is selected, continue with payment processing
+            event.preventDefault();
+
+            stripe.createToken(card).then(function (result) {
+                if (result.error) {
+                    // Inform the user if there was an error
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Append the token to the form and submit
+                    var tokenInput = document.createElement('input');
+                    tokenInput.type = 'hidden';
+                    tokenInput.name = 'stripeToken';
+                    tokenInput.value = result.token.id;
+                    form.appendChild(tokenInput);
+
+                    // Disable the submit button to prevent double submission
+                    form.querySelector('[type="submit"]').disabled = true;
+
+                    // Submit the form
+                    form.submit();
+                }
+            });
+        });
+
     </script>
+
+    <?php include("footer.php"); ?>
 
 </body>
 </html>

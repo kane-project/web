@@ -129,8 +129,9 @@ function fetch_listings($filters)
     $result = sqlQuery($sql_query_string);
 
     $listings = [];
+    $rows = $result->fetchAll(PDO::FETCH_ASSOC);
     
-    foreach ($result as $row) 
+    foreach ($rows as $row) 
     {
         $listing = new Listing($row['id']);
         $listings[] = $listing;
@@ -194,7 +195,7 @@ function fetch_listings_count($filters)
     }
 
     $result = sqlQuery($sql_query_string);
-    return $result['count'];
+    return $result->fetch()['count'];
 }
 
 /**
@@ -203,25 +204,43 @@ function fetch_listings_count($filters)
  * @param  Listing $listing
  * @return bool
  */
-function add_listing($listing) {
-    $result = sqlQuery("INSERT INTO `listings` VALUES(
-        $listing->id,
-        $listing->userid,
-        '$listing->slug',
-        '$listing->title',
-        '$listing->address',
-        '$listing->description',
-        '$listing->rental_type',
-        $listing->price,
-        $listing->num_beds,
-        $listing->num_baths,
-        $listing->is_furnished,
-        $listing->allows_pets,
-        $listing->has_parking,
-        $listing->timestamp,
-        $listing->view_count,
-        $listing->sponsored_tier
-    );");  
+function add_listing($listing) 
+{
+    $result = sqlQuery("INSERT INTO `listings` VALUES (
+        :id,
+        :userid,
+        :slug,
+        :title,
+        :address,
+        :description,
+        :rental_type,
+        :price,
+        :num_beds,
+        :num_baths,
+        :is_furnished,
+        :allows_pets,
+        :has_parking,
+        :timestamp,
+        :view_count,
+        :sponsored_tier
+    )", [
+        ':id' => $listing->id,
+        ':userid' => $listing->userid,
+        ':slug' => $listing->slug,
+        ':title' => $listing->title,
+        ':address' => $listing->address,
+        ':description' => $listing->description,
+        ':rental_type' => $listing->rental_type,
+        ':price' => $listing->price,
+        ':num_beds' => $listing->num_beds,
+        ':num_baths' => $listing->num_baths,
+        ':is_furnished' => $listing->is_furnished,
+        ':allows_pets' => $listing->allows_pets,
+        ':has_parking' => $listing->has_parking,
+        ':timestamp' => $listing->timestamp,
+        ':view_count' => $listing->view_count,
+        ':sponsored_tier' => $listing->sponsored_tier,
+    ]);
 
     if ($result) {
         return true;
@@ -235,21 +254,61 @@ function add_listing($listing) {
  * Adds photos to a listing in the database
  * @param  int $listingId
  * @param  array $photos
- * @return void
+ * @return bool
  */
 function add_listing_photos($listingId, $photos) {
-    foreach ($photos as $photo) {
-        $result = sqlQuery("INSERT INTO `listingphotos` VALUES(
-            $listingId,
-            '$photo'
-        );");
+    
+    if (!isset($photos) || !is_array($photos['name']))
+        return false;
 
-        if (!$result) {
+     // Iterate over each file
+     for ($i = 0; $i < count($photos['name']); $i++) 
+     {
+        // Skip upload if there's an error with a file
+        if ($photos['error'][$i] != 0) {
             return false;
         }
+
+        $target_dir = "./uploads/listings/";
+        $imageFileType = strtolower(pathinfo($photos['name'][$i], PATHINFO_EXTENSION));
+        $newFileName = $listingId . "_" . rand(100000, 999999) . "." . $imageFileType;
+        $target_file = $target_dir . $newFileName;
+
+        if (move_uploaded_file($photos['tmp_name'][$i], $target_file)) 
+        {
+            $result = sqlQuery("INSERT INTO `listingphotos` VALUES(:listingId, :newFileName)", [
+                ':listingId' => $listingId,
+                ':newFileName' => $newFileName
+            ]);
+            
+            if(!$result) return false;
+        } 
+        
+        else return false;
     }
 
     return true;
+}
+
+/**
+ * fetch_listing_photos
+ * Fetches photos of a listing from the database
+ * @param  int $listingId
+ * @return array
+ */
+function fetch_listing_photos($listingId) {
+    //...
+}
+
+/**
+ * fetch_listing_id
+ * Fetches the id of a listing, needs a URL slug
+ * Returns 0 if not found
+ * @param  string $listingSlug
+ * @return int
+ */
+function fetch_listing_id($listingSlug) {
+    //...
 }
 
 /**
