@@ -10,10 +10,14 @@
 	if(isset($_POST['submit']))
 	{
 		$user = user_login($_POST['email'], $_POST['password']);
-		if($user != null && $user->user_type == 1) {
+		
+		if($user != null && $user->user_type && $user->is_email_verified && !$user->is_banned) {
 			$_SESSION['landlord_id'] = $user->id;
 			header("Location: /portal");
 		} 
+
+		else if(!$user->is_email_verified) header("Location: /portal/login?uv=1");
+		else if($user->is_banned) header("Location: /portal/login?be=1");
 		
 		else header("Location: /portal/login?le");
 	}
@@ -59,10 +63,18 @@
 												</div>';
 											}
 
+											if(isset($_GET['be'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert alert-danger rounded-0">
+														Error - Your account has been banned. Please contact support.
+													</div>
+												</div>';
+											}
+
 											if(isset($_GET['uv'])) {
 												echo '<div class="mb-1 p-1">
 													<div class="alert alert-warning rounded-0">
-														Please verify your email address. 
+														Please verify your email address to login.<br> 
 														Don\'t forget to check your spam folder!
 														<br><br>
 														<a href="portal/resend-email/{userid}">Resend Email</a>

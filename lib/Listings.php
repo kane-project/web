@@ -4,7 +4,274 @@
 // This script handles listing management
 // Author: kiduswb
 
+require_once("Database.php");
+
 class Listing
 {
+
+    public $id;
+    public $userid;
+    public $slug;
+    public $title;
+    public $address;
+    public $description;
+    public $rental_type;
+    public $price;
+    public $num_beds;
+    public $num_baths;
+    public $is_furnished;
+    public $allows_pets;
+    public $has_parking;
+    public $timestamp;
+    public $view_count;
+    public $sponsored_tier;
+
+    function __construct($id = 0) 
+    {
+        
+        if ($id != 0) {
+            $result = sqlQuery("SELECT * FROM `listings` WHERE id = ?", [$id])->fetch(PDO::FETCH_OBJ);
+            if ($result != null){
+                $this->id = $result[0]['id'];
+                $this->userid = $result[0]['userid'];
+                $this->slug = $result[0]['slug'];
+                $this->title = $result[0]['title'];
+                $this->address = $result[0]['address'];
+                $this->description = $result[0]['description'];
+                $this->rental_type = $result[0]['rental_type'];
+                $this->price = $result[0]['price'];
+                $this->num_beds = $result[0]['num_beds'];
+                $this->num_baths = $result[0]['num_baths'];
+                $this->is_furnished = $result[0]['is_furnished'];
+                $this->allows_pets = $result[0]['allows_pets'];
+                $this->has_parking = $result[0]['has_parking'];
+                $this->timestamp = $result[0]['timestamp'];
+                $this->view_count = $result[0]['view_count'];
+                $this->sponsored_tier = $result[0]['sponsored_tier'];
+            }
+        }
+    }
+}
+
+/**
+ * fetch_listings
+ * Fetches listings from the database
+ * @param  array $filters
+ * @param  int $start
+ * @param  int $limit
+ * @return void
+ */
+function fetch_listings($filters) 
+{
+    // $filters is an array of filters with the following optional keys:
+    // - type: the rental type of the listing - {apartment, room, house, condo, townhouse, studio, loft, basement, other}
+    // - min_price: the minimum price of the listing
+    // - max_price: the maximum price of the listing
+    // - min_bedrooms: the minimum number of bedrooms
+    // - max_bedrooms: the maximum number of bedrooms
+    // - min_bathrooms: the minimum number of bathrooms
+    // - max_bathrooms: the maximum number of bathrooms
+    // - user_id: the id of the user who created the listing
+    // - is_furnished: whether the listing is furnished
+    // - has_parking: whether the listing has parking
+    // - allows_pets: whether the listing allows pets
+
+    $sql_query_string = "SELECT * FROM listings WHERE 1=1";
+
+    if (isset($filters['type'])) {
+        $sql_query_string .= " AND type = " . $filters['type'];
+    }
+
+    if (isset($filters['min_price'])) {
+        $sql_query_string .= " AND price >= " . $filters['min_price'];
+    }
+
+    if (isset($filters['max_price'])) {
+        $sql_query_string .= " AND price <= " . $filters['max_price'];
+    }
+
+    if (isset($filters['min_bedrooms'])) {
+        $sql_query_string .= " AND bedrooms >= " . $filters['min_bedrooms'];
+    }
+
+    if (isset($filters['max_bedrooms'])) {
+        $sql_query_string .= " AND bedrooms <= " . $filters['max_bedrooms'];
+    }
+
+    if (isset($filters['min_bathrooms'])) {
+        $sql_query_string .= " AND bathrooms >= " . $filters['min_bathrooms'];
+    }
+
+    if (isset($filters['max_bathrooms'])) {
+        $sql_query_string .= " AND bathrooms <= " . $filters['max_bathrooms'];
+    }
+
+    if (isset($filters['user_id'])) {
+        $sql_query_string .= " AND user_id = " . $filters['user_id'];
+    }
+
+    if (isset($filters['is_furnished'])) {
+        $sql_query_string .= " AND is_furnished = " . $filters['is_furnished'];
+    }
+
+    if (isset($filters['has_parking'])) {
+        $sql_query_string .= " AND has_parking = " . $filters['has_parking'];
+    }
+
+    if (isset($filters['allows_pets'])) {
+        $sql_query_string .= " AND allows_pets = " . $filters['allows_pets'];
+    }
+
+    // Proritize Sponsored Listings
+    // Sort by timestamp
+
+    $sql_query_string .= " ORDER BY timestamp DESC, sponsored_tier DESC";
+    $result = sqlQuery($sql_query_string);
+
+    $listings = [];
+    
+    foreach ($result as $row) 
+    {
+        $listing = new Listing($row['id']);
+        $listings[] = $listing;
+    }
+
+    return $listings;
+}
+
+/**
+ * fetch_listings_count
+ * Fetches the count of listings from the database
+ * @param  array $filters
+ * @return void
+ */
+function fetch_listings_count($filters) 
+{
+    $sql_query_string = "SELECT COUNT(*) AS count FROM listings WHERE 1=1";
+
+    if (isset($filters['type'])) {
+        $sql_query_string .= " AND type = " . $filters['type'];
+    }
+
+    if (isset($filters['min_price'])) {
+        $sql_query_string .= " AND price >= " . $filters['min_price'];
+    }
+
+    if (isset($filters['max_price'])) {
+        $sql_query_string .= " AND price <= " . $filters['max_price'];
+    }
+
+    if (isset($filters['min_bedrooms'])) {
+        $sql_query_string .= " AND bedrooms >= " . $filters['min_bedrooms'];
+    }
+
+    if (isset($filters['max_bedrooms'])) {
+        $sql_query_string .= " AND bedrooms <= " . $filters['max_bedrooms'];
+    }
+
+    if (isset($filters['min_bathrooms'])) {
+        $sql_query_string .= " AND bathrooms >= " . $filters['min_bathrooms'];
+    }
+
+    if (isset($filters['max_bathrooms'])) {
+        $sql_query_string .= " AND bathrooms <= " . $filters['max_bathrooms'];
+    }
+
+    if (isset($filters['user_id'])) {
+        $sql_query_string .= " AND user_id = " . $filters['user_id'];
+    }
+
+    if (isset($filters['is_furnished'])) {
+        $sql_query_string .= " AND is_furnished = " . $filters['is_furnished'];
+    }
+
+    if (isset($filters['has_parking'])) {
+        $sql_query_string .= " AND has_parking = " . $filters['has_parking'];
+    }
+
+    if (isset($filters['allows_pets'])) {
+        $sql_query_string .= " AND allows_pets = " . $filters['allows_pets'];
+    }
+
+    $result = sqlQuery($sql_query_string);
+    return $result['count'];
+}
+
+/**
+ * add_listing
+ * Adds a new listing to the database
+ * @param  Listing $listing
+ * @return bool
+ */
+function add_listing($listing) {
+    $result = sqlQuery("INSERT INTO `listings` VALUES(
+        $listing->id,
+        $listing->userid,
+        '$listing->slug',
+        '$listing->title',
+        '$listing->address',
+        '$listing->description',
+        '$listing->rental_type',
+        $listing->price,
+        $listing->num_beds,
+        $listing->num_baths,
+        $listing->is_furnished,
+        $listing->allows_pets,
+        $listing->has_parking,
+        $listing->timestamp,
+        $listing->view_count,
+        $listing->sponsored_tier
+    );");  
+
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+} 
+
+/**
+ * add_listing_photos
+ * Adds photos to a listing in the database
+ * @param  int $listingId
+ * @param  array $photos
+ * @return void
+ */
+function add_listing_photos($listingId, $photos) {
+    foreach ($photos as $photo) {
+        $result = sqlQuery("INSERT INTO `listingphotos` VALUES(
+            $listingId,
+            '$photo'
+        );");
+
+        if (!$result) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * update_listing
+ * Updates a listing in the database
+ * @param  int $listingId
+ * @param  Listing $newdata
+ * @return bool
+ */
+function update_listing($listingId, $newdata) {
     //...
+}
+
+/**
+ * delete_listing
+ * Deletes a listing from the database
+ * @param  int $listingId
+ * @return bool
+ */
+function delete_listing($listingId) 
+{
+    // Clean up the listing from the database
+    // Clean up the listing images from the server
+    // Clean up the listing messages from the database
 }
