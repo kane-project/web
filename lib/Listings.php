@@ -274,4 +274,5 @@ function delete_listing($listingId)
     // Clean up the listing from the database
     // Clean up the listing images from the server
     // Clean up the listing messages from the database
+    // Clean up EVERYTHING!
 }
