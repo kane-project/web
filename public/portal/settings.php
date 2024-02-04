@@ -29,7 +29,7 @@
 
     </main>
 
-    <?php include("footer.php"); ?>
+    <?php $stickyfooter = 1;  include("footer.php"); ?>
 
 </body>
 </html>

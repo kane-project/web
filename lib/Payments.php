@@ -31,10 +31,12 @@ function process_payment($stripe_token, $amount, $currency = 'cad')
         $paymentIntent = \Stripe\PaymentIntent::create([
             'amount' => $amount,
             'currency' => $currency,
-            'payment_method' => $stripe_token, // Use the token as the payment method
+            'payment_method' => $stripe_token,
             'confirmation_method' => 'manual',
             'confirm' => true,
+            'return_url' => 'https://yourwebsite.com/success', // Replace with your actual success page URL
         ]);
+
     }
     
     catch (\Stripe\Exception\CardException $e) 

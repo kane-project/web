@@ -48,7 +48,7 @@
 
     </main>
 
-    <?php include("footer.php"); ?>
+    <?php $stickyfooter = true; include("footer.php"); ?>
 
 </body>
 </html>

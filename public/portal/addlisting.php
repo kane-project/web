@@ -30,14 +30,10 @@
         $listing->timestamp = time();
         $listing->view_count = 0;
 
-        // First, try to upload photos
-        if(!add_listing_photos($listing->id, $_FILES['images']))
-            die(header("Location: /portal/new?phe=1"));
-
-        // Then, check for payment processing, if it works, add the listing to the database
+        // First, check if a sponsored tier was selected
         if ($_POST['sponsored_tier'] !== '0') 
         {
-            $stripe_token = $_POST['stripeToken'];
+            $stripe_token = isset($_POST['payment_method']) ? $_POST['payment_method'] : null;
             $amount = 0;
 
             switch ($_POST['sponsored_tier']) 
@@ -56,6 +52,10 @@
             if (!process_payment($stripe_token, $amount))
                 die(header("Location: /portal/new?pye=1"));
         }
+
+        // Then, try to upload photos
+        if(!add_listing_photos($listing->id, $_FILES['images']))
+            die(header("Location: /portal/new?phe=1"));
 
         if (!add_listing($listing))
             die(header("Location: /portal/new?lfe=1"));
@@ -211,8 +211,9 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>&libraries=places"></script>
     <script src="https://js.stripe.com/v3/"></script>
-    <script>
 
+    <script>
+        
         // Google Maps API
         
         function initialize() {
@@ -254,7 +255,6 @@
 
         card.mount('#card-element');
 
-        // Handle real-time validation errors from the card Element.
         card.addEventListener('change', function (event) {
             var displayError = document.getElementById('card-errors');
             if (event.error) {
@@ -264,40 +264,42 @@
             }
         });
 
-        // Handle form submission
         var form = document.getElementById('add_listing_form');
 
-        form.addEventListener('submit', function (event) {
-            // Check if the sponsorship tier is 'None'
+        form.addEventListener('submit', async function (event) {
             var selectedTier = document.getElementById('sponsored_tier').value;
-            if (selectedTier === '0') {
-                // If 'None' is selected, allow the form to submit without processing payment
-                return;
+            console.log("Selected Tier: " + selectedTier);
+
+            if (selectedTier === '0') return;
+
+            event.preventDefault();
+           
+            var { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: card,
+            });
+
+            if (error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = error.message;
+            } 
+            
+            else 
+            {
+                var paymentMethodInput = document.createElement('input');
+                paymentMethodInput.type = 'hidden';
+                paymentMethodInput.name = 'payment_method';
+                paymentMethodInput.value = paymentMethod.id;
+                form.appendChild(paymentMethodInput);
+                // I fucking hate JavaScript
+                var addListingInput = document.createElement('input');
+                addListingInput.type = 'hidden';
+                addListingInput.name = 'add_listing';
+                addListingInput.value = '1';
+                form.appendChild(addListingInput);
+                form.submit();
             }
 
-            // If a sponsorship tier other than 'None' is selected, continue with payment processing
-            event.preventDefault();
-
-            stripe.createToken(card).then(function (result) {
-                if (result.error) {
-                    // Inform the user if there was an error
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                } else {
-                    // Append the token to the form and submit
-                    var tokenInput = document.createElement('input');
-                    tokenInput.type = 'hidden';
-                    tokenInput.name = 'stripeToken';
-                    tokenInput.value = result.token.id;
-                    form.appendChild(tokenInput);
-
-                    // Disable the submit button to prevent double submission
-                    form.querySelector('[type="submit"]').disabled = true;
-
-                    // Submit the form
-                    form.submit();
-                }
-            });
         });
 
     </script>
