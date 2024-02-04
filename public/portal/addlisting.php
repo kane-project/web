@@ -189,7 +189,7 @@
                                         <option value="2">Silver - $4.99 One-time Payment</option>
                                         <option value="3">Gold - $9.99 One-time Payment</option>
                                     </select>
-                                    <p class="py-2">To read more about sponsorship benefits, visit <a target="_blank" class="text-primary" href="/sponsorship">this page</a>.</p>
+                                    <p class="py-2">To read more about sponsorship benefits, visit <a target="_blank" class="text-primary" href="/pricing">this page</a>.</p>
                                 </div>
                                 <div id="payment-section" style="display: none;">
                                     <div class="mb-3">
