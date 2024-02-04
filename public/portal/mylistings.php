@@ -13,7 +13,7 @@
     include("header.php");
 
 ?>
-<body>
+<body class="d-flex flex-column vh-100">
 
     <?php include("navbar.php"); ?>
 
@@ -34,6 +34,62 @@
                         </div></div></div>';
                 }
             ?>
+            <div class="row">
+                <div class="col-lg-12 mx-auto">
+                    <div class="card shadow rounded-0">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Listing 1</td>
+                                            <td>Description 1</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Listing 2</td>
+                                            <td>Description 2</td>
+                                            <td>$200</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Listing 3</td>
+                                            <td>Description 3</td>
+                                            <td>$300</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Listing 3</td>
+                                            <td>Description 3</td>
+                                            <td>$300</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Listing 3</td>
+                                            <td>Description 3</td>
+                                            <td>$300</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Listing 3</td>
+                                            <td>Description 3</td>
+                                            <td>$300</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Listing 3</td>
+                                            <td>Description 3</td>
+                                            <td>$300</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>

@@ -13,7 +13,7 @@
     include("header.php");
 
 ?>
-<body>
+<body class="d-flex flex-column vh-100">
 
     <?php include("navbar.php"); ?>
 
@@ -29,7 +29,7 @@
 
     </main>
 
-    <?php $stickyfooter = 1; include("footer.php"); ?>
+    <?php include("footer.php"); ?>
 
 </body>
 </html>

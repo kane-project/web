@@ -13,7 +13,7 @@
     include("header.php");
 
 ?>
-<body>
+<body class="d-flex flex-column vh-100">
 
     <?php include("navbar.php"); ?>
 

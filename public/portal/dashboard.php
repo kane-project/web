@@ -13,7 +13,7 @@
     include("header.php");
 
 ?>
-<body>
+<body class="d-flex flex-column vh-100">
 
     <?php include("navbar.php"); ?>
 
@@ -24,6 +24,8 @@
                 <div class="col-lg-12 py-2 mx-auto text-center">
                     <h1>Landlord Portal</h1>
                 </div>
+            </div>
+            <div class="row py-5">
                 <div class="col-lg-6 py-2 mx-auto">
                     <div class="card bg-washed-pink text-light p-3 rounded-0 shadow">
                         <div class="card-body">
@@ -48,7 +50,7 @@
 
     </main>
 
-    <?php $stickyfooter = true; include("footer.php"); ?>
+    <?php include("footer.php"); ?>
 
 </body>
 </html>
