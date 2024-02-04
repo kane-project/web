@@ -11,7 +11,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 # TODO for Kane-Web
 
-## Tasks
+## Pre-Deployment Tasks
 
 - Evaluate and implement using Content Delivery Networks (CDN) for improved performance and load times.
 - Check for any `die()` statements & related errors/exceptions before production
@@ -20,6 +20,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - Security Audit
 - SEO & Analytics API
 - Add reCaptcha
+- Review page access settings
 
 ## Pages
 
@@ -55,6 +56,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - Polish UI/UX and continously refactor.
 - AWS EC2, S3, Route53
 - Brevo Email
+- Stripe
 
 ## BUGS
 

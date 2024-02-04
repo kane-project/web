@@ -1,10 +1,11 @@
 # Folders
 
+.vscode
 /uploads
 /vendor
 /temp 
+/phpMyAdmin
 
 # Files
 
 .env
-TODOLOCAL.md

@@ -41,7 +41,7 @@
                         <div class="card-body">
                             <h1 class="text-light">{num_messages}</h1>
                             <p class="lead">New Messages</p>
-                            <a href="/portal/listings" class="btn btn-light btn-lg rounded-0">Inbox &nbsp;&rarr;</a>
+                            <a href="/portal/messages/" class="btn btn-light btn-lg rounded-0">Inbox &nbsp;&rarr;</a>
                         </div>
                     </div>
                 </div>

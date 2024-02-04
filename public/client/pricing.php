@@ -27,7 +27,7 @@ include("header.php") ?>
                     <div class="col-md-6">
                         <div class="card mb-4 p-1 rounded-0 shadow">
                             <div class="card-body">
-                                <h5 class="card-title">ID Verification</h5>
+                                <h5 class="card-title">ID Verification &nbsp;<span class="badge badge-sm bg-dark text-light">Beta</span></h5>
                                 <h6 class="card-subtitle mb-2 text-muted"><del>$4.99</del> $3.49 One Time</h6>
                                 <ul class="list-unstyled">
                                     <li>Securely verify your Photo ID</li>
