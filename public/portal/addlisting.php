@@ -69,7 +69,7 @@
     include("header.php");
     loadEnv();
 ?>
-
+<head><link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"></head>
 <body>
 
     <?php include("navbar.php"); ?>
@@ -211,8 +211,14 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>&libraries=places"></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>    
 
-    <script>
+        // Initilize Quill Editor
+
+        var quill = new Quill('#description', {
+            theme: 'snow'
+        });
         
         // Google Maps API
         

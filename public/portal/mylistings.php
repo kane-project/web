@@ -38,50 +38,50 @@
             ?>
             <div class="row mt-5">
                 <div class="col-lg-12 mx-auto">
-                    <div class="card shadow rounded-0">
-                        <div class="card-body">
-                            <?php if(sizeof($listings)) { ?>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Date Added</th>
-                                        <th>Price</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                        foreach($listings as $listing) {
+                    <?php if(sizeof($listings)) { 
+                        
+                        foreach($listings as $listing) {
+                            $listing_date = date("d M, Y", $listing->timestamp);
+                            $listing_price = number_format($listing->price, 2);
+                            $sponsorship_tier = "None";
 
-                                            $listing_date = date("d/m/y", $listing->timestamp);
-                                            $listing_price = number_format($listing->price, 2, '.', ',');
+                            switch($listing->sponsored_tier) {
+                                case 1:
+                                    $sponsorship_tier = "Bronze &nbsp;<i class='text-bronze fa fa-award'></i>";
+                                    break;
+                                case 2:
+                                    $sponsorship_tier = "Silver &nbsp;<i class='text-silver fa fa-award'></i>";
+                                    break;
+                                case 3:
+                                    $sponsorship_tier = "Gold &nbsp;<i class='text-gold fa fa-award'></i>";
+                                    break;
+                            }
 
-                                            echo <<<_LISTINGENTRY
-                                            <tr>
-                                                <td style="padding: 10px;">$listing->title</td>
-                                                <td style="padding: 10px;">$listing_date</td>
-                                                <td style="padding: 10px;">$$listing_price</td>
-                                                <td style="padding: 10px;">
-                                                    <a href="/portal/listing/$listing->id" class="p-1 btn btn-primary rounded-0 btn-sm"><i class="fa fa-pen"></i></a>&nbsp;
-                                                    <a href="#" class="p-1 btn btn-danger rounded-0 btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-listing-id="$listing->id"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-_LISTINGENTRY;
-                                        }
-                                    ?>
-                                </tbody>
-                            </table>
-                            <?php } else { ?>
-                            <div class="alert col-6 p-4 mx-auto alert-primary rounded-0" role="alert">
-                                <i class="fa fa-info-circle"></i>&nbsp; You have not added any listings yet. 
-                                <div class="mt-3">
-                                    <a class="btn btn-light rounded-0" href="/portal/new">Add Listing</a>
+                            echo <<<_LISTINGCARD
+                            <div class="card shadow col-lg-6 mx-auto rounded-0 p-2 mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">$listing->title</h5>
+                                    <p class="card-text">$listing->address</p>
+                                    <p class="card-text">Price: $$listing_price per mo.</p>
+                                    <p class="card-text">Date Added: $listing_date</p>
+                                    <p class="card-text">Sponsorship Tier: $sponsorship_tier</p>
+                                    <a href="/portal/editlisting?id=$listing->id" class="btn btn-dark rounded-0">Edit</a>&nbsp;
+                                    <a href="#" class="btn btn-danger rounded-0" data-bs-toggle="modal" data-listing-id="$listing->id">Delete</a>
                                 </div>
                             </div>
-                            <?php } ?>
+_LISTINGCARD;
+                        }
+                    ?>
+                    
+                    <?php } else { ?>
+                    <div class="alert col-lg-8 col-sm-12 p-4 mx-auto alert-primary rounded-0" role="alert">
+                        <i class="fa fa-info-circle"></i>&nbsp; You have not added any listings yet. 
+                        <div class="mt-3">
+                            <a class="btn btn-light rounded-0" href="/portal/new">Add Listing</a>
                         </div>
                     </div>
+                    <?php } ?>
+
                 </div>
             </div>
         </section>

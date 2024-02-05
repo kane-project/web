@@ -29,7 +29,7 @@
                 <div class="col-lg-6 py-2 mx-auto">
                     <div class="card bg-washed-pink text-light p-3 rounded-0 shadow">
                         <div class="card-body">
-                            <h1 class="text-light"><?php $filters = ["userid" => $_SESSION['landlord_id']]; echo fetch_listings_count($filters); ?></h1>
+                            <h1 class="text-light"><?php $filters = ["user_id" => $_SESSION['landlord_id']]; echo fetch_listings_count($filters); ?></h1>
                             <p class="lead">Your Listings</p>
                             <a href="/portal/new" class="btn btn-light btn-lg rounded-0">Add New</a> &nbsp;
                             <a href="/portal/listings" class="btn btn-light btn-lg rounded-0">View All &nbsp;&rarr;</a>
