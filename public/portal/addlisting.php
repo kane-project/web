@@ -83,7 +83,7 @@
             </div>
 
             <div class="row py-2">
-                <div class="col-lg-8 mx-auto">
+                <div class="col-lg-7 mx-auto">
                     <div class="card p-2 shadow rounded-0">
                         <div class="card-body">
                             <form id="add_listing_form" method="POST" action="/portal/new" enctype="multipart/form-data">

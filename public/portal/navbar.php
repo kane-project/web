@@ -28,12 +28,16 @@ NAVBAR
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        My Account
+                    <?php 
+                        if($user->profile_photo == "")
+                            $user->profile_photo = "default.png";
+                    ?>
+                    <a class="nav-link dropdown-toggle p-1" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="profile-pic"><img class="img-fluid rounded-circle" src="/uploads/profiles/<?php echo $user->profile_photo ?>"></span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item " href="portal/settings">Settings</a>
-                        <a class="dropdown-item " href="portal/logout">Logout</a>
+                        <a class="dropdown-item" href="portal/settings">Settings</a>
+                        <a class="dropdown-item" href="portal/logout">Logout</a>
                     </div>
                 </li>
             </ul>

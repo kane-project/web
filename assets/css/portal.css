@@ -25,3 +25,8 @@
 .text-silver {
     color: silver;
 }
+
+.profile-pic img {
+    width: 40px;
+    height: 40px;
+}
