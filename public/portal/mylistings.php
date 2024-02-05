@@ -73,7 +73,7 @@
                                     <p class="card-text">Price: $$listing_price per mo.</p>
                                     <p class="card-text">Date Added: $listing_date</p>
                                     <p class="card-text">Sponsorship Tier: $sponsorship_tier</p>
-                                    <a href="/portal/editlisting?id=$listing->id" class="btn btn-dark rounded-0">Edit</a>&nbsp;
+                                    <a href="/portal/listing/$listing->id" class="btn btn-dark rounded-0">Edit</a>&nbsp;
                                     <a href="#" class="btn btn-danger rounded-0" data-bs-toggle="modal" data-listing-id="$listing->id">Delete</a>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@ _LISTINGCARD;
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark rounded-0" data-bs-dismiss="modal">Cancel</button>
-                        <a href="/portal/deletelisting?id=" class="btn btn-danger rounded-0" id="deleteListingLink">Delete</a>
+                        <a href="javascript:void();" class="btn btn-danger rounded-0" id="deleteListingLink">Confirm Deletion</a>
                     </div>
                 </div>
             </div>

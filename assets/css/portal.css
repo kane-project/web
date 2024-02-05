@@ -14,6 +14,18 @@
     background-color: #5D576B;
 }
 
+.bg-gold {
+    background-color: gold;
+}
+
+.bg-bronze {
+    background-color: #CD7F32;
+}
+
+.bg-silver {
+    background-color: silver;
+}
+
 .text-gold {
     color: gold;
 }

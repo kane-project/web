@@ -2150,3 +2150,19 @@ footer .copyright-footer {
 footer .credits {
 	font-size: 14px;
 }
+
+/*--------------------------------------------------------------
+# Sponsorhip Tiers
+--------------------------------------------------------------*/
+
+.bg-gold {
+    background-color: rgb(232, 197, 1);
+}
+
+.bg-bronze {
+    background-color: #CD7F32;
+}
+
+.bg-silver {
+    background-color: rgb(149, 136, 136);
+}
