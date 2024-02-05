@@ -30,8 +30,16 @@
             <?php
                 if(isset($_GET['success']))
                 {
-                    echo '<div class="row"><div class="col-lg-12 mx-auto"><div class="alert alert-success rounded-0 alert-dismissible fade show" role="alert">
+                    echo '<div class="row"><div class="col-lg-6 col-sm-12 mx-auto"><div class="alert alert-success rounded-0 alert-dismissible fade show" role="alert">
                             <strong>Success!</strong> Your listing has been successfully published!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div></div></div>';
+                }
+
+                if(isset($_GET['ds']))
+                {
+                    echo '<div class="row"><div class="col-lg-6 col-sm-12 mx-auto"><div class="alert alert-info rounded-0 alert-dismissible fade show" role="alert">
+                            <i class="fa fa-info-circle"></i> Your listing has been removed successfully.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div></div></div>';
                 }
@@ -114,7 +122,7 @@ _LISTINGCARD;
                 if (deleteButton) {
                     var listingId = deleteButton.getAttribute('data-listing-id');
                     var deleteLink = document.getElementById('deleteListingLink');
-                    deleteLink.href = '/portal/deletelisting?id=' + listingId;
+                    deleteLink.href = '/portal/delete-listing/' + listingId;
                     myModal.show();
                     event.preventDefault();
                 }

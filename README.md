@@ -21,6 +21,8 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - SEO & Analytics API
 - Add reCaptcha
 - Review page access settings
+- Transactional emails at every step
+- CRON job to clean archived data every 7 years
 
 ## Pages
 

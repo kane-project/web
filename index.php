@@ -62,6 +62,12 @@ switch ($routeInfo[0])
 {
     case \FastRoute\Dispatcher::FOUND:
         $page = $routeInfo[1];
+        $vars = $routeInfo[2];
+
+        foreach ($vars as $varName => $varValue) {
+            ${$varName} = $varValue;
+        }
+        
         include(__DIR__ . '/public' . $page);
         break;
 
@@ -75,3 +81,4 @@ switch ($routeInfo[0])
         echo '<pre>405 Method Not Allowed</pre>';
         break;
 }
+
