@@ -26,28 +26,28 @@ class Listing
     public $view_count;
     public $sponsored_tier;
 
-    function __construct($id = 0) 
+    function __construct($id = null) 
     {
         
-        if ($id != 0) {
-            $result = sqlQuery("SELECT * FROM `listings` WHERE id = ?", [$id])->fetch(PDO::FETCH_OBJ);
+        if ($id != null) {
+            $result = sqlQuery("SELECT * FROM `listings` WHERE id = ?", [$id])->fetch(PDO::FETCH_ASSOC);
             if ($result != null){
-                $this->id = $result[0]['id'];
-                $this->userid = $result[0]['userid'];
-                $this->slug = $result[0]['slug'];
-                $this->title = $result[0]['title'];
-                $this->address = $result[0]['address'];
-                $this->description = $result[0]['description'];
-                $this->rental_type = $result[0]['rental_type'];
-                $this->price = $result[0]['price'];
-                $this->num_beds = $result[0]['num_beds'];
-                $this->num_baths = $result[0]['num_baths'];
-                $this->is_furnished = $result[0]['is_furnished'];
-                $this->allows_pets = $result[0]['allows_pets'];
-                $this->has_parking = $result[0]['has_parking'];
-                $this->timestamp = $result[0]['timestamp'];
-                $this->view_count = $result[0]['view_count'];
-                $this->sponsored_tier = $result[0]['sponsored_tier'];
+                $this->id = $result['id'];
+                $this->userid = $result['userid'];
+                $this->slug = $result['slug'];
+                $this->title = $result['title'];
+                $this->address = $result['address'];
+                $this->description = $result['description'];
+                $this->rental_type = $result['rental_type'];
+                $this->price = $result['price'];
+                $this->num_beds = $result['num_beds'];
+                $this->num_baths = $result['num_baths'];
+                $this->is_furnished = $result['is_furnished'];
+                $this->allows_pets = $result['allows_pets'];
+                $this->has_parking = $result['has_parking'];
+                $this->timestamp = $result['timestamp'];
+                $this->view_count = $result['view_count'];
+                $this->sponsored_tier = $result['sponsored_tier'];
             }
         }
     }
@@ -59,7 +59,7 @@ class Listing
  * @param  array $filters
  * @param  int $start
  * @param  int $limit
- * @return void
+ * @return array
  */
 function fetch_listings($filters) 
 {
@@ -107,7 +107,7 @@ function fetch_listings($filters)
     }
 
     if (isset($filters['user_id'])) {
-        $sql_query_string .= " AND user_id = " . $filters['user_id'];
+        $sql_query_string .= " AND userid = " . $filters['user_id'];
     }
 
     if (isset($filters['is_furnished'])) {
@@ -144,7 +144,7 @@ function fetch_listings($filters)
  * fetch_listings_count
  * Fetches the count of listings from the database
  * @param  array $filters
- * @return void
+ * @return int
  */
 function fetch_listings_count($filters) 
 {
@@ -179,7 +179,7 @@ function fetch_listings_count($filters)
     }
 
     if (isset($filters['user_id'])) {
-        $sql_query_string .= " AND user_id = " . $filters['user_id'];
+        $sql_query_string .= " AND userid = " . $filters['user_id'];
     }
 
     if (isset($filters['is_furnished'])) {

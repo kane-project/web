@@ -35,6 +35,7 @@ function sqlQuery($query, $params = [])
     
     catch (PDOException $e) 
     {
+        // die($e->getMessage());
         throw new Exception("<pre>DBERROR - Please contact the site administrator!</pre>");
     }
 }

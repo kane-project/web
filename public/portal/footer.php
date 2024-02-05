@@ -4,18 +4,11 @@ PORTAL
 FOOTER
 
 -->
-<footer class="mt-auto footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="copyright-footer">
-                    <p class="copyright color-text-a">
-                        Copyright &copy; The KANE Project. All Rights Reserved.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="py-5"></div>
+<footer class="mt-5 fixed-bottom">
+    <p class="color-text-a">
+        Copyright &copy; The KANE Project. All Rights Reserved.
+    </p>
 </footer>
 
 <div id="preloader"></div>
