@@ -21,7 +21,7 @@
 
     <main>
         
-        <section class="container dashboard-counters py-5">
+        <section class="container py-5">
             <div class="row py-3">
                 <div class="col-lg-12 py-2 mx-auto text-center">
                     <h1>My Listings</h1>
@@ -52,16 +52,20 @@
                             $listing_date = date("d M, Y", $listing->timestamp);
                             $listing_price = number_format($listing->price, 2);
                             $sponsorship_tier = "None";
-
+                            $stats_button = "<a href='javascript:void()' class='btn btn-disabled btn-secondary rounded-0'><i class='fa fa-lock'></i> Stats Unavailable</a>";
+                            
                             switch($listing->sponsored_tier) {
                                 case 1:
                                     $sponsorship_tier = "Bronze &nbsp;<i class='text-bronze fa fa-award'></i>";
+                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> View Stats</a>";
                                     break;
                                 case 2:
                                     $sponsorship_tier = "Silver &nbsp;<i class='text-silver fa fa-award'></i>";
+                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> View Stats</a>";
                                     break;
                                 case 3:
                                     $sponsorship_tier = "Gold &nbsp;<i class='text-gold fa fa-award'></i>";
+                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> View Stats</a>";
                                     break;
                             }
 
@@ -70,11 +74,14 @@
                                 <div class="card-body">
                                     <h5 class="card-title">$listing->title</h5>
                                     <p class="card-text">$listing->address</p>
-                                    <p class="card-text">Price: $$listing_price per mo.</p>
-                                    <p class="card-text">Date Added: $listing_date</p>
-                                    <p class="card-text">Sponsorship Tier: $sponsorship_tier</p>
-                                    <a href="/portal/listing/$listing->id" class="btn btn-dark rounded-0">Edit</a>&nbsp;
-                                    <a href="#" class="btn btn-danger rounded-0" data-bs-toggle="modal" data-listing-id="$listing->id">Delete</a>
+                                    <p class="card-text"><i class="fas fa-dollar-sign"></i>&nbsp; $listing_price per mo.</p>
+                                    <p class="card-text"><i class="fas fa-bed"></i>&nbsp; $listing->num_beds</p>
+                                    <p class="card-text"><i class="fas fa-bath"></i>&nbsp; $listing->num_baths</p>
+                                    <p class="card-text"><i class="fas fa-calendar-alt"></i>&nbsp; $listing_date</p>
+                                    <p class="card-text"><i class="fas fa-bolt"></i>&nbsp; $sponsorship_tier</p>
+                                    <a href="/portal/listing/$listing->id" class="btn btn-dark rounded-0"><i class="fas fa-pen"></i>&nbsp; Edit Details</a>&nbsp;
+                                    $stats_button&nbsp;
+                                    <a href="#" class="btn btn-danger rounded-0" data-bs-toggle="modal" data-listing-id="$listing->id"><i class="fas fa-trash"></i> Delete</a>
                                 </div>
                             </div>
 _LISTINGCARD;

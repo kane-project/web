@@ -319,7 +319,35 @@ function fetch_listing_id($listingSlug) {
  * @return bool
  */
 function update_listing($listingId, $newdata) {
-    //...
+    $result = sqlQuery("UPDATE `listings` SET 
+        title = :title,
+        address = :address,
+        description = :description,
+        rental_type = :rental_type,
+        price = :price,
+        num_beds = :num_beds,
+        num_baths = :num_baths,
+        is_furnished = :is_furnished,
+        allows_pets = :allows_pets,
+        has_parking = :has_parking
+        WHERE id = :id", [
+        ':id' => $listingId,
+        ':title' => $newdata->title,
+        ':address' => $newdata->address,
+        ':description' => $newdata->description,
+        ':rental_type' => $newdata->rental_type,
+        ':price' => $newdata->price,
+        ':num_beds' => $newdata->num_beds,
+        ':num_baths' => $newdata->num_baths,
+        ':is_furnished' => $newdata->is_furnished,
+        ':allows_pets' => $newdata->allows_pets,
+        ':has_parking' => $newdata->has_parking
+    ]);
+
+    if (!$result)
+        return false;
+    
+    return true;
 }
 
 /**

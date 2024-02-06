@@ -19,7 +19,7 @@
 
     <main>
         
-        <section class="container dashboard-counters py-5">
+        <section class="container py-5">
             <div class="row py-3">
                 <div class="col-lg-12 py-2 mx-auto text-center">
                     <h1>Inbox</h1>
