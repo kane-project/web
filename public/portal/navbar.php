@@ -24,7 +24,7 @@ NAVBAR
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php if ($page == "My Messages") echo "active"; ?>" href="portal/messages">
-                        My Messages &nbsp;<span class="badge badge-sm p-2 rounded-1 bg-secondary">1</span>
+                        My Messages &nbsp;<i class="fa fa-bell text-danger"></i><sup><span class="badge bg-danger">4</span></sup>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
