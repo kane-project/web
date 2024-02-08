@@ -55,7 +55,7 @@ class Listing
 
 /**
  * fetch_listings
- * Fetches listings from the database
+ * Filters: type, min_price, max_price, min_bedrooms, max_bedrooms, min_bathrooms, max_bathrooms, user_id, is_furnished, has_parking, allows_pets
  * @param  array $filters
  * @param  int $start
  * @param  int $limit
@@ -63,19 +63,6 @@ class Listing
  */
 function fetch_listings($filters) 
 {
-    // $filters is an array of filters with the following optional keys:
-    // - type: the rental type of the listing - {apartment, room, house, condo, townhouse, studio, loft, basement, other}
-    // - min_price: the minimum price of the listing
-    // - max_price: the maximum price of the listing
-    // - min_bedrooms: the minimum number of bedrooms
-    // - max_bedrooms: the maximum number of bedrooms
-    // - min_bathrooms: the minimum number of bathrooms
-    // - max_bathrooms: the maximum number of bathrooms
-    // - user_id: the id of the user who created the listing
-    // - is_furnished: whether the listing is furnished
-    // - has_parking: whether the listing has parking
-    // - allows_pets: whether the listing allows pets
-
     $sql_query_string = "SELECT * FROM listings WHERE 1=1";
 
     if (isset($filters['type'])) {
@@ -297,7 +284,9 @@ function add_listing_photos($listingId, $photos) {
  * @return array
  */
 function fetch_listing_photos($listingId) {
-    //...
+    $result = sqlQuery("SELECT * FROM `listingphotos` WHERE listingid = ?", [$listingId]);
+    $photos = $result->fetchAll(PDO::FETCH_ASSOC);
+    return $photos;
 }
 
 /**
@@ -308,7 +297,12 @@ function fetch_listing_photos($listingId) {
  * @return int
  */
 function fetch_listing_id($listingSlug) {
-    //...
+    $result = sqlQuery("SELECT id FROM `listings` WHERE slug = ?", [$listingSlug])->fetch(PDO::FETCH_ASSOC);
+    if ($result != null) {
+        return $result['id'];
+    } else {
+        return 0;
+    }
 }
 
 /**
@@ -358,8 +352,51 @@ function update_listing($listingId, $newdata) {
  */
 function delete_listing($listingId) 
 {
-    // Clean up the listing from the database
-    // Clean up the listing images from the server
-    // Clean up the listing messages from the database
-    // Clean up EVERYTHING!
+    // Move listing to trash database
+
+    $listing = new Listing($listingId);
+    $result = trashSqlQuery("INSERT INTO `listings` (id, userid, slug, title, address, description, rental_type, price, num_beds, num_baths, is_furnished, allows_pets, has_parking, timestamp, view_count, sponsored_tier) 
+    VALUES (:id, :userid, :slug, :title, :address, :description, :rental_type, :price, :num_beds, :num_baths, :is_furnished, :allows_pets, :has_parking, :timestamp, :view_count, :sponsored_tier)", [
+        ':id' => $listing->id,
+        ':userid' => $listing->userid,
+        ':slug' => $listing->slug,
+        ':title' => $listing->title,
+        ':address' => $listing->address,
+        ':description' => $listing->description,
+        ':rental_type' => $listing->rental_type,
+        ':price' => $listing->price,
+        ':num_beds' => $listing->num_beds,
+        ':num_baths' => $listing->num_baths,
+        ':is_furnished' => $listing->is_furnished,
+        ':allows_pets' => $listing->allows_pets,
+        ':has_parking' => $listing->has_parking,
+        ':timestamp' => $listing->timestamp,
+        ':view_count' => $listing->view_count,
+        ':sponsored_tier' => $listing->sponsored_tier
+    ]);
+
+    if (!$result)
+        return false;
+
+    // Delete listing from main database
+
+    // Delete photos
+    $photos = fetch_listing_photos($listingId);
+    foreach ($photos as $photo) {
+        $target_file = "./uploads/listings/" . $photo['photo'];
+        if (!unlink($target_file)) return false;
+    }
+    
+    // Delete photos from database
+    $result = sqlQuery("DELETE FROM `listingphotos` WHERE listingid = ?", [$listingId]);
+    if (!$result) return false;
+
+    // Delete listing
+    $result = sqlQuery("DELETE FROM `listings` WHERE id = ?", [$listingId]);
+    if (!$result) return false;
+    else return true;
+
+    // NOTE: Messages and other interactions will simply show the listing
+    // as "deleted"
+    
 }

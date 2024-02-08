@@ -39,3 +39,36 @@ function sqlQuery($query, $params = [])
         throw new Exception("<pre>DBERROR - Please contact the site administrator!</pre>");
     }
 }
+
+/**
+ * trashSqlQuery
+ * This function handles SQL queries for the kanetrash_db
+ * @param  mixed $query
+ * @param  mixed $params
+ * @return void
+ */
+function trashSqlQuery($query, $params = [])
+{ 
+    loadEnv();
+    
+    try 
+    {
+        $pdo = new PDO(
+            "mysql:host=" . $_ENV['TRASHDB_HOST'] . ";dbname=" . $_ENV['TRASHDB_NAME'],
+            $_ENV['TRASHDB_USER'],
+            $_ENV['TRASHDB_PASS']
+        );
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        $pdo = null;
+        return $stmt;
+    } 
+    
+    catch (PDOException $e) 
+    {
+        // die($e->getMessage());
+        throw new Exception("<pre>TRSHDBERROR - Please contact the site administrator!</pre>");
+    }
+}

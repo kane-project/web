@@ -38,8 +38,16 @@
 
                 if(isset($_GET['ds']))
                 {
-                    echo '<div class="row"><div class="col-lg-6 col-sm-12 mx-auto"><div class="alert alert-info rounded-0 alert-dismissible fade show" role="alert">
+                    echo '<div class="row"><div class="col-lg-6 col-sm-12 mx-auto"><div class="alert bg-primary text-light rounded-0 alert-dismissible fade show" role="alert">
                             <i class="fa fa-info-circle"></i> Your listing has been removed successfully.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div></div></div>';
+                }
+
+                if(isset($_GET['de']))
+                {
+                    echo '<div class="row"><div class="col-lg-6 col-sm-12 mx-auto"><div class="alert bg-danger text-light rounded-0 alert-dismissible fade show" role="alert">
+                            <i class="fa fa-info-circle"></i> Failed to remove your listing. Please contact support.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div></div></div>';
                 }

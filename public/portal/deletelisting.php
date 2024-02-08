@@ -7,16 +7,11 @@
     if(!isset($_SESSION['landlord_id']))
         die(header("Location: /portal/login"));
 
-    // Move data to kanetrash_db
-
-    // Move photos to kanetrash_s3
-
-    // Delete Listing Photos from local server
-
-    // Delete Listing Data from local server
-
-    // Redirect to listings list
-
+    if(delete_listing($id)) 
+        die(header("Location: /portal/listings?ds=1"));
+    else
+        die(header("Location: /portal/listings?de=1"));
+    
     die(header("Location: /portal/listings?ds=1"));
 
 ?>
