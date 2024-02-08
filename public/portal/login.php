@@ -10,16 +10,20 @@
 	if(isset($_POST['submit']))
 	{
 		$user = user_login($_POST['email'], $_POST['password']);
-		
-		if($user != null && $user->user_type && $user->is_email_verified && !$user->is_banned) {
+		// var_dump($user); die();
+
+		if (/*AUTH*/$user && /*CHECK LANDLORDNESS=>*/ $user->user_type && /*VERIF*/$user->is_email_verified && /*ISBAN*/ !$user->is_banned) {
 			$_SESSION['landlord_id'] = $user->id;
 			header("Location: /portal");
-		} 
-
-		else if(!$user->is_email_verified) header("Location: /portal/login?uv=1");
-		else if($user->is_banned) header("Location: /portal/login?be=1");
-		
-		else header("Location: /portal/login?le");
+		} elseif (!$user) {
+			header("Location: /portal/login?le=1");
+		} elseif (!$user->is_email_verified) {
+			header("Location: /portal/login?uv=1&uid=$user->id");
+		} elseif ($user->is_banned) {
+			header("Location: /portal/login?be=1");
+		} else {
+			header("Location: /portal/login?e");
+		}
 	}
 
 	$page = "Portal Login";
@@ -50,51 +54,55 @@
 											if(isset($_GET['le'])) {
 												echo '<div class="mb-1 p-1">
 													<div class="alert alert-warning rounded-0">
-														Error - Invalid credentials. Please try again.
+													 	<i class="fas fa-exclamation-triangle"></i>&nbsp; Error - Invalid credentials. Please try again.
 													</div>
 												</div>';
 											}
 
 											if(isset($_GET['e'])) {
 												echo '<div class="mb-1 p-1">
-													<div class="alert alert-danger rounded-0">
-														Fatal Error! Please contact the site administrator.
+													<div class="alert bg-danger text-light rounded-0">
+														<i class="fas fa-exclamation-triangle"></i>&nbsp; System error. Please contact support.
 													</div>
 												</div>';
 											}
 
 											if(isset($_GET['be'])) {
 												echo '<div class="mb-1 p-1">
-													<div class="alert alert-danger rounded-0">
-														Error - Your account has been banned. Please contact support.
+													<div class="alert bg-danger text-light rounded-0">
+														<i class="fas fa-exclamation-triangle"></i>&nbsp; Error - Your account has been banned.<br>
+														Please contact support for more information.
 													</div>
 												</div>';
 											}
 
 											if(isset($_GET['uv'])) {
+												$userID = isset($_GET['uid']) ? $_GET['uid'] : die(header("Location: /portal/login"));
+
 												echo '<div class="mb-1 p-1">
-													<div class="alert alert-warning rounded-0">
-														Please verify your email address to login.<br> 
-														Don\'t forget to check your spam folder!
-														<br><br>
-														<a href="portal/resend-email/{userid}">Resend Email</a>
+													<div class="alert bg-primary text-light rounded-0">
+													 	<i class="fa fa-info-circle"></i> Please verify your email address. Don\'t forget to check your spam folder!
+														<div class="mt-3">
+															<a class="btn btn-sm btn-light p-2 rounded-0" href="portal/resend-email/'.$userID.'">Resend Email</a>
+														</div>
 													</div>
 												</div>';
 											}
 
 											if(isset($_GET['ls'])) {
 												echo '<div class="mb-1 p-1">
-													<div class="alert alert-success rounded-0">
-														You\'ve been logged out successfully.
+													<div class="alert bg-success text-light rounded-0">
+														<i class="fa fa-info-circle"></i> You\'ve been logged out successfully.
 													</div>
 												</div>';
 											}
 
 											if(isset($_GET['rs'])) {
 												echo '<div class="mb-1 p-1">
-													<div class="alert alert-success rounded-0">
-														You\'ve been registered successfully. Please verify your email address
-														to login. Don\'t forget to check your spam folder!
+													<div class="alert bg-success text-light rounded-0">
+														<i class="fa fa-info-circle"></i> You\'ve been registered successfully.<br><br>
+														Please verify your email address to login. We\'ve sent you an email.
+														Don\'t forget to check your spam folder!
 													</div>
 												</div>';
 											}

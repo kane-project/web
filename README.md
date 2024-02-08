@@ -13,7 +13,6 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 ## L'chronologie
 
-- Listing Deletion
 - Landlord Registration + Login Initial Security Audit
 - Generic Email Template
 - Landlord Password Reset

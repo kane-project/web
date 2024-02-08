@@ -48,13 +48,13 @@ class User
  * Authenticates a user
  * @param  string $email
  * @param  string $password
- * @return User
+ * @return User | bool
  */
 function user_login($email, $password) {
     $email_check = sqlQuery("SELECT * FROM users WHERE email = ?", [$email]);
     
     if($email_check->rowCount() == 0)
-        return null;
+        return false;
 
     else 
     {
@@ -62,7 +62,7 @@ function user_login($email, $password) {
         if(password_verify($password, $user->password))
             return new User($user->id);
         else
-            return null;
+            return false;
     }
 }
 
