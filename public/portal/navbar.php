@@ -44,3 +44,5 @@ NAVBAR
         </div>
     </div>
 </nav>
+
+<div id="preloader"></div>

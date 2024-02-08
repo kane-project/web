@@ -11,6 +11,25 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 # TODO for Kane-Web
 
+## L'chronologie
+
+- Listing Deletion
+- Landlord Registration + Login Initial Security Audit
+- Generic Email Template
+- Landlord Password Reset
+- Homepage Rework
+- Listings Page {Loading Order, Filters}
+- Listing View Page
+- Client Login + Initial Auth Security Audit
+- Client Registration + Forgot Password {Don't Forget Email List Signup}
+- Client Account Purchases
+- Landlord Account Settings
+- Client Account Settings
+- Reporting Mechanism
+- ADMIN PAGE INIT
+- Email Marketing
+- Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
+
 ## Pre-Deployment Tasks
 
 - Evaluate and implement using Content Delivery Networks (CDN) for improved performance and load times.
