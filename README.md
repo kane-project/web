@@ -13,12 +13,12 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 ## L'chronologie
 
+- Listings Page {Loading Order, Filters, Pagination}
+- Listing View Page
+- Generic Email Templates
 - Landlord Registration + Login Initial Security Audit
-- Generic Email Template
 - Landlord Password Reset
 - Homepage Rework
-- Listings Page {Loading Order, Filters}
-- Listing View Page
 - Client Login + Initial Auth Security Audit
 - Client Registration + Forgot Password {Don't Forget Email List Signup}
 - Client Account Purchases
