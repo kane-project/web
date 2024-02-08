@@ -42,6 +42,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - Review page access settings
 - Transactional emails at every step
 - CRON job to clean archived data every 7 years
+- Check for AWS options
 
 ## Pages
 
