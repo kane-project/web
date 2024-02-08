@@ -22,7 +22,8 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/account/logout[/]', '/client/logout.php');
     $r->addRoute('GET', '/account/chat/{slug}[/]', '/client/viewchat.php');
     $r->addRoute('GET', '/safety[/]', '/client/safety.php');
-    $r->addRoute('GET', '/legal/{page}[/]', '/client/legal.php');
+    $r->addRoute('GET', '/legal/{slug}[/]', '/client/legal.php');
+
 
     // Landlord Portal Routes
 

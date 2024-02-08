@@ -1,4 +1,6 @@
-<?php $page = "{ListingName}"; include("header.php"); ?>
+<?php
+	$page = "{ListingName}"; include("header.php"); 
+?>
 
 <body>
 

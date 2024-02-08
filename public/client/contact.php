@@ -25,14 +25,14 @@ include("header.php"); ?>
 					<div class="col-sm-12">
 						<div class="contact-map box">
 							<div id="map" class="contact-map">
-								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes+Square!5e0!3m2!1ses-419!2sve!4v1510329142834" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.655242675809!2d-79.41339582344423!3d43.67613945094626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349c7b2e07d1%3A0x78fafe8ff1bee19d!2s160%20Kendal%20Ave%2C%20Toronto%2C%20ON%20M5T%202T9!5e0!3m2!1sen!2sca!4v1707421405594!5m2!1sen!2sca" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-12 section-t8">
 						<div class="row">
 							<div class="col-md-7">
-								<form action="contact" method="post" role="form" class="php-email-form">
+								<form action="/contact" method="POST" role="form">
 									<div class="row">
 										<div class="col-md-6 mb-3">
 											<div class="form-group">
@@ -54,16 +54,8 @@ include("header.php"); ?>
 												<textarea name="message" class="form-control" name="message" cols="45" rows="8" placeholder="Message" required></textarea>
 											</div>
 										</div>
-										<div class="col-md-12 my-3">
-											<div class="mb-3">
-												<div class="loading">Loading</div>
-												<div class="error-message"></div>
-												<div class="sent-message">Your message has been sent. Thank you!</div>
-											</div>
-										</div>
-
-										<div class="col-md-12 text-center">
-											<button type="submit" class="btn btn-a">Send Message</button>
+										<div class="col-md-12 mt-3 text-center">
+											<button type="submit" class="btn rounded-0 btn-lg btn-outline-dark">Send Message</button>
 										</div>
 									</div>
 								</form>
@@ -78,11 +70,11 @@ include("header.php"); ?>
 											<h4 class="icon-title">Say Hello</h4>
 										</div>
 										<div class="icon-box-content">
-											<p class="mb-1">Email.
-												<span class="color-a">contact@example.com</span>
+											<p class="mb-1">Email -
+												<span class="color-a">info@kaneproject.ca</span>
 											</p>
-											<p class="mb-1">Phone.
-												<span class="color-a">+54 356 945234</span>
+											<p class="mb-1">Phone -
+												<span class="color-a">{TODO! PHONENUM}</span>
 											</p>
 										</div>
 									</div>
@@ -93,12 +85,11 @@ include("header.php"); ?>
 									</div>
 									<div class="icon-box-content table-cell">
 										<div class="icon-box-title">
-											<h4 class="icon-title">Find us in</h4>
+											<h4 class="icon-title">Main Office</h4>
 										</div>
 										<div class="icon-box-content">
 											<p class="mb-1">
-												Manhattan, Nueva York 10036,
-												<br> EE. UU.
+												160 Kendal Ave, Toronto, ON
 											</p>
 										</div>
 									</div>
