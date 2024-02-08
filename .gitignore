@@ -2,8 +2,9 @@
 
 .vscode
 /uploads
+/templates
 /vendor
-/temp 
+/temp
 /phpMyAdmin
 
 # Files
