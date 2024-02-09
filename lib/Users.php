@@ -67,6 +67,40 @@ function user_login($email, $password) {
 }
 
 /**
+ * register_user
+ * Registers a new user
+ * @param  User $user
+ * @return bool
+ */
+function register_user($user)
+{
+       
+}
+
+/**
+ * upload_user_photo
+ * Attempts to upload a user photo
+ * @param  mixed $photo
+ * @return bool
+ */
+function upload_user_photo($photo)
+{
+    //...
+}
+
+/**
+ * check_email_phone
+ * Checks if email or phone number is already in use
+ * @param  mixed $email
+ * @param  mixed $phone
+ * @return bool
+ */
+function check_email_phone($email, $phone)
+{
+    //...
+}
+
+/**
  * update_user
  * Updates user data
  * @param  int $id
