@@ -45,7 +45,7 @@ function generate_uuid() {
         return $uuid4->toString();
     } 
     
-    catch (UnsatisfiedDependencyException $e) 
+    catch (Exception $e) 
     {
         return "ID Generation Failed :(";
     }
@@ -75,3 +75,49 @@ function loadEnv($envfile = ".env") {
     }
     
 }
+
+/**
+ * encryptUserID
+ * Encrypts a user ID for use in URLs
+ * @param  string $userID - The UUID to encrypt
+ * @param  string $key - The encryption key
+ * @return string - The encrypted user ID
+ */
+function encryptUserID($userID) {
+    loadEnv();
+    $key = $_ENV['SUID_SECRET_KEY'];
+    // Generate a random nonce
+    $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+
+    // Encrypt the user ID
+    $encrypted = sodium_crypto_secretbox($userID, $nonce, $key);
+
+    // Encode the encrypted user ID and nonce
+    $encoded = base64_encode($nonce . $encrypted);
+
+    return urlencode($encoded);
+}
+
+/**
+ * decryptUserID
+ * Decrypts an encrypted user ID from a URL
+ * @param  string $encryptedUserID - The encrypted user ID
+ * @param  string $key - The decryption key
+ * @return string - The decrypted user ID (UUID)
+ */
+function decryptUserID($encryptedUserID) {
+    loadEnv();
+    $key = $_ENV['SUID_SECRET_KEY'];
+    // Decode the URL-encoded string
+    $decoded = base64_decode(urldecode($encryptedUserID));
+
+    // Extract the nonce and encrypted data
+    $nonce = substr($decoded, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+    $encrypted = substr($decoded, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+
+    // Decrypt the data
+    $decrypted = sodium_crypto_secretbox_open($encrypted, $nonce, $key);
+
+    return $decrypted !== false ? $decrypted : null;
+}
+

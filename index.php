@@ -5,8 +5,8 @@ require 'vendor/autoload.php';
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
-$dispatcher = simpleDispatcher(function (RouteCollector $r) {
-
+$dispatcher = simpleDispatcher(function (RouteCollector $r) 
+{
     // Client (Public) Routes
 
     $r->addRoute('GET', '[/]', '/client/home.php');
@@ -23,7 +23,8 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/account/chat/{slug}[/]', '/client/viewchat.php');
     $r->addRoute('GET', '/safety[/]', '/client/safety.php');
     $r->addRoute('GET', '/legal/{slug}[/]', '/client/legal.php');
-
+    $r->addRoute('GET', '/verify-email/{uid}[/]', '/client/verify.php');
+    $r->addRoute('GET', '/resend-email/{suid}[/]', '/client/resend.php');
 
     // Landlord Portal Routes
 
@@ -32,7 +33,6 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/portal/login[/]', '/portal/login.php');
     $r->addRoute('GET', '/portal/register[/]', '/portal/register.php');
     $r->addRoute('POST', '/portal/register[/]', '/portal/register.php');
-    $r->addRoute('GET', '/portal/resend-email/{user_id}[/]', '/portal/resend.php');
     $r->addRoute('GET', '/portal/reset-password[/]', '/portal/reset.php');
     $r->addRoute('GET', '/portal/logout[/]', '/portal/logout.php');
     $r->addRoute('GET', '/portal/new[/]', '/portal/addlisting.php');
@@ -44,6 +44,8 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/portal/messages[/]', '/portal/messages.php');
     $r->addRoute('GET', '/portal/message/{id}[/]', '/portal/messageview.php');
     $r->addRoute('GET', '/portal/settings[/]', '/portal/settings.php');
+    $r->addRoute('GET', '/portal/verify-email/{uid}[/]', '/portal/verify.php');
+    $r->addRoute('GET', '/portal/resend-email/{suid}[/]', '/portal/resend.php');
 
     // Site Admin Routes
 

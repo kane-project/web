@@ -55,134 +55,183 @@ class Listing
 
 /**
  * fetch_listings
- * Filters: type, min_price, max_price, min_bedrooms, max_bedrooms, min_bathrooms, max_bathrooms, user_id, is_furnished, has_parking, allows_pets
+ * Fetches listings based on provided filters
  * @param  array $filters
- * @param  int $start
- * @param  int $limit
  * @return array
  */
 function fetch_listings($filters) 
 {
+    // Initialize the SQL query string
     $sql_query_string = "SELECT * FROM listings WHERE 1=1";
 
+    // Initialize an array to store the parameters
+    $params = [];
+
+    // Check and append filters to the SQL query string
     if (isset($filters['type'])) {
-        $sql_query_string .= " AND type = " . $filters['type'];
+        $sql_query_string .= " AND type = ?";
+        $params[] = $filters['type'];
     }
 
     if (isset($filters['min_price'])) {
-        $sql_query_string .= " AND price >= " . $filters['min_price'];
+        $sql_query_string .= " AND price >= ?";
+        $params[] = $filters['min_price'];
     }
 
     if (isset($filters['max_price'])) {
-        $sql_query_string .= " AND price <= " . $filters['max_price'];
+        $sql_query_string .= " AND price <= ?";
+        $params[] = $filters['max_price'];
     }
 
     if (isset($filters['min_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms >= " . $filters['min_bedrooms'];
+        $sql_query_string .= " AND bedrooms >= ?";
+        $params[] = $filters['min_bedrooms'];
     }
 
     if (isset($filters['max_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms <= " . $filters['max_bedrooms'];
+        $sql_query_string .= " AND bedrooms <= ?";
+        $params[] = $filters['max_bedrooms'];
     }
 
     if (isset($filters['min_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms >= " . $filters['min_bathrooms'];
+        $sql_query_string .= " AND bathrooms >= ?";
+        $params[] = $filters['min_bathrooms'];
     }
 
     if (isset($filters['max_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms <= " . $filters['max_bathrooms'];
+        $sql_query_string .= " AND bathrooms <= ?";
+        $params[] = $filters['max_bathrooms'];
     }
 
     if (isset($filters['user_id'])) {
-        $sql_query_string .= " AND userid = " . $filters['user_id'];
+        $sql_query_string .= " AND userid = ?";
+        $params[] = $filters['user_id'];
     }
 
     if (isset($filters['is_furnished'])) {
-        $sql_query_string .= " AND is_furnished = " . $filters['is_furnished'];
+        $sql_query_string .= " AND is_furnished = ?";
+        $params[] = $filters['is_furnished'];
     }
 
     if (isset($filters['has_parking'])) {
-        $sql_query_string .= " AND has_parking = " . $filters['has_parking'];
+        $sql_query_string .= " AND has_parking = ?";
+        $params[] = $filters['has_parking'];
     }
 
     if (isset($filters['allows_pets'])) {
-        $sql_query_string .= " AND allows_pets = " . $filters['allows_pets'];
+        $sql_query_string .= " AND allows_pets = ?";
+        $params[] = $filters['allows_pets'];
     }
 
-    // Proritize Sponsored Listings
-    // Sort by timestamp
-
+    // Add sorting criteria
     $sql_query_string .= " ORDER BY timestamp DESC, sponsored_tier DESC";
-    $result = sqlQuery($sql_query_string);
 
-    $listings = [];
-    $rows = $result->fetchAll(PDO::FETCH_ASSOC);
-    
-    foreach ($rows as $row) 
-    {
-        $listing = new Listing($row['id']);
-        $listings[] = $listing;
+    try {
+        // Execute the query with the parameters
+        $result = sqlQuery($sql_query_string, $params);
+        
+        // Fetch all listings from the result
+        $listings = [];
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $listing = new Listing($row['id']);
+            $listings[] = $listing;
+        }
+
+        // Return the listings array
+        return $listings;
+    } catch (PDOException $e) {
+        // Handle database errors
+        // You may log the error, display a user-friendly message, or rethrow the exception
+        error_log("Error fetching listings: " . $e->getMessage());
+        return []; // Return an empty array or handle the error as appropriate for your application
     }
-
-    return $listings;
 }
 
 /**
  * fetch_listings_count
- * Fetches the count of listings from the database
- * @param  array $filters
- * @return int
+ * Fetches the count of listings from the database based on provided filters
+ * @param  array $filters An array of filters to apply to the query
+ * @return int The count of listings
  */
 function fetch_listings_count($filters) 
 {
+    // Initialize the SQL query string
     $sql_query_string = "SELECT COUNT(*) AS count FROM listings WHERE 1=1";
 
+    // Initialize an array to store the parameters
+    $params = [];
+
+    // Check and append filters to the SQL query string
     if (isset($filters['type'])) {
-        $sql_query_string .= " AND type = " . $filters['type'];
+        $sql_query_string .= " AND type = ?";
+        $params[] = $filters['type'];
     }
 
     if (isset($filters['min_price'])) {
-        $sql_query_string .= " AND price >= " . $filters['min_price'];
+        $sql_query_string .= " AND price >= ?";
+        $params[] = $filters['min_price'];
     }
 
     if (isset($filters['max_price'])) {
-        $sql_query_string .= " AND price <= " . $filters['max_price'];
+        $sql_query_string .= " AND price <= ?";
+        $params[] = $filters['max_price'];
     }
 
     if (isset($filters['min_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms >= " . $filters['min_bedrooms'];
+        $sql_query_string .= " AND bedrooms >= ?";
+        $params[] = $filters['min_bedrooms'];
     }
 
     if (isset($filters['max_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms <= " . $filters['max_bedrooms'];
+        $sql_query_string .= " AND bedrooms <= ?";
+        $params[] = $filters['max_bedrooms'];
     }
 
     if (isset($filters['min_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms >= " . $filters['min_bathrooms'];
+        $sql_query_string .= " AND bathrooms >= ?";
+        $params[] = $filters['min_bathrooms'];
     }
 
     if (isset($filters['max_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms <= " . $filters['max_bathrooms'];
+        $sql_query_string .= " AND bathrooms <= ?";
+        $params[] = $filters['max_bathrooms'];
     }
 
     if (isset($filters['user_id'])) {
-        $sql_query_string .= " AND userid = " . $filters['user_id'];
+        $sql_query_string .= " AND userid = ?";
+        $params[] = $filters['user_id'];
     }
 
     if (isset($filters['is_furnished'])) {
-        $sql_query_string .= " AND is_furnished = " . $filters['is_furnished'];
+        $sql_query_string .= " AND is_furnished = ?";
+        $params[] = $filters['is_furnished'];
     }
 
     if (isset($filters['has_parking'])) {
-        $sql_query_string .= " AND has_parking = " . $filters['has_parking'];
+        $sql_query_string .= " AND has_parking = ?";
+        $params[] = $filters['has_parking'];
     }
 
     if (isset($filters['allows_pets'])) {
-        $sql_query_string .= " AND allows_pets = " . $filters['allows_pets'];
+        $sql_query_string .= " AND allows_pets = ?";
+        $params[] = $filters['allows_pets'];
     }
 
-    $result = sqlQuery($sql_query_string);
-    return $result->fetch()['count'];
+    try {
+        // Execute the query with the parameters
+        $result = sqlQuery($sql_query_string, $params);
+        
+        // Fetch the count from the result
+        $count = $result->fetch()['count'];
+
+        // Return the count
+        return $count;
+    } catch (PDOException $e) {
+        // Handle database errors
+        // You may log the error, display a user-friendly message, or rethrow the exception
+        error_log("Error fetching listings count: " . $e->getMessage());
+        return false; // Return false or handle the error as appropriate for your application
+    }
 }
 
 /**

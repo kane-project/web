@@ -4,6 +4,7 @@
 // This script handles user authentication and management
 // Author: kiduswb
 
+require_once("Emails.php");
 require_once("Database.php");
 require_once("Utils.php");
 
@@ -74,28 +75,82 @@ function user_login($email, $password) {
  */
 function register_user($user)
 {
-       
+    $sql = "INSERT INTO users (id, user_type, first_name, last_name, email, password, phone, address, is_email_verified, profile_photo, timestamp, is_banned) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $result = sqlQuery($sql, [$user->id, $user->user_type, $user->first_name, $user->last_name, $user->email, $user->password, $user->phone, $user->address, $user->is_email_verified, $user->profile_photo, $user->timestamp, $user->is_banned]);
+
+    if(!$result)
+        return false;
+
+    $mailDetails = new KaneMail;
+    $mailDetails->userID = $user->id;
+    $mailDetails->previewText = "Confirm your email address.";
+    $mailDetails->greeting = "Hello, $user->first_name!";
+    $userType = $user->user_type == 1 ? "Property Owner/Manager" : "Prospective Tenant";
+    $mailDetails->message = "Thank you for registering with KANE Project as a $userType. Please click the button below to confirm your email address.";
+    $mailDetails->buttonText = "Confirm Email";
+    $mailDetails->linkForButton = $user->user_type == 1 ? "https://kaneproject.ca/portal/verify-email/$user->id" : "https://kaneproject.ca/verify-email/$user->id";
+    $mailDetails->altLink = $mailDetails->linkForButton; // I know, I hate redundancy too
+    send_transactional_email($mailDetails, $user->first_name.' '.$user->last_name, $user->email, "Confirm your email address", 'button');
+    return true;
 }
 
 /**
  * upload_user_photo
  * Attempts to upload a user photo
- * @param  mixed $photo
- * @return bool
+ * @param  array $photo
+ * @return string
  */
 function upload_user_photo($photo)
 {
-    //...
+    // Check if file was uploaded without errors
+    if(isset($photo) && $photo['error'] === UPLOAD_ERR_OK) {
+        $file_tmp_name = $photo['tmp_name'];
+        $file_name = generate_uuid() . '.' . pathinfo($photo['name'], PATHINFO_EXTENSION);
+        $destination = './uploads/profiles/' . $file_name;
+        if(move_uploaded_file($file_tmp_name, $destination)) {
+            return $file_name;
+        } else {
+            return "ERROR"; // Failed to move file
+        }
+    } else {
+        return ""; // No file uploaded or some error occurred
+    }
 }
 
 /**
- * check_email_phone
+ * delete_user_photo
+ * Deletes a user photo from storage
+ * @param  string $photo The path of the photo to delete
+ * @return void
+ */
+function delete_user_photo($photo) 
+{
+    unlink("./uploads/profiles/" . $photo);    
+}
+
+/**
+ * is_email_phone_registered
  * Checks if email or phone number is already in use
- * @param  mixed $email
- * @param  mixed $phone
+ * @param  string $email
+ * @param  string $phone
  * @return bool
  */
-function check_email_phone($email, $phone)
+function is_email_phone_registered($email, $phone)
+{
+    $result = sqlQuery("SELECT * FROM users WHERE email = ? OR phone = ?", [$email, $phone]);
+    if($result->rowCount() == 0)
+        return false;
+    else
+        return true;
+}
+
+/**
+ * resend_verification_email
+ * Resends a verification email
+ * @param  User $user
+ * @return void
+ */
+function resend_verification_email($user)
 {
     //...
 }
@@ -103,13 +158,49 @@ function check_email_phone($email, $phone)
 /**
  * update_user
  * Updates user data
- * @param  int $id
- * @param  User $newdata
- * @return void
+ * @param  int $id The ID of the user to update
+ * @param  User $newdata The new data for the user
+ * @return bool True if the update was successful, false otherwise
  */
 function update_user($id, $newdata) {
-    //...
+    try {
+        // Prepare the SQL query
+        $sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, phone = ?, address = ?, is_email_verified = ?, profile_photo = ?, is_banned = ? WHERE id = ?";
+        
+        // Prepare the parameters array
+        $params = [
+            $newdata->first_name,
+            $newdata->last_name,
+            $newdata->email,
+            $newdata->password,
+            $newdata->phone,
+            $newdata->address,
+            $newdata->is_email_verified,
+            $newdata->profile_photo,
+            $newdata->is_banned,
+            $id
+        ];
+
+        // Execute the SQL query
+        $result = sqlQuery($sql, $params);
+        
+        // Check if the query was successful
+        if ($result->rowCount() > 0) {
+            return true; // Return true if at least one row was affected
+        } else {
+            return false; // Return false if no rows were affected
+        }
+    } catch (PDOException $e) {
+        // Handle database errors
+        // You may log the error, display a user-friendly message, or rethrow the exception
+        error_log("Error updating user: " . $e->getMessage());
+        return false; // Return false to indicate failure
+    }
 }
+
+#
+# Administration Functions, mostly for admin use
+#
 
 /**
  * fetch_users
@@ -135,6 +226,16 @@ function fetch_users($start, $limit, $type, $verified, $banned) {
  * @return void
  */
 function fetch_user_count($type, $verified, $banned) {
+    //...
+}
+
+/**
+ * ban_user
+ * Bans a user
+ * @param  mixed $userid
+ * @return void
+ */
+function ban_user($userid) {
     //...
 }
 

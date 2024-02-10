@@ -9,9 +9,46 @@
 
 	if(isset($_POST['submit'])) 
 	{
-		$user = new User;
-	}
 
+		$errors = "?ecf=1";
+
+		if($_POST['password'] != $_POST['confirm_password'])
+			$errors .= "&pe=1&";
+
+		if(is_email_phone_registered($_POST["email"], $_POST["phone"]))
+			$errors .= "&ar=1&";
+
+		$profile_pic = upload_user_photo($_FILES['profile_pic']);
+
+		if($profile_pic == "ERROR") 
+			$errors .= "&pfe=1&";
+
+		$user = new User;
+		$user->user_type = 1;
+		$user->id = generate_uuid();
+		$user->first_name = $_POST['first_name'];
+		$user->last_name = $_POST['last_name'];
+		$user->email = $_POST['email'];
+		$user->phone = $_POST['phone'];
+		$user->address = $_POST['address'];
+		$user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		$user->is_email_verified = 0;
+		$user->profile_photo = $profile_pic;
+		$user->timestamp = time();
+		$user->is_banned = 0;
+
+		if($errors != '?ecf=1') 
+			die(header("Location: /portal/register" . $errors));
+		else 
+		{
+			if(!register_user($user)) {
+				delete_user_photo($profile_pic);
+				die(header("Location: /portal/register?e=1"));
+			} 
+
+			die(header("Location: /portal/login?rs=1"));
+		}
+	}
 
     $page = "Register";
     include("header.php");  
@@ -35,6 +72,30 @@
 												echo '<div class="mb-1 p-1">
 													<div class="alert bg-danger text-light rounded-0">
 														<i class="fas fa-exclamation-triangle"></i>&nbsp; System error. Please contact support.
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['pfe'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert alert-warning rounded-0">
+														<i class="fas fa-exclamation-triangle"></i>&nbsp; Failed to upload profile photo. Please try again.
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['pe'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert alert-warning rounded-0">
+														<i class="fas fa-exclamation-triangle"></i>&nbsp; Password\'s do not match.
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['ar'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert alert-warning rounded-0">
+														<i class="fas fa-exclamation-triangle"></i>&nbsp; Email or phone number already registered. Please login or use a different email/phone number.
 													</div>
 												</div>';
 											}

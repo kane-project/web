@@ -24,15 +24,16 @@ class KaneMail
 /**
  * send_transactional_email
  * Sends a transactional email to a user
- * Connected to Brevo's SMTP server
+ * Connected to AWS's SMTP server
  * $to_name: Name of the recipient
  * $to_email: Email address of the recipient
  * $subject: Subject of the email
+ * $mailType: button?, long text?, alert? lol
  * $body: Body of the email
  * $altbody (optional): Alternative body of the email for non-HTML clients
  * @return bool
  */
-function send_transactional_email($name, $to_email, $subject, $body, $altbody = "")
+function send_transactional_email($mailDetails, $name, $to_email, $subject, $mailType, $altbody = "")
 {
     $mail = new PHPMailer(true);
     loadEnv();
@@ -51,7 +52,7 @@ function send_transactional_email($name, $to_email, $subject, $body, $altbody = 
         $mail->addReplyTo('info@kaneproject.ca', 'KANE Project Mail');
         $mail->isHTML(true);
         $mail->Subject = $subject;
-        $mail->Body    = $body;
+        $mail->Body    = build_button_email($mailDetails);
         $mail->AltBody = $altbody;
         $mail->send();
     } catch (Exception $e) { 
@@ -68,7 +69,7 @@ function send_transactional_email($name, $to_email, $subject, $body, $altbody = 
  * @param  KaneMail $mailDetails
  * @return string
  */
-function build_transactional_email($mailDetails)
+function build_button_email($mailDetails)
 {
     return <<<_EMAIL
 <!doctype html>
@@ -226,9 +227,6 @@ function build_transactional_email($mailDetails)
 								<p
 									style="font-family: Helvetica, sans-serif; font-size: 13px; font-weight: normal; margin: 0; margin-bottom: 16px;">
 									Can't click the button? Copy and paste this link into your browser - <a href="$mailDetails->altLink">$mailDetails->altLink</a></p>
-								<p
-									style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">
-									Good luck! Hope it works.</p>
 							</td>
 						</tr>
 
@@ -254,7 +252,7 @@ function build_transactional_email($mailDetails)
 							</tr>
 						</table>
 					</div>
-
+					<br><br><br>
 					<!-- END FOOTER -->
 
 					<!-- END CENTERED WHITE CONTAINER -->

@@ -18,7 +18,8 @@
 		} elseif (!$user) {
 			header("Location: /portal/login?le=1");
 		} elseif (!$user->is_email_verified) {
-			header("Location: /portal/login?uv=1&uid=$user->id");
+			$suid = urlencode(encryptUserID($user->id));
+			die(header("Location: /portal/login?uv=1&suid=$suid"));
 		} elseif ($user->is_banned) {
 			header("Location: /portal/login?be=1");
 		} else {
@@ -77,13 +78,13 @@
 											}
 
 											if(isset($_GET['uv'])) {
-												$userID = isset($_GET['uid']) ? $_GET['uid'] : die(header("Location: /portal/login"));
+												$userID = isset($_GET['suid']) ? $_GET['suid'] : die(header("Location: /portal/login"));
 
 												echo '<div class="mb-1 p-1">
 													<div class="alert bg-primary text-light rounded-0">
 													 	<i class="fa fa-info-circle"></i> Please verify your email address. Don\'t forget to check your spam folder!
 														<div class="mt-3">
-															<a class="btn btn-sm btn-light p-2 rounded-0" href="portal/resend-email/'.$userID.'">Resend Email</a>
+															<a class="btn btn-sm btn-light p-2 rounded-0" href="portal/resend-email/'.$_GET['suid'].'">Resend Email</a>
 														</div>
 													</div>
 												</div>';
@@ -103,6 +104,22 @@
 														<i class="fa fa-info-circle"></i> You\'ve been registered successfully.<br><br>
 														Please verify your email address to login. We\'ve sent you an email.
 														Don\'t forget to check your spam folder!
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['cs'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert bg-success text-light rounded-0">
+														<i class="fa fa-info-circle"></i> Email address confirmed successfully! Please login.
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['ess'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert bg-primary text-light rounded-0">
+														<i class="fa fa-info-circle"></i> Email resent. Please check your email. Don\'t forget to check your spam folder!
 													</div>
 												</div>';
 											}
