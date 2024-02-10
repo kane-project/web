@@ -39,6 +39,13 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - CRON job to clean archived data every 7 years
 - Database Security! Rotating DB secrets and switch to RDS!
 
+## Pre-Audit
+
+- Image Uploads (Size Limit, File Type and Extension!)
+- UserID security
+- Email Limit Attack (Cloudflare?)
+- DB Leak Prevention
+
 ## Pages
 
 **Landlord Portal Prototype**
