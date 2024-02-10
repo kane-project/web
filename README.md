@@ -13,13 +13,13 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 ## L'chronologie
 
-- [ ] Landlord Registration + Login Initial Security Audit
+- [x] Landlord Registration + Login Initial Security Audit
 - [ ] Landlord Password Reset
 - [ ] Listings Page {Loading Order, Filters, Pagination}
 - [ ] Listing View Page
 - [ ] Homepage Rework
 - [ ] Client Login + Initial Auth Security Audit
-- [ ] Client Registration + Forgot Password {Don't Forget Email List Signup}
+- [ ] Client Registration + Marketing Email Opt-in + Forgot Password
 - [ ] Client Account Purchases
 - [ ] Landlord Account Settings
 - [ ] Client Account Settings
@@ -31,16 +31,13 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 ## Pre-Deployment Tasks
 
 - Evaluate and implement using Content Delivery Networks (CDN) for improved performance and load times.
-- Check for any `die()` statements & related errors/exceptions before production
-- Increase view counts
-- Implement a mechanism to accurately track and increase view counts for listings.
-- Security Audit
-- SEO & Analytics API
+- Check for error messages and set up secure logging
+- Security Audit & extensive A/B Testing
+- SEO & Analytics library for listing stats
 - Add reCaptcha
-- Review page access settings
-- Transactional emails at every step
+- Transactional emails
 - CRON job to clean archived data every 7 years
-- Check for AWS options
+- Database Security! Rotating DB secrets and switch to RDS!
 
 ## Pages
 
