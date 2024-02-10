@@ -68,6 +68,38 @@ function user_login($email, $password) {
 }
 
 /**
+ * get_user_id_from_email
+ * Fetches the ID of a user from their email
+ * @param  string $email
+ * @return string
+ */
+function get_user_id_from_email($email) {
+    $result = sqlQuery("SELECT id FROM users WHERE email = ?", [$email]);
+    if($result->rowCount() == 0)
+        return "";
+    else
+        return $result->fetch(PDO::FETCH_OBJ)->id;
+}
+
+/**
+ * get_reset_requesters_email
+ * Fetches the email of a user who requested a password reset
+ * @param  mixed $resetid
+ * @return string
+ */
+function get_reset_requesters_email($resetid) {
+    $result = sqlQuery("SELECT email FROM reset_reqs WHERE code = ?", [$resetid]);
+    if($result->rowCount() == 0)
+        return "";
+    else
+        return $result->fetch(PDO::FETCH_OBJ)->email;
+}
+
+function delete_reset_request($resetid) {
+    sqlQuery("DELETE FROM reset_reqs WHERE code = ?", [$resetid]);
+}
+
+/**
  * register_user
  * Registers a new user
  * @param  User $user
@@ -81,17 +113,51 @@ function register_user($user)
     if(!$result)
         return false;
 
-    $mailDetails = new KaneMail;
-    $mailDetails->userID = $user->id;
-    $mailDetails->previewText = "Confirm your email address.";
-    $mailDetails->greeting = "Hello, $user->first_name!";
-    $userType = $user->user_type == 1 ? "Property Owner/Manager" : "Prospective Tenant";
-    $mailDetails->message = "Thank you for registering with KANE Project as a $userType. Please click the button below to confirm your email address.";
-    $mailDetails->buttonText = "Confirm Email";
-    $mailDetails->linkForButton = $user->user_type == 1 ? "https://kaneproject.ca/portal/verify-email/$user->id" : "https://kaneproject.ca/verify-email/$user->id";
-    $mailDetails->altLink = $mailDetails->linkForButton; // I know, I hate redundancy too
-    send_transactional_email($mailDetails, $user->first_name.' '.$user->last_name, $user->email, "Confirm your email address", 'button');
+    send_verification_email($user);
     return true;
+}
+
+/**
+ * update_user
+ * Updates user data
+ * @param  int $id The ID of the user to update
+ * @param  User $newdata The new data for the user
+ * @return bool True if the update was successful, false otherwise
+ */
+function update_user($id, $newdata) {
+    try {
+        // Prepare the SQL query
+        $sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, phone = ?, address = ?, is_email_verified = ?, profile_photo = ?, is_banned = ? WHERE id = ?";
+        
+        // Prepare the parameters array
+        $params = [
+            $newdata->first_name,
+            $newdata->last_name,
+            $newdata->email,
+            $newdata->password,
+            $newdata->phone,
+            $newdata->address,
+            $newdata->is_email_verified,
+            $newdata->profile_photo,
+            $newdata->is_banned,
+            $id
+        ];
+
+        // Execute the SQL query
+        $result = sqlQuery($sql, $params);
+        
+        // Check if the query was successful
+        if ($result->rowCount() > 0) {
+            return true; // Return true if at least one row was affected
+        } else {
+            return false; // Return false if no rows were affected
+        }
+    } catch (PDOException $e) {
+        // Handle database errors
+        // You may log the error, display a user-friendly message, or rethrow the exception
+        error_log("Error updating user: " . $e->getMessage());
+        return false; // Return false to indicate failure
+    }
 }
 
 /**
@@ -150,52 +216,57 @@ function is_email_phone_registered($email, $phone)
  * @param  User $user
  * @return void
  */
-function resend_verification_email($user)
+function send_verification_email($user)
 {
-    //...
+    $mailDetails = new KaneMail;
+    $mailDetails->userID = $user->id;
+    $mailDetails->previewText = "Confirm your email address.";
+    $mailDetails->greeting = "Hello, $user->first_name!";
+    $userType = $user->user_type == 1 ? "Property Owner/Manager" : "Prospective Tenant";
+    $mailDetails->message = "Thank you for registering with KANE Project as a $userType. Please click the button below to confirm your email address.";
+    $mailDetails->buttonText = "Confirm Email";
+    $mailDetails->linkForButton = $user->user_type == 1 ? "https://kaneproject.ca/portal/verify-email/$user->id" : "https://kaneproject.ca/verify-email/$user->id";
+    $mailDetails->altLink = $mailDetails->linkForButton; // I know, I hate redundancy too
+    send_transactional_email($mailDetails, $user->first_name.' '.$user->last_name, $user->email, "Confirm your email address", 'button');
 }
 
 /**
- * update_user
- * Updates user data
- * @param  int $id The ID of the user to update
- * @param  User $newdata The new data for the user
- * @return bool True if the update was successful, false otherwise
+ * check_reset_link
+ * Checks if a password reset link already exists for an email
+ * @param  string $email
+ * @return bool
  */
-function update_user($id, $newdata) {
-    try {
-        // Prepare the SQL query
-        $sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, phone = ?, address = ?, is_email_verified = ?, profile_photo = ?, is_banned = ? WHERE id = ?";
-        
-        // Prepare the parameters array
-        $params = [
-            $newdata->first_name,
-            $newdata->last_name,
-            $newdata->email,
-            $newdata->password,
-            $newdata->phone,
-            $newdata->address,
-            $newdata->is_email_verified,
-            $newdata->profile_photo,
-            $newdata->is_banned,
-            $id
-        ];
+function check_reset_link($email) {
+    $result = sqlQuery("SELECT * FROM reset_reqs WHERE email = ?", [$email]);
+    
+    if($result->rowCount() > 0)
+        return true;
+    else
+        return false;
+}
 
-        // Execute the SQL query
-        $result = sqlQuery($sql, $params);
-        
-        // Check if the query was successful
-        if ($result->rowCount() > 0) {
-            return true; // Return true if at least one row was affected
-        } else {
-            return false; // Return false if no rows were affected
-        }
-    } catch (PDOException $e) {
-        // Handle database errors
-        // You may log the error, display a user-friendly message, or rethrow the exception
-        error_log("Error updating user: " . $e->getMessage());
-        return false; // Return false to indicate failure
-    }
+/**
+ * add_reset_link
+ * Adds a password reset link to the database
+ * @param  mixed $email
+ * @return string
+ */
+function add_reset_link($email) {
+    $reset_link = generate_uuid();
+    $result = sqlQuery("INSERT INTO reset_reqs (email, code) VALUES (?, ?)", [$email, $reset_link]);
+    return $reset_link;
+}
+
+function send_reset_email($user_type, $email, $linkid) {
+    $mailDetails = new KaneMail;
+    $mailDetails->userID = 0;
+    $mailDetails->previewText = "Reset your password.";
+    $mailDetails->greeting = "Hello!";
+    $mailDetails->message = "Please click the button below to reset your password.";
+    $mailDetails->buttonText = "Reset Password";
+    $mailDetails->linkForButton = $user_type == 1 ? "https://kaneproject.ca/portal/reset/$linkid" : "https://kaneproject.ca/reset/$linkid";
+    $mailDetails->altLink = $mailDetails->linkForButton;
+    send_transactional_email($mailDetails, "User", $email, "Reset Your Password", 'button');
 }
 
 #

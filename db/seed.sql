@@ -4,7 +4,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) DEFAULT NULL
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `emailist` (
@@ -12,7 +13,8 @@ CREATE TABLE `emailist` (
   `email` varchar(255) NOT NULL,
   `promotional` tinyint(1) DEFAULT NULL,
   `sponsored` tinyint(1) DEFAULT NULL,
-  `new_listings` tinyint(1) DEFAULT NULL
+  `new_listings` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `listingphotos` (
@@ -36,15 +38,18 @@ CREATE TABLE `listings` (
   `has_parking` tinyint(1) DEFAULT NULL,
   `timestamp` bigint(20) DEFAULT NULL,
   `view_count` int(11) DEFAULT NULL,
-  `sponsored_tier` int(11) DEFAULT NULL
+  `sponsored_tier` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `listing_reports` (
+  `reportid` varchar(36) NOT NULL,
   `listingid` varchar(36) NOT NULL,
   `userid` varchar(36) NOT NULL,
   `timestamp` bigint(20) NOT NULL,
   `reason` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`reportid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `messages` (
@@ -54,7 +59,8 @@ CREATE TABLE `messages` (
   `listing_id` varchar(36) DEFAULT NULL,
   `timestamp` bigint(20) DEFAULT NULL,
   `content` text DEFAULT NULL,
-  `is_read` tinyint(1) DEFAULT 0
+  `is_read` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`message_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `users` (
@@ -69,16 +75,24 @@ CREATE TABLE `users` (
   `is_email_verified` tinyint(1) DEFAULT NULL,
   `profile_photo` varchar(255) DEFAULT NULL,
   `timestamp` bigint(20) DEFAULT NULL,
-  `is_banned` tinyint(1) NOT NULL
+  `is_banned` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `user_reports` (
-  `report_id` varchar(36) NOT NULL,
+  `reportid` varchar(36) NOT NULL,
   `reporter_id` varchar(36) DEFAULT NULL,
   `reported_user_id` varchar(36) DEFAULT NULL,
   `timestamp` bigint(20) DEFAULT NULL,
   `reason` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`reportid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `reset_reqs` (
+  `email` varchar(64) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;

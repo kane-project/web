@@ -123,6 +123,23 @@
 													</div>
 												</div>';
 											}
+
+											if(isset($_GET['prs'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert bg-primary text-light rounded-0">
+														<i class="fa fa-info-circle"></i> Password reset link sent. Please check your email. Don\'t forget to check your spam folder!
+													</div>
+												</div>';
+											}
+
+											if(isset($_GET['ps'])) {
+												echo '<div class="mb-1 p-1">
+													<div class="alert bg-success text-light rounded-0">
+														<i class="fa fa-info-circle"></i> Password reset successfully! Please login.
+													</div>
+												</div>';
+											}
+
 										?>
 										<div class="mb-3 p-1">
 											<label for="email" class="form-label">Email Address</label>

@@ -25,6 +25,10 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r)
     $r->addRoute('GET', '/legal/{slug}[/]', '/client/legal.php');
     $r->addRoute('GET', '/verify-email/{uid}[/]', '/client/verify.php');
     $r->addRoute('GET', '/resend-email/{suid}[/]', '/client/resend.php');
+    $r->addRoute('GET', '/reset-password[/]', '/client/reset.php');
+    $r->addRoute('POST', '/reset-password[/]', '/client/reset.php');
+    $r->addRoute('GET', '/reset/{resetid}[/]', '/client/processReset.php');
+    $r->addRoute('POST', '/reset/{resetid}[/]', '/client/processReset.php');
 
     // Landlord Portal Routes
 
@@ -33,7 +37,6 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r)
     $r->addRoute('POST', '/portal/login[/]', '/portal/login.php');
     $r->addRoute('GET', '/portal/register[/]', '/portal/register.php');
     $r->addRoute('POST', '/portal/register[/]', '/portal/register.php');
-    $r->addRoute('GET', '/portal/reset-password[/]', '/portal/reset.php');
     $r->addRoute('GET', '/portal/logout[/]', '/portal/logout.php');
     $r->addRoute('GET', '/portal/new[/]', '/portal/addlisting.php');
     $r->addRoute('POST', '/portal/new[/]', '/portal/addlisting.php');
@@ -46,6 +49,11 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r)
     $r->addRoute('GET', '/portal/settings[/]', '/portal/settings.php');
     $r->addRoute('GET', '/portal/verify-email/{uid}[/]', '/portal/verify.php');
     $r->addRoute('GET', '/portal/resend-email/{suid}[/]', '/portal/resend.php');
+    $r->addRoute('GET', '/portal/reset-password[/]', '/portal/reset.php');
+    $r->addRoute('POST', '/portal/reset-password[/]', '/portal/reset.php');
+    $r->addRoute('GET', '/portal/reset/{resetid}[/]', '/portal/processReset.php');
+    $r->addRoute('POST', '/portal/reset/{resetid}[/]', '/portal/processReset.php');
+    
 
     // Site Admin Routes
 
