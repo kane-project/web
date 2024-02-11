@@ -1,3 +1,7 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 CREATE TABLE `listings` (
   `id` varchar(36) NOT NULL,
   `userid` varchar(36) DEFAULT NULL,
@@ -13,6 +17,7 @@ CREATE TABLE `listings` (
   `allows_pets` tinyint(1) DEFAULT NULL,
   `has_parking` tinyint(1) DEFAULT NULL,
   `timestamp` bigint(20) DEFAULT NULL,
+  `deleted_timestamp` bigint(20) NOT NULL,
   `view_count` int(11) DEFAULT NULL,
   `sponsored_tier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -29,5 +34,14 @@ CREATE TABLE `users` (
   `is_email_verified` tinyint(1) DEFAULT NULL,
   `profile_photo` varchar(255) DEFAULT NULL,
   `timestamp` bigint(20) DEFAULT NULL,
+  `deleted_timestamp` bigint(20) NOT NULL,
   `is_banned` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+ALTER TABLE `listings`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+COMMIT;

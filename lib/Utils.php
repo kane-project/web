@@ -1,13 +1,12 @@
 <?php
 
 // Utils.php
-// Just a bunch of utilities for the site
+// Utility functions
 // Author: kiduswb
 
 require_once("vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
 /**
  * slugify
@@ -38,17 +37,10 @@ function slugify($string) {
  * Generates a UUID
  * @return string
  */
-function generate_uuid() {
-    try 
-    {
-        $uuid4 = Uuid::uuid4();
-        return $uuid4->toString();
-    } 
-    
-    catch (Exception $e) 
-    {
-        return "ID Generation Failed :(";
-    }
+function generate_uuid() 
+{    
+    $uuid4 = Uuid::uuid4();
+    return $uuid4->toString();
 }
 
 /**
