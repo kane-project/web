@@ -35,7 +35,6 @@
     include("header.php");
 
 ?>
-<head><link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"></head>
 <body>
 
     <?php include("navbar.php"); ?>
@@ -86,8 +85,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="description" class="mb-2">Description</label>
-                                    <div id="quill-editor" style="height: 200px;"><?php echo htmlspecialchars($listing->description); ?></div>
-                                    <textarea id="description" name="description" style="display: none;"><?php echo htmlspecialchars($listing->description); ?></textarea>
+                                    <textarea placeholder="Write a description for your listing here..." name="description" class="form-control rounded-0" id="description" style="resize:none;height:200px;"><?php echo $listing->description; ?></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="type">Type</label>
@@ -145,20 +143,8 @@
 
     <?php include("footer.php"); ?>
     <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>&libraries=places"></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
-        // Initialize Quill Editor
-        var quill = new Quill('#quill-editor', {
-            theme: 'snow'
-        });
-
-        quill.clipboard.dangerouslyPasteHTML(document.getElementById('description').value);
-        
-        document.getElementById('edit_listing_form').addEventListener('submit', function () {
-            document.getElementById('description').value = quill.root.innerHTML;
-        });
-
         // Google Maps API
         function initialize() {
             var input = document.getElementById('address');
@@ -176,9 +162,7 @@
                 document.getElementById('description').value = quill.root.innerHTML;
             });
         });
-        
     </script>
-
 
 </body>
 </html>

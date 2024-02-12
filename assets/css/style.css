@@ -1389,6 +1389,13 @@ a:hover {
 	}
 }
 
+.img-listing img {
+    width: 100%;
+    height: 450px;
+    display: block;
+	object-fit: cover;
+}
+
 /*------/ Property Grid /-----*/
 .property-grid .grid-option {
 	text-align: right;

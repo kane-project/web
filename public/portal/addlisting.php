@@ -69,7 +69,6 @@
     include("header.php");
     loadEnv();
 ?>
-<head><link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"></head>
 <body>
 
     <?php include("navbar.php"); ?>
@@ -154,7 +153,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="description" class="mb-2">Description</label>
-                                    <textarea placeholder="Write a detailed description..." class="form-control rounded-0" style="resize:none;height:200px;" id="description" name="description" required></textarea>
+                                    <textarea placeholder="Write a description for your listing here..." name="description" class="form-control rounded-0" id="description" style="resize:none;height:200px;"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="furnished">Furnished</label>
@@ -211,15 +210,8 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>&libraries=places"></script>
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>    
 
-        // Initilize Quill Editor
-
-        var quill = new Quill('#description', {
-            theme: 'snow'
-        });
-        
         // Google Maps API
         
         function initialize() {

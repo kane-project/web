@@ -57,9 +57,11 @@ class Listing
  * fetch_listings
  * Fetches listings based on provided filters
  * @param  array $filters
+ * @param int $start
+ * @param int $limit
  * @return array
  */
-function fetch_listings($filters) 
+function fetch_listings($filters, $start, $limit) 
 {
     // Initialize the SQL query string
     $sql_query_string = "SELECT * FROM listings WHERE 1=1";
@@ -124,7 +126,7 @@ function fetch_listings($filters)
     }
 
     // Add sorting criteria
-    $sql_query_string .= " ORDER BY timestamp DESC, sponsored_tier DESC";
+    $sql_query_string .= " ORDER BY sponsored_tier DESC, timestamp DESC LIMIT $start, $limit";
 
     try {
         // Execute the query with the parameters
@@ -137,13 +139,10 @@ function fetch_listings($filters)
             $listings[] = $listing;
         }
 
-        // Return the listings array
         return $listings;
     } catch (PDOException $e) {
-        // Handle database errors
-        // You may log the error, display a user-friendly message, or rethrow the exception
         error_log("Error fetching listings: " . $e->getMessage());
-        return []; // Return an empty array or handle the error as appropriate for your application
+        return [];
     }
 }
 
@@ -333,9 +332,14 @@ function add_listing_photos($listingId, $photos) {
  * @return array
  */
 function fetch_listing_photos($listingId) {
-    $result = sqlQuery("SELECT * FROM `listingphotos` WHERE listingid = ?", [$listingId]);
-    $photos = $result->fetchAll(PDO::FETCH_ASSOC);
-    return $photos;
+    try {
+        $result = sqlQuery("SELECT * FROM `listingphotos` WHERE listingid = ?", [$listingId]);
+        $photos = $result->fetchAll(PDO::FETCH_ASSOC);
+        return $photos;
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        return [];
+    }
 }
 
 /**

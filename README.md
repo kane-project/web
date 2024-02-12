@@ -38,6 +38,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - Transactional emails
 - CRON job to clean archived data every 7 years
 - Database Security! Rotating DB secrets and switch to RDS!
+- THE ABILITY TO EDIT LISTING PHOTOS!
 
 ## Pre-Audit
 
