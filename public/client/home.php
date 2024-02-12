@@ -140,7 +140,7 @@
 								$listingPhoto = fetch_listing_photos($listing->id)[0]['photo'];
 								$num_beds = $listing->num_beds == 0? "Studio": $listing->num_beds;
 								$sponsoredBadge = $listing->sponsored_tier == 0 ? 
-								"<div class='badge bg-primary'>New!</div>" : "<div class='badge bg-gold'>SPONSORED</div>";
+								"<div class='badge bg-primary'>New!</div>" : "<div class='badge bg-gold'>Sponsored</div>";
 
 								echo <<<_END
 						<div class="carousel-item-b swiper-slide">

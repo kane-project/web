@@ -11,6 +11,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r)
 
     $r->addRoute('GET', '[/]', '/client/home.php');
     $r->addRoute('GET', '/listings[/]', '/client/listings.php');
+    $r->addRoute('POST', '/listings[/]', '/client/listings.php');
     $r->addRoute('GET', '/listing/{slug}[/]', '/client/viewlisting.php');
     $r->addRoute('GET', '/about[/]', '/client/about.php');
     $r->addRoute('GET', '/contact[/]', '/client/contact.php');

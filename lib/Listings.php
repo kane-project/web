@@ -63,76 +63,75 @@ class Listing
  */
 function fetch_listings($filters, $start, $limit) 
 {
-    // Initialize the SQL query string
     $sql_query_string = "SELECT * FROM listings WHERE 1=1";
-
-    // Initialize an array to store the parameters
     $params = [];
 
-    // Check and append filters to the SQL query string
-    if (isset($filters['type'])) {
-        $sql_query_string .= " AND type = ?";
-        $params[] = $filters['type'];
+    if (isset($filters['rental_type']) && $filters['rental_type'] != null) {
+        $sql_query_string .= " AND rental_type = ?";
+        $params[] = $filters['rental_type'];
     }
 
-    if (isset($filters['min_price'])) {
+    if (isset($filters['min_price']) && $filters['min_price'] != null) {
         $sql_query_string .= " AND price >= ?";
         $params[] = $filters['min_price'];
     }
 
-    if (isset($filters['max_price'])) {
+    if (isset($filters['max_price']) && $filters['max_price'] != null) {
         $sql_query_string .= " AND price <= ?";
         $params[] = $filters['max_price'];
     }
 
-    if (isset($filters['min_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms >= ?";
+    if (isset($filters['min_bedrooms']) && $filters['min_bedrooms'] != null) {
+        $sql_query_string .= " AND num_beds >= ?";
         $params[] = $filters['min_bedrooms'];
     }
 
-    if (isset($filters['max_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms <= ?";
+    if (isset($filters['max_bedrooms']) && $filters['max_bedrooms'] != null) {
+        $sql_query_string .= " AND num_beds <= ?";
         $params[] = $filters['max_bedrooms'];
     }
 
-    if (isset($filters['min_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms >= ?";
+    if (isset($filters['min_bathrooms']) && $filters['min_bathrooms'] != null) {
+        $sql_query_string .= " AND num_baths >= ?";
         $params[] = $filters['min_bathrooms'];
     }
 
-    if (isset($filters['max_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms <= ?";
+    if (isset($filters['max_bathrooms']) && $filters['max_bathrooms'] != null) {
+        $sql_query_string .= " AND num_baths <= ?";
         $params[] = $filters['max_bathrooms'];
     }
 
-    if (isset($filters['user_id'])) {
+    if (isset($filters['user_id']) && $filters['user_id'] != null) {
         $sql_query_string .= " AND userid = ?";
         $params[] = $filters['user_id'];
     }
 
-    if (isset($filters['is_furnished'])) {
+    if (isset($filters['is_furnished']) && $filters['is_furnished'] != null) {
         $sql_query_string .= " AND is_furnished = ?";
         $params[] = $filters['is_furnished'];
     }
 
-    if (isset($filters['has_parking'])) {
+    if (isset($filters['has_parking']) && $filters['has_parking'] != null) {
         $sql_query_string .= " AND has_parking = ?";
         $params[] = $filters['has_parking'];
     }
 
-    if (isset($filters['allows_pets'])) {
+    if (isset($filters['allows_pets']) && $filters['allows_pets'] != null) {
         $sql_query_string .= " AND allows_pets = ?";
         $params[] = $filters['allows_pets'];
     }
 
+    if(isset($filters['location']) && !empty($filters['location'])) {
+        $sql_query_string .= ' AND address LIKE ?';
+        $params[] = '%' . $filters['location'] . '%';
+    }    
+
     // Add sorting criteria
     $sql_query_string .= " ORDER BY sponsored_tier DESC, timestamp DESC LIMIT $start, $limit";
 
-    try {
-        // Execute the query with the parameters
+    try 
+    {
         $result = sqlQuery($sql_query_string, $params);
-        
-        // Fetch all listings from the result
         $listings = [];
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $listing = new Listing($row['id']);
@@ -161,60 +160,65 @@ function fetch_listings_count($filters)
     $params = [];
 
     // Check and append filters to the SQL query string
-    if (isset($filters['type'])) {
-        $sql_query_string .= " AND type = ?";
-        $params[] = $filters['type'];
+    if (isset($filters['rental_type']) && $filters['rental_type'] != null) {
+        $sql_query_string .= " AND rental_type = ?";
+        $params[] = $filters['rental_type'];
     }
 
-    if (isset($filters['min_price'])) {
+    if (isset($filters['min_price']) && $filters['min_price'] != null) {
         $sql_query_string .= " AND price >= ?";
         $params[] = $filters['min_price'];
     }
 
-    if (isset($filters['max_price'])) {
+    if (isset($filters['max_price']) && $filters['max_price'] != null) {
         $sql_query_string .= " AND price <= ?";
         $params[] = $filters['max_price'];
     }
 
-    if (isset($filters['min_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms >= ?";
+    if (isset($filters['min_bedrooms']) && $filters['min_bedrooms'] != null) {
+        $sql_query_string .= " AND num_beds >= ?";
         $params[] = $filters['min_bedrooms'];
     }
 
-    if (isset($filters['max_bedrooms'])) {
-        $sql_query_string .= " AND bedrooms <= ?";
+    if (isset($filters['max_bedrooms']) && $filters['max_bedrooms'] != null) {
+        $sql_query_string .= " AND num_beds <= ?";
         $params[] = $filters['max_bedrooms'];
     }
 
-    if (isset($filters['min_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms >= ?";
+    if (isset($filters['min_bathrooms']) && $filters['min_bathrooms'] != null) {
+        $sql_query_string .= " AND num_baths >= ?";
         $params[] = $filters['min_bathrooms'];
     }
 
-    if (isset($filters['max_bathrooms'])) {
-        $sql_query_string .= " AND bathrooms <= ?";
+    if (isset($filters['max_bathrooms']) && $filters['max_bathrooms'] != null) {
+        $sql_query_string .= " AND num_baths <= ?";
         $params[] = $filters['max_bathrooms'];
     }
 
-    if (isset($filters['user_id'])) {
+    if (isset($filters['user_id']) && $filters['user_id'] != null) {
         $sql_query_string .= " AND userid = ?";
         $params[] = $filters['user_id'];
     }
 
-    if (isset($filters['is_furnished'])) {
+    if (isset($filters['is_furnished']) && $filters['is_furnished'] != null) {
         $sql_query_string .= " AND is_furnished = ?";
         $params[] = $filters['is_furnished'];
     }
 
-    if (isset($filters['has_parking'])) {
+    if (isset($filters['has_parking']) && $filters['has_parking'] != null) {
         $sql_query_string .= " AND has_parking = ?";
         $params[] = $filters['has_parking'];
     }
 
-    if (isset($filters['allows_pets'])) {
+    if (isset($filters['allows_pets']) && $filters['allows_pets'] != null) {
         $sql_query_string .= " AND allows_pets = ?";
         $params[] = $filters['allows_pets'];
     }
+
+    if(isset($filters['location']) && !empty($filters['location'])) {
+        $sql_query_string .= ' AND address LIKE ?';
+        $params[] = '%' . $filters['location'] . '%';
+    }    
 
     try {
         // Execute the query with the parameters

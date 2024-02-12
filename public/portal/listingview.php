@@ -94,6 +94,9 @@
                                         <option value="House" <?php if($listing->rental_type == "House") echo "selected"; ?>>House</option>
                                         <option value="Condo" <?php if($listing->rental_type == "Condo") echo "selected"; ?>>Condo</option>
                                         <option value="Townhouse" <?php if($listing->rental_type == "Townhouse") echo "selected"; ?>>Townhouse</option>
+                                        <option value="Loft <?php if($listing->rental_type == "Loft") echo "selected"; ?>">Loft</option>
+                                        <option value="Basement" <?php if($listing->rental_type == "Basement") echo "selected"; ?>>Basement</option>
+                                        <option value="Other" <?php if($listing->rental_type == "Other") echo "selected"; ?>>Other</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">

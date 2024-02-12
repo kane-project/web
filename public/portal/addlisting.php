@@ -133,7 +133,6 @@
                                         <option value="House">House</option>
                                         <option value="Condo">Condo</option>
                                         <option value="Townhouse">Townhouse</option>
-                                        <option value="Studio">Studio</option>
                                         <option value="Loft">Loft</option>
                                         <option value="Basement">Basement</option>
                                         <option value="Other">Other</option>
