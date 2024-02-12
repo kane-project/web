@@ -130,6 +130,7 @@
 					</div>
 				</div>
 
+				<?php if(sizeof($toplistings)) { ?>
 				<div id="property-carousel" class="swiper">
 					<div class="swiper-wrapper">
 
@@ -138,6 +139,8 @@
 								$listingPrice = 'CA$'.number_format($listing->price, 2).'/mo';
 								$listingPhoto = fetch_listing_photos($listing->id)[0]['photo'];
 								$num_beds = $listing->num_beds == 0? "Studio": $listing->num_beds;
+								$sponsoredBadge = $listing->sponsored_tier == 0 ? 
+								"<div class='badge bg-primary'>New!</div>" : "<div class='badge bg-gold'>SPONSORED</div>";
 
 								echo <<<_END
 						<div class="carousel-item-b swiper-slide">
@@ -152,6 +155,9 @@
 												<a href="/listing/$listing->slug">$listing->title</a>
 											</h2>
 											<p class="text-light">$listing->address</p>
+											<div class="p-2">
+												$sponsoredBadge
+											</div>
 										</div>
 										<div class="card-body-a">
 											<div class="price-box d-flex">
@@ -185,6 +191,16 @@ _END;
 				</div>
 
 				<div class="propery-carousel-pagination carousel-pagination"></div>
+				<?php 
+					} else {
+						echo '
+						<div class="row">
+							<div class="col-md-12">
+								<div class="alert alert-info rounded-0"><i class="fa fa-info-circle"></i>&nbsp; No listings posted yet. Please try again later.</div>
+							</div>
+						</div>';
+					}
+				?>
 
 			</div>
 		</section>

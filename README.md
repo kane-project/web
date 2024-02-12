@@ -15,73 +15,38 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 - [x] Landlord Registration + Login Initial Security Audit
 - [x] Landlord Password Reset
-- [ ] Listings Page {Check Loading Order, Filters, Pagination}
-- [ ] Listing View Page
-- [ ] Homepage Rework
-- [ ] Client Login + Initial Auth Security Audit
-- [ ] Client Registration + Marketing Email Opt-in + Forgot Password
-- [ ] Client Account Purchases
+- [ ] Listings Page {Filters + Pagination}
+- [ ] Client Login
+- [ ] Client Registration {Marketing Opt-in, Email Verification}
+- [ ] Client Password Reset
+- [ ] Messaging System {Initial Inquiry, Direct Messaging}
+- [ ] Client Account Purchases {Verification Badges}
+- [ ] Listing Analytics Setup
 - [ ] Landlord Account Settings
 - [ ] Client Account Settings
-- [ ] Reporting Mechanism
-- [ ] Admin Pages
-- [ ] Email Marketing Templates + Generator
+- [ ] Report Submissions {Listings, Users}
+- [ ] Admin Console
+- [ ] Marketing Emails
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
 
 ## Pre-Deployment Tasks
 
-- Evaluate and implement using Content Delivery Networks (CDN) for improved performance and load times.
-- Check for error messages and set up secure logging
-- Security Audit & extensive A/B Testing
-- SEO & Analytics library for listing stats
+- UI/UX Optimizations and Testing
+- Error Logging Management
+- Initial Security Audit
+- Site Tests
+- Google Analytics & reCaptcha Integrations
 - Add reCaptcha
-- Transactional emails
-- CRON job to clean archived data every 7 years
-- Database Security! Rotating DB secrets and switch to RDS!
-- THE ABILITY TO EDIT LISTING PHOTOS!
+- Periodic Archive Data Cleanup
+- RDS Setup
 
-## Pre-Audit
+## Pre-Audit Tasks
 
-- Image Uploads (Size Limit, File Type and Extension!)
-- UserID security
-- Email Limit Attack (Cloudflare?)
+- Form Safety {Min/Max Length Safety, SQL Injection Safety}
+- File Upload Security {Size, File-Type, Filenames}
+- UserID Confidentiality
+- Cloudflare DDoS Prevention
 - DB Leak Prevention
-
-## Pages
-
-**Landlord Portal Prototype**
-
-- Registration: Implement user registration functionality.
-- Listings List: Create a page displaying a list of landlord's listings.
-- Edit Listing: Allow landlords to edit their existing listings.
-- Messages: Implement messaging functionality.
-- Message Thread: Develop a thread view for message conversations.
-- Account Settings: Provide options for landlords to manage their account settings.
-- Dashboard: Create a personalized dashboard for landlords.
-
-**Client Portal Prototype**
-
-- Listings: Display a list of available listings for clients.
-- Listing View + Initial Inquiry: Allow clients to view details of a listing and make initial inquiries.
-- Messages + Message Thread: Enable clients to communicate with landlords.
-- Account Settings: Offer options for clients to manage their account settings.
-- About, Contact, Legalese: Create informative pages for users.
-
-**Admin Pages**
-
-- Dashboard: Develop an admin dashboard for overview and management.
-- Login: Implement a secure login system for administrators.
-- Reports: Create reporting features for admin purposes.
-- Users: Manage user accounts and permissions.
-- Listings: Administer and oversee property listings.
-- Settings: Implement admin settings.
-
-**Polish and DevOps it**
-
-- Polish UI/UX and continously refactor.
-- AWS EC2, S3, Route53
-- Brevo Email
-- Stripe
 
 ## BUGS
 
