@@ -10,7 +10,6 @@
 	if(isset($_POST['submit']))
 	{
 		$user = user_login($_POST['email'], $_POST['password']);
-		// var_dump($user); die();
 
 		if (/*AUTH*/$user && /*CHECK LANDLORDNESS=>*/ $user->user_type && /*VERIF*/$user->is_email_verified && /*ISBAN*/ !$user->is_banned) {
 			$_SESSION['landlord_id'] = $user->id;
@@ -22,6 +21,8 @@
 			die(header("Location: /portal/login?uv=1&suid=$suid"));
 		} elseif ($user->is_banned) {
 			header("Location: /portal/login?be=1");
+		} elseif (!$user->user_type) {
+			header("Location: /portal/login?le=1");
 		} else {
 			header("Location: /portal/login?e");
 		}
