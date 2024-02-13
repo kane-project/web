@@ -39,10 +39,10 @@
 
     <?php include("navbar.php"); ?>
 
-    <main>
+    <main class="mb-5">
         
-        <section class="container py-5">
-            <div class="row py-3">
+        <section class="container">
+            <div class="row py-1">
                 <div class="col-lg-6 mx-auto py-2">
                     <h1 class="text-center">Edit Listing Details</h1>
                 </div>

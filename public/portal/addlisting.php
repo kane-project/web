@@ -73,9 +73,9 @@
 
     <?php include("navbar.php"); ?>
 
-    <main>
-        <section class="container py-5">
-            <div class="row py-3">
+    <main class="mb-5">
+        <section class="container">
+            <div class="row py-1">
                 <div class="col-lg-12 py-2 mx-auto text-center">
                     <h1>Add New Listing</h1>
                 </div>
