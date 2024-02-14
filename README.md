@@ -16,7 +16,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Landlord Registration + Login Initial Security Audit
 - [x] Landlord Password Reset
 - [x] Listings Page {Filters + Pagination}
-- [ ] Client Login
+- [x] Client Login
 - [ ] Client Registration {Marketing Opt-in, Email Verification}
 - [ ] Client Password Reset
 - [ ] Messaging System {Initial Inquiry, Direct Messaging}
