@@ -73,43 +73,38 @@ function loadEnv($envfile = ".env") {
  * Encrypts a user ID for use in URLs
  * @param  string $userID - The UUID to encrypt
  * @param  string $key - The encryption key
- * @return string - The encrypted user ID
+ * @return string - The encrypted user ID (hexadecimal)
  */
 function encryptUserID($userID) {
     loadEnv();
     $key = $_ENV['SUID_SECRET_KEY'];
-    // Generate a random nonce
-    $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-
+    // Generate a random initialization vector (IV)
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
     // Encrypt the user ID
-    $encrypted = sodium_crypto_secretbox($userID, $nonce, $key);
-
-    // Encode the encrypted user ID and nonce
-    $encoded = base64_encode($nonce . $encrypted);
-
-    return urlencode($encoded);
+    $encrypted = openssl_encrypt($userID, 'aes-256-cbc', $key, 0, $iv);
+    // Convert the encrypted data to hexadecimal representation
+    $hex = bin2hex($iv . $encrypted);
+    return $hex;
 }
 
 /**
  * decryptUserID
  * Decrypts an encrypted user ID from a URL
- * @param  string $encryptedUserID - The encrypted user ID
+ * @param  string $encryptedUserID - The encrypted user ID (hexadecimal)
  * @param  string $key - The decryption key
  * @return string - The decrypted user ID (UUID)
  */
 function decryptUserID($encryptedUserID) {
     loadEnv();
     $key = $_ENV['SUID_SECRET_KEY'];
-    // Decode the URL-encoded string
-    $decoded = base64_decode(urldecode($encryptedUserID));
-
-    // Extract the nonce and encrypted data
-    $nonce = substr($decoded, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-    $encrypted = substr($decoded, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-
+    // Convert the hexadecimal string back to binary
+    $binary = hex2bin($encryptedUserID);
+    // Extract the IV and encrypted data
+    $iv = substr($binary, 0, openssl_cipher_iv_length('aes-256-cbc'));
+    $encrypted = substr($binary, openssl_cipher_iv_length('aes-256-cbc'));
     // Decrypt the data
-    $decrypted = sodium_crypto_secretbox_open($encrypted, $nonce, $key);
-
+    $decrypted = openssl_decrypt($encrypted, 'aes-256-cbc', $key, 0, $iv);
     return $decrypted !== false ? $decrypted : null;
 }
+
 
