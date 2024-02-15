@@ -1,5 +1,10 @@
-<?php $page = "Pricing";
-include("header.php") ?>
+<?php 
+
+    session_start();
+    $page = "Pricing";
+    include("header.php"); 
+
+?>
 
 <body>
 

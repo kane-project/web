@@ -1,5 +1,12 @@
-<?php $page = "Contact";
-include("header.php"); ?>
+<?php 
+	
+	require_once("lib/Emails.php");
+
+	session_start();
+	$page = "Contact";
+	include("header.php"); 
+
+?>
 
 <body>
 

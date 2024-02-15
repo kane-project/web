@@ -28,7 +28,7 @@
             }
             
             $_SESSION['uid'] = $user->id;
-            header("Location: /account");
+            header("Location: /listings");
         } 
         
         else {
