@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * The KANE Project
+ * A PHP based web application for Rental Listings and Property Management
+ * T177 - Winter 2024 - Capstone Team 04
+ * Please email info@kaneproject.ca if you have any questions about this project.
+ */
+
+// index.php
+// This is the main entry point for the application. 
+// It is responsible for routing requests to the appropriate page.
+// It uses the FastRoute library to define routes and dispatch requests to the appropriate page.
+
 require 'vendor/autoload.php';
 
 use FastRoute\RouteCollector;
