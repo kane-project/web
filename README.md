@@ -22,31 +22,32 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [ ] Messaging System {Initial Inquiry, Direct Messaging}
 - [ ] Client Account Purchases {Verification Badges}
 - [ ] Listing Analytics Setup
+- [ ] Listing Stats Page
 - [ ] Landlord Account Settings
 - [ ] Client Account Settings
 - [ ] Report Submissions {Listings, Users}
-- [ ] Admin Console
 - [ ] Marketing Emails
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
+- [ ] Administrator Console
 
 ## Pre-Deployment Tasks
 
-- UI/UX Optimizations and Testing
-- Error Logging Management
-- Initial Security Audit
-- Site Tests
-- Google Analytics & reCaptcha Integrations
-- Add reCaptcha
-- Periodic Archive Data Cleanup
-- RDS Setup
+- [ ] UI/UX Optimizations and Testing
+- [ ] Error Logging Management
+- [ ] Initial Security Audit
+- [ ] Site Tests
+- [ ] Google Analytics & reCaptcha Integrations
+- [ ] Add reCaptcha
+- [ ] Periodic Archive Data Cleanup
+- [ ] RDS Setup
 
 ## Pre-Audit Tasks
 
-- Form Safety {Min/Max Length Safety, SQL Injection Safety}
-- File Upload Security {Size, File-Type, Filenames}
-- UserID Confidentiality
-- Cloudflare DDoS Prevention
-- DB Leak Prevention
+- [ ] Ensure Form Safety {Min/Max Length Safety, SQL Injection Safety}
+- [ ] Ensure File Upload Security {Size, File-Type, Filenames}
+- [ ] Ensure UserID Confidentiality
+- [ ] Implement Cloudflare DDoS Prevention
+- [ ] Ensure DB Leak Prevention
 
 ## BUGS
 
