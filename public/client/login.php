@@ -90,7 +90,7 @@
 
                                         if(isset($_GET['uv'])) {
 
-                                            $userID = isset($_GET['suid']) ? $_GET['suid'] : die(header("Location: /portal/login"));
+                                            $userID = isset($_GET['suid']) ? $_GET['suid'] : die(header("Location: /account/login"));
 
                                             echo '
                                                 <div class="mb-3">
@@ -125,6 +125,19 @@
                                             ';
                                         }
 
+                                        if(isset($_GET['rs'])) {
+                                            echo '
+                                                <div class="mb-3">
+                                                    <div class="alert bg-success text-light rounded-0">
+                                                        <i class="fa fa-info-circle"></i>&nbsp; Registration successful. Please verify your email.
+                                                        <div class="mt-2">
+                                                            Don\'t forget to check your spam folder!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }
+
                                         if(isset($_GET['ess'])) {
                                             echo '
                                                 <div class="mb-3">
@@ -149,7 +162,7 @@
                                         <button type="submit" name="login" class="btn col-8 btn-dark rounded-0">Login</button>
                                         <br>
                                         <div class="mt-2">
-                                            <a href="/account/reset-password" class="mt-2 text-primary">Forgot Password?</a> |
+                                            <a href="/reset-password" class="mt-2 text-primary">Forgot Password?</a> |
                                             <a href="/account/register" class="mt-2 text-primary">Register Account</a>
                                         </div>
                                     </div>
