@@ -17,18 +17,18 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Landlord Password Reset
 - [x] Listings Page {Filters + Pagination}
 - [x] Client Login
-- [ ] Client Registration {Marketing Opt-in, Email Verification}
-- [ ] Client Password Reset
+- [x] Client Registration {Marketing Opt-in, Email Verification}
 - [ ] Messaging System {Initial Inquiry, Direct Messaging}
-- [ ] Client Account Purchases {Verification Badges}
-- [ ] Listing Analytics Setup
-- [ ] Listing Stats Page
+- [ ] Listing Analytics Backend
+- [ ] Listing Stats View Page
 - [ ] Landlord Account Settings
 - [ ] Client Account Settings
+- [ ] Client Password Reset
+- [ ] Client Account Purchases {Verification Badges}
 - [ ] Report Submissions {Listings, Users}
-- [ ] Marketing Emails
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
 - [ ] Administrator Console
+- [ ] Marketing Emails CRON
 
 ## Pre-Deployment Tasks
 
