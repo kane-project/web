@@ -2,6 +2,7 @@
     
     require_once("lib/Users.php");
     session_start();
+    loadEnv();
 
     if(isset($_SESSION['uid'])) {
         die(header("Location: /account"));
@@ -9,7 +10,53 @@
 
     if(isset($_POST['register'])) 
     {
-        //...
+		$errors = "?ecf=1";
+
+		if($_POST['password'] != $_POST['password2'])
+			$errors .= "&pe=1&";
+
+		if(is_email_phone_registered($_POST["email"], $_POST["phone"]))
+			$errors .= "&ar=1&";
+
+        $profile_pic = "";
+
+		if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] == 0) 
+            $profile_pic = upload_user_photo($_FILES['profile_photo']);
+
+		if($profile_pic == "ERROR") 
+			$errors .= "&pfe=1&";
+
+		$user = new User;
+		$user->user_type = 0;
+		$user->id = generate_uuid();
+		$user->first_name = $_POST['first_name'];
+		$user->last_name = $_POST['last_name'];
+		$user->email = $_POST['email'];
+		$user->phone = $_POST['phone'];
+		$user->address = $_POST['address'];
+		$user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		$user->is_email_verified = 0;
+		$user->profile_photo = $profile_pic;
+		$user->timestamp = time();
+		$user->is_banned = 0;
+
+		if($errors != '?ecf=1') 
+			die(header("Location: /account/register" . $errors));
+		else 
+		{
+			if(!register_user($user)) {
+				delete_user_photo($profile_pic);
+				die(header("Location: /account/register?e=1"));
+			} 
+            
+            if(isset($_POST['newsletter'])) {
+                if(!add_to_emailist($user->id, $user->email)) {
+                    error_log("Failed to add user to email list: " . $user->id . " - " . $user->email);
+                }
+            }
+
+			die(header("Location: /account/login?rs=1"));
+		}
     }
 
     $page = "Register";
@@ -48,6 +95,36 @@
                                                 <div class="mb-3">
                                                     <div class="alert bg-danger text-light rounded-0">
                                                         <i class="fa fa-info-circle"></i>&nbsp; System Error - Please contact support immediately.
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }
+
+                                        if(isset($_GET['pe'])) {
+                                            echo '
+                                                <div class="mb-3">
+                                                    <div class="alert alert-warning rounded-0">
+                                                        <i class="fa fa-info-circle"></i>&nbsp; Passwords don\'t match.
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }
+
+                                        if(isset($_GET['ar'])) {
+                                            echo '
+                                                <div class="mb-3">
+                                                    <div class="alert alert-warning rounded-0">
+                                                        <i class="fa fa-info-circle"></i>&nbsp; Email or phone number already registered.
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }
+
+                                        if(isset($_GET['pfe'])) {
+                                            echo '
+                                                <div class="mb-3">
+                                                    <div class="alert alert-warning rounded-0">
+                                                        <i class="fa fa-info-circle"></i>&nbsp; Failed to upload profile photo. Please try again.
                                                     </div>
                                                 </div>
                                             ';
@@ -113,6 +190,22 @@
     </main>
 
     <?php include("footer.php"); ?>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>&libraries=places"></script>
+	<script>
+		// Google Maps API
+        
+        function initialize() {
+            var input = document.getElementById('address');
+            var autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['geocode'],
+                componentRestrictions: {
+                    country: 'CA'
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initialize);
+	</script>
 
 </body>
 </html>

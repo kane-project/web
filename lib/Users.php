@@ -257,6 +257,14 @@ function add_reset_link($email) {
     return $reset_link;
 }
 
+/**
+ * send_reset_email
+ * Sends a password reset email
+ * @param  mixed $user_type
+ * @param  mixed $email
+ * @param  mixed $linkid
+ * @return void
+ */
 function send_reset_email($user_type, $email, $linkid) {
     $mailDetails = new KaneMail;
     $mailDetails->userID = 0;
@@ -267,6 +275,22 @@ function send_reset_email($user_type, $email, $linkid) {
     $mailDetails->linkForButton = $user_type == 1 ? "https://kaneproject.ca/portal/reset/$linkid" : "https://kaneproject.ca/reset/$linkid";
     $mailDetails->altLink = $mailDetails->linkForButton;
     send_transactional_email($mailDetails, "User", $email, "Reset Your Password", 'button');
+}
+
+/**
+ * add_to_emailist
+ * Adds a user to the KANE Project mailing list
+ * @param  mixed $userid
+ * @param  mixed $email
+ * @return bool
+ */
+function add_to_emailist($userid, $email) {
+    $result = sqlQuery("INSERT INTO emailist (userid, email) VALUES (?, ?)", [$userid, $email]);
+    
+    if($result)
+        return true;
+    else
+        return false;
 }
 
 #
