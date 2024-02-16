@@ -2,6 +2,8 @@
 
 The KANE Project's website. Real estate listings for newcomers to Canada.
 
+<img src="https://progress-bar.dev/75/?title=Progress">
+
 # Contribution Guide
 
 1. Create a feature branch to make your changes.
@@ -40,6 +42,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [ ] Add reCaptcha
 - [ ] Periodic Archive Data Cleanup
 - [ ] RDS Setup
+- [ ] CI/CD Setup
 
 ## Pre-Audit Tasks
 
