@@ -29,6 +29,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r)
     $r->addRoute('GET', '/contact[/]', '/client/contact.php');
     $r->addRoute('GET', '/pricing[/]', '/client/pricing.php');
     $r->addRoute('GET', '/account[/]', '/client/account.php');
+    $r->addRoute('POST', '/account[/]', '/client/account.php');
     $r->addRoute('GET', '/account/login[/]', '/client/login.php');
     $r->addRoute('POST', '/account/login[/]', '/client/login.php');
     $r->addRoute('GET', '/account/register[/]', '/client/register.php');
@@ -36,7 +37,8 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r)
     $r->addRoute('GET', '/account/messages[/]', '/client/messages.php');
     $r->addRoute('POST', '/account/messages[/]', '/client/messages.php');
     $r->addRoute('GET', '/account/logout[/]', '/client/logout.php');
-    $r->addRoute('GET', '/account/chat/{slug}[/]', '/client/viewchat.php');
+    $r->addRoute('GET', '/account/message/{threadid}[/]', '/client/viewchat.php');
+    $r->addRoute('POST', '/account/message/{threadid}[/]', '/client/viewchat.php');
     $r->addRoute('GET', '/safety[/]', '/client/safety.php');
     $r->addRoute('GET', '/legal/{slug}[/]', '/client/legal.php');
     $r->addRoute('GET', '/verify-email/{uid}[/]', '/client/verify.php');

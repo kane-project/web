@@ -22,14 +22,15 @@
                         <?php 
                             if(isset($_SESSION['uid'])) {
                                 echo '
-                                    <a class="dropdown-item" href="account">Settings</a>
-                                    <a class="dropdown-item" href="account/logout">Logout</a>
+                                    <a class="dropdown-item" href="/account/messages">Inbox &nbsp;<span class="badge badge-sm bg-danger"><i class="fa fa-bell"></i> 2</span></a>
+                                    <a class="dropdown-item" href="/account">Settings</a>
+                                    <a class="dropdown-item" href="/account/logout">Logout</a>
                                 ';
                             }
                             else {
                                 echo '
-                                    <a class="dropdown-item" href="account/login">Login</a>
-                                    <a class="dropdown-item" href="account/register">Register</a>
+                                    <a class="dropdown-item" href="/account/login">Login</a>
+                                    <a class="dropdown-item" href="/account/register">Register</a>
                                 ';
                             }
                         ?> 

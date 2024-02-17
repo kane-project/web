@@ -43,11 +43,6 @@
 							<div class="col-md-6 col-lg-5">
 								<img src="assets/img/about-2.jpg" alt="" class="img-fluid">
 							</div>
-							<div class="col-lg-2  d-none d-lg-block position-relative">
-								<div class="title-vertical d-flex justify-content-start">
-									<span>EstateAgency Exclusive Property</span>
-								</div>
-							</div>
 							<div class="col-md-6 col-lg-5 section-md-t3">
 								<div class="title-box-d">
 									<h3 class="title-d">Sed

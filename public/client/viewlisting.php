@@ -69,6 +69,50 @@
 									</div>
 								</div>
 								<div class="property-summary">
+									<div class="row section-t3">
+										<div class="col-sm-12">
+											<div class="title-box-d">
+												<h3 class="title-d">Contact Owner</h3>
+												<p>Interested in this property? Contact the owner and place an inquiry.</p>
+											</div>
+										</div>
+									</div>
+									
+									<?php 
+										if(!isset($_SESSION['uid'])) {
+											echo '
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="alert bg-primary text-light rounded-0">
+												<i class="fa fa-info-circle"></i> Please login to send an inquiry.
+											</div>
+										</div>
+									</div>
+											';
+										}
+
+										if(isset($_SESSION['uid'])) {
+
+											// Check if message already exists
+											// if it does, show link to inbox
+											// if it doesn't, show form to send message
+
+											echo '
+									<div class="row">
+										<div class="col-sm-12">
+											<form method="POST" action="/listing/'.$slug.'">
+												<div class="mb-2">
+													<textarea class="form-control rounded-0" style="resize:none;height:100px;" name="message" required>Hello! Is this listing still available?</textarea>
+												</div>
+												<div class="mb-3">
+													<button type="submit" name="initial_inquiry" class="btn rounded-0 btn-dark">Send Message</button>
+												</div>
+											</form>
+										</div>
+									</div>
+											';
+										}
+									?>
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="title-box-d section-t4">
@@ -124,8 +168,7 @@
 								<div class="row section-t3">
 									<div class="col-sm-12">
 										<div class="title-box-d">
-											<h3 class="title-d">Contact Owner</h3>
-											<p>Interested in this property? Contact the owner and place an inquiry.</p>
+											<h3 class="title-d">View Map</h3>
 										</div>
 									</div>
 								</div>
@@ -144,6 +187,7 @@
 										</div>
 									</div>
 								</div>
+
 							</div>
 
 						</div>
