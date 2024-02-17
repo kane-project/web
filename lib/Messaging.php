@@ -27,7 +27,8 @@ class Message
 
 class MessageThread
 {
-    
+    public $listing_id;
+    public $messages;
 }
 
 /**
@@ -44,7 +45,7 @@ function send_message($message) {
  * fetch_messages
  * Retrieves threads of messages for a user
  * @param  int $user_id
- * @return array
+ * @return array of MessageThread objects
  */
 function fetch_messages($user_id) {
     //...
