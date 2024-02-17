@@ -36,32 +36,32 @@
 								<tr>
 									<td><a class="text-primary" href="javascript:void()">Listing Title Shortened</a>&nbsp; <i class="fa fa-bell text-danger"></i></td>
 									<td><b>In publishing and graphic design, Lorem ipsum is a placeholder text...</b></td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/message/{threadid}">Open</a></td>
+									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
 								</tr>
 								<tr>
 									<td><a class="text-primary" href="javascript:void()">Another Listing Name</a></td>
 									<td>The contents of a message that has already been opened...</td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/message/{threadid}">Open</a></td>
+									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
 								</tr>
 								<tr>
 									<td><a class="text-primary" href="javascript:void()">Another Listing Name</a></td>
 									<td>The contents of a message that has already been opened...</td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/message/{threadid}">Open</a></td>
+									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
 								</tr>
 								<tr>
 									<td><a class="text-primary" href="javascript:void()">Another Listing Name</a></td>
 									<td>The contents of a message that has already been opened...</td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/message/{threadid}">Open</a></td>
+									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
 								</tr>
 								<tr>
 									<td><a class="text-primary" href="javascript:void()">Another Listing Name</a></td>
 									<td>The contents of a message that has already been opened...</td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/message/{threadid}">Open</a></td>
+									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
 								</tr>
 								<tr>
 									<td><a class="text-primary" href="javascript:void()">Another Listing Name</a></td>
 									<td>The contents of a message that has already been opened...</td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/message/{threadid}">Open</a></td>
+									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
 								</tr>
 							</tbody>
 						</table>
