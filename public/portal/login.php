@@ -51,6 +51,9 @@
 								</div>
 								<div class="col-md-6 col-sm-12">
 									<h5 class="card-title text-center">Portal Login</h5>
+									<?php if(empty($_GET)) echo '<div class="alert p-2 rounded-0 alert-secondary"><i class="fa fa-info-circle"></i>
+									&nbsp; This portal is for property owners. &nbsp;<a class="btn btn-sm btn-light" href="/account/login">Client Login</a>
+									</div>'; ?>
 									<form method="POST" action="portal/login">
 										<?php
 											if(isset($_GET['le'])) {

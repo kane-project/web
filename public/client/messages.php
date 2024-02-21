@@ -1,5 +1,11 @@
 <?php
+	require_once("lib/Users.php");
 	session_start();
+
+	if(!isset($_SESSION['uid']))
+		die(header("Location: /account/login"));
+
+	$user = new User($_SESSION['uid']);
 	$page = "My Messages";
 	include("header.php");
 ?>

@@ -27,7 +27,7 @@
 	$urlFilters = $_SERVER['QUERY_STRING'];
 	$urlFilters = preg_replace('/&?p=\d+(&|$)/', '', $urlFilters);
 
-	$limit = 3;
+	$limit = 24;
 	$p = isset($_GET['p']) ? intval($_GET['p']) : 1;
 	$offset = ($p - 1) * $limit;
 

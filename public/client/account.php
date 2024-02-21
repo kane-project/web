@@ -1,7 +1,15 @@
 <?php 
+
+	require_once("lib/Users.php");
 	session_start();
+
+	if(!isset($_SESSION['uid']))
+		die(header("Location: /account/login"));
+
+	$user = new User($_SESSION['uid']);
 	$page = "My Account";
 	include("header.php"); 
+
 ?>
 
 <body>
@@ -15,7 +23,7 @@
 				<div class="row">
 					<div class="col-md-12 col-lg-12">
 						<div class="title-single-box">
-							<h1 class="title-single">My Account</h1>
+							<h1 class="title-single">Welcome, <?php echo $user->first_name; ?></h1>
 						</div>
 					</div>
 				</div>
