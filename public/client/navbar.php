@@ -21,12 +21,22 @@
                     <div class="dropdown-menu">
                         <?php 
                             if(isset($_SESSION['uid'])) {
+
+                                require_once("lib/Messaging.php");
+
+                                $notifs = get_notif_count($_SESSION['uid']);
+                                if($notifs)
+                                    $notifs = '&nbsp;<span class="badge badge-sm bg-danger"><i class="fa fa-bell"></i> &nbsp;'.$notifs.'</span>';
+                                else 
+                                    $notifs = '';
+
                                 echo '
-                                    <a class="dropdown-item" href="/account/messages">Inbox &nbsp;<span class="badge badge-sm bg-danger"><i class="fa fa-bell"></i> 2</span></a>
+                                    <a class="dropdown-item" href="/account/messages">Inbox '.$notifs.'</a>
                                     <a class="dropdown-item" href="/account">Settings</a>
                                     <a class="dropdown-item" href="/account/logout">Logout</a>
                                 ';
                             }
+                            
                             else {
                                 echo '
                                     <a class="dropdown-item" href="/account/login">Login</a>

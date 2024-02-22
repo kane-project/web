@@ -41,7 +41,7 @@
                     <div class="col-lg-12 py-2 mx-auto">
                         <div class="card bg-kanegray text-light p-3 rounded-0 shadow">
                             <div class="card-body">
-                                <h1 class="text-light"><i class="fa fa-bell"></i>&nbsp; <code>notif_count</code></h1>
+                                <h1 class="text-light"><i class="fa fa-bell"></i>&nbsp; <?php echo get_notif_count($_SESSION['landlord_id']); ?></h1>
                                 <p class="lead">New Messages</p>
                                 <a href="/portal/messages/" class="btn btn-light btn-lg rounded-0"><i class="fa fa-envelope"></i>&nbsp; Open Inbox</a>
                             </div>

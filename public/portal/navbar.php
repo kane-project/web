@@ -24,7 +24,12 @@ NAVBAR
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php if ($page == "My Messages") echo "active"; ?>" href="portal/messages">
-                        My Messages &nbsp;<i class="fa fa-bell text-danger"></i><sup><span class="badge bg-danger">4</span></sup>
+                        My Messages <?php
+                            require_once("lib/Messaging.php"); 
+                            $notifs = get_notif_count($_SESSION['landlord_id']);
+                            if($notifs)
+                                echo '&nbsp;<i class="fa fa-bell text-danger"></i><sup><span class="badge bg-danger">'.$notifs.'</span></sup>'; 
+                        ?>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
