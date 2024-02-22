@@ -37,7 +37,7 @@ class User
             $this->phone = $user->phone;
             $this->address = $user->address;
             $this->is_email_verified = $user->is_email_verified;
-            $this->profile_photo = $user->profile_photo;
+            $this->profile_photo = $user->profile_photo != "" ? $user->profile_photo : "default.png";
             $this->timestamp = $user->timestamp;
             $this->is_banned = $user->is_banned;
         }

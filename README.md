@@ -2,7 +2,7 @@
 
 The KANE Project's website. Real estate listings for newcomers to Canada.
 
-<img src="https://progress-bar.dev/75/?title=Progress">
+<img src="https://progress-bar.dev/70/?title=Progress">
 
 # Contribution Guide
 

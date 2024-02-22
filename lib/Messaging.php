@@ -19,16 +19,22 @@ class Message
 
     public function __construct($id = 0)
     {
-        if ($id != 0) {
-            // Load the message from the database
+        if ($id != 0) 
+        {
+            $msg = sqlQuery("SELECT * FROM messages WHERE message_id = ?", [$id])->fetch(PDO::FETCH_OBJ);
+            $this->message_id = $msg->message_id;
+            $this->sender_id = $msg->sender_id;
+            $this->receiver_id = $msg->receiver_id;
+            $this->listing_id = $msg->listing_id;
+            $this->timestamp = $msg->timestamp;
+            $this->content = $msg->content;
         }
     }
 }
 
 class MessageThread
 {
-    public $listing_id;
-    public $messages;
+    
 }
 
 /**
@@ -38,16 +44,17 @@ class MessageThread
  * @return void
  */
 function send_message($message) {
-    //..
+    
 }
 
 /**
  * fetch_messages
  * Retrieves threads of messages for a user
  * @param  int $user_id
+ * @param  int $listing_id
  * @return array of MessageThread objects
  */
-function fetch_messages($user_id) {
+function fetch_messages($user_id, $listing_id = 0) {
     //...
 }
 
