@@ -2,7 +2,7 @@
 
 The KANE Project's website. Real estate listings for newcomers to Canada.
 
-<img src="https://progress-bar.dev/70/?title=Progress">
+<img src="https://progress-bar.dev/80/?title=Progress">
 
 # Contribution Guide
 
@@ -20,7 +20,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Listings Page {Filters + Pagination}
 - [x] Client Login
 - [x] Client Registration {Marketing Opt-in, Email Verification}
-- [ ] Messaging System {Initial Inquiry, Direct Messaging}
+- [x] Messaging System {Initial Inquiry, Direct Messaging}
 - [ ] Listing Analytics Backend
 - [ ] Listing Stats View Page
 - [ ] Landlord Account Settings
@@ -30,11 +30,12 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [ ] Report Submissions {Listings, Users}
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
 - [ ] Administrator Console
-- [ ] Marketing Emails CRON
+- [ ] Marketing Emails
 
 ## Pre-Deployment Tasks
 
 - [ ] UI/UX Optimizations and Testing
+- [ ] Optimize Messaging System {Frontend AND Backend}
 - [ ] Error Logging Management
 - [ ] Initial Security Audit
 - [ ] Site Tests
