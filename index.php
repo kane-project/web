@@ -64,7 +64,8 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r)
     $r->addRoute('POST', '/portal/listing/{id}[/]', '/portal/listingview.php');
     $r->addRoute('GET', '/portal/delete-listing/{id}[/]', '/portal/deletelisting.php');
     $r->addRoute('GET', '/portal/messages[/]', '/portal/messages.php');
-    $r->addRoute('GET', '/portal/message/{id}[/]', '/portal/messageview.php');
+    $r->addRoute('GET', '/portal/message/{slug}[/]', '/portal/messageview.php');
+    $r->addRoute('POST', '/portal/message/{slug}[/]', '/portal/messageview.php');
     $r->addRoute('GET', '/portal/settings[/]', '/portal/settings.php');
     $r->addRoute('GET', '/portal/verify-email/{uid}[/]', '/portal/verify.php');
     $r->addRoute('GET', '/portal/resend-email/{suid}[/]', '/portal/resend.php');

@@ -11,7 +11,33 @@
 	$listing = new Listing(fetch_listing_id($slug));
 	$thread = new MessageThread;
 	$thread->user_id = $_SESSION['uid'];
-	$thread->load_thread();
+	$thread->load_thread($listing->id);
+
+	// if last message is for the user and unread, mark it as read
+	if ($thread->last_message->receiver_id == $_SESSION['uid'] && !$thread->last_message->is_read) {
+		$thread->last_message->mark_read();
+	}
+
+	if(isset($_POST['send_message']))
+	{
+		$msg = new Message;
+		$msg->message_id = generate_uuid();
+		$msg->sender_id = $_SESSION['uid'];
+		$msg->receiver_id = $listing->userid;
+		$msg->content = $_POST['message'];
+		$msg->listing_id = fetch_listing_id($slug);
+		$msg->timestamp = time();
+		$msg->is_read = 0;
+
+		if(send_message($msg))
+		{
+			header("Location: /account/message/$slug");
+		}
+		else
+		{
+			throw new Exception("Failed to send message.");
+		}
+	}
 
 	$user = new User($_SESSION['uid']);
 	$page = "View Message";
@@ -73,17 +99,13 @@ _END;
 									}
 								}
 
-							?>
-
-							
-
-							
+							?>	
 
 							<div class="form-outline">
-								<form>
+								<form method="POST" action="/account/message/<?php echo $slug; ?>">
 									<div class="input-group">
-										<input type="text" class="form-control rounded-0" placeholder="Type your message...">
-										<button class="btn btn-dark rounded-0" type="submit">Send</button>
+										<input type="text" name="message" class="form-control rounded-0" placeholder="Type your message...">
+										<button name="send_message" class="btn btn-dark rounded-0" type="submit">Send</button>
 									</div>
 								</form>
 							</div>

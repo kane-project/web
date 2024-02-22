@@ -138,7 +138,7 @@
 											<div class="row">	
 												<div class="col-sm-12">
 													<div class="alert bg-primary text-light rounded-0">
-														<i class="fa fa-info-circle"></i> You have already inquired about this listing.<br><br><a class="btn btn-sm btn-light rounded-0" href="/account/messages">Open Inbox</a>
+														<i class="fa fa-info-circle"></i> You have already inquired about this listing.<br><br><a class="btn btn-sm btn-light rounded-0" href="/account/message/'.$listing->slug.'">Open Chat</a>
 													</div>
 												</div>
 											</div>

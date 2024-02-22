@@ -34,6 +34,7 @@ class Message
             $this->listing_id = $msg->listing_id;
             $this->timestamp = $msg->timestamp;
             $this->content = $msg->content;
+            $this->is_read = $msg->is_read;
         }
     }
 
@@ -55,9 +56,9 @@ class MessageThread
     public $messages; // a list of Message objects pertaining to this thread
     public $last_message; // Message object, the last message in the thread, is it unread?
 
-    function load_thread() 
+    function load_thread($listingid) 
     {
-        $result = sqlQuery("SELECT * FROM messages WHERE (sender_id = ? OR receiver_id = ?) ORDER BY timestamp ASC", [$this->user_id, $this->user_id]);
+        $result = sqlQuery("SELECT * FROM messages WHERE listing_id = ? AND (sender_id = ? OR receiver_id = ?) ORDER BY timestamp ASC", [$listingid, $this->user_id, $this->user_id]);
         
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $msg = new Message($row['message_id']);
@@ -91,12 +92,12 @@ function fetch_all_threads($user_id, $start, $limit) {
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $thread = new MessageThread();
         $thread->user_id = $user_id;
-        $thread->load_thread();
+        $thread->load_thread($row['listing_id']);
         $threads[] = $thread;
     }
 
     usort($threads, function($a, $b) {
-        return $a->last_message->timestamp <=> $b->last_message->timestamp;
+        return $b->last_message->timestamp <=> $a->last_message->timestamp;
     });
 
     return $threads;

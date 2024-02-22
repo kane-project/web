@@ -49,28 +49,39 @@
 							</thead>
 							<tbody>
 								
-								<?php 
+							<?php 
 
-									foreach($threads as $thread)
-									{
-										$listingName = "Deleted Listing";
-										$lastmsg = $thread->last_message->content;
-										$listingId = 0;
-
-										if(!$thread->is_listing_deleted()) {
-											$listing = new Listing($thread->messages[0]->listing_id);
-											$listingName = $listing->title;
-											$listingId = $listing->slug;
-										}
-
-										echo <<<_END
-										<tr>
-											<td>$listingName</td>
-											<td>$lastmsg</td>
-											<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/$listingId">Open Chat</a></td>
-										</tr>
-_END;
+								foreach($threads as $thread)
+								{
+									$listingName = "Deleted Listing";
+									$lastmsg = substr($thread->last_message->content, 0, 50);
+									
+									if (strlen($thread->last_message->content) > 50) {
+										$lastmsg .= '...';
 									}
+
+									$listingId = 0;
+
+									$notif = "";
+
+									if($thread->last_message->receiver_id == $user->id && !$thread->last_message->is_read) {
+										$notif = "<span class='badge bg-danger rounded-0'>New</span>";
+									}
+
+									if(!$thread->is_listing_deleted()) {
+										$listing = new Listing($thread->messages[0]->listing_id);
+										$listingName = $listing->title;
+										$listingId = $listing->slug;
+									}
+
+									echo <<<_END
+									<tr>
+										<td>$listingName</td>
+										<td>$notif &nbsp; $lastmsg</td>
+										<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/$listingId">Open Chat</a></td>
+									</tr>
+_END;
+								}
 
 								?>					
 
