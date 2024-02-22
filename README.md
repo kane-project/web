@@ -27,6 +27,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [ ] Client Account Settings
 - [ ] Client Password Reset
 - [ ] Client Account Purchases {Verification Badges}
+- [ ] Add AJAX to Messaging System
 - [ ] Report Submissions {Listings, Users}
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
 - [ ] Administrator Console
