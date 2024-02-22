@@ -7,6 +7,12 @@
 require_once("Database.php");
 require_once("Utils.php");
 
+const LISTING_DELETED = -1;
+
+/**
+ * Message
+ * Represents a single message and its properties
+ */
 class Message
 {
     public $message_id;
@@ -30,51 +36,131 @@ class Message
             $this->content = $msg->content;
         }
     }
+
+    public function mark_read() 
+    {
+        $result = sqlQuery("UPDATE messages SET is_read = 1 WHERE message_id = ?", [$this->message_id]);
+        return $result;
+    }
 }
 
+/**
+ * MessageThread
+ * Represents a thread of messages between two users
+ * Messages are ordered by timestamp, in ascending order
+ */
 class MessageThread
 {
-    
+    public $user_id;
+    public $messages; // a list of Message objects pertaining to this thread
+    public $last_message; // Message object, the last message in the thread, is it unread?
+
+    function load_thread() 
+    {
+        $result = sqlQuery("SELECT * FROM messages WHERE (sender_id = ? OR receiver_id = ?) ORDER BY timestamp ASC", [$this->user_id, $this->user_id]);
+        
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $msg = new Message($row['message_id']);
+            $this->messages[] = $msg;
+        }
+
+        $this->last_message = end($this->messages);
+    }
+
+    public function is_listing_deleted() 
+    {
+        $listing = new Listing($this->messages[0]->listing_id);
+        if($listing->status == LISTING_DELETED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 /**
- * send_message
- * Sends a message to a user's inbox
- * @param  Message $message
- * @return void
- */
-function send_message($message) {
-    
-}
-
-/**
- * fetch_messages
- * Retrieves threads of messages for a user
+ * fetch_all_threads
+ * Fetches all message threads for a given user
  * @param  int $user_id
- * @param  int $listing_id
  * @return array of MessageThread objects
  */
-function fetch_messages($user_id, $listing_id = 0) {
-    //...
+function fetch_all_threads($user_id, $start, $limit) {
+    $threads = array();
+    $result = sqlQuery("SELECT DISTINCT listing_id FROM messages WHERE sender_id = ? OR receiver_id = ? LIMIT " . intval($start) . ", " . intval($limit), [$user_id, $user_id]);
+
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $thread = new MessageThread();
+        $thread->user_id = $user_id;
+        $thread->load_thread();
+        $threads[] = $thread;
+    }
+
+    usort($threads, function($a, $b) {
+        return $a->last_message->timestamp <=> $b->last_message->timestamp;
+    });
+
+    return $threads;
 }
 
 /**
- * check_for_initial_inquiry
- * Checks if a user has already sent an initial inquiry to a listing
- * @param  int $user_id
- * @param  int $listing_id
- * @return bool
+ * fetch_threads_count
+ * Fetches the count of message threads for a given user
+ * @param int $user_id The ID of the user
+ * @return int The count of message threads
  */
-function check_for_initial_inquiry($user_id, $listing_id) {
-    //...
+function fetch_threads_count($user_id) {
+    $result = sqlQuery("SELECT COUNT(DISTINCT listing_id) AS thread_count FROM messages WHERE sender_id = ? OR receiver_id = ?", [$user_id, $user_id]);
+    $thread_count = $result->fetch(PDO::FETCH_COLUMN);
+    return $thread_count;
 }
 
 /**
  * get_notif_count
- * Returns the number of unread messages for a user
- * @param  int $receiver_id
+ * Fetches the number of unread messages for a given user
+ * @param  mixed $user_id
  * @return void
  */
-function get_notif_count($receiver_id) {
-    //...
+function get_notif_count($user_id) {
+    $result = sqlQuery("SELECT COUNT(*) FROM messages WHERE receiver_id = ? AND is_read = 0", [$user_id]);
+    return $result->fetch(PDO::FETCH_COLUMN);
+}
+
+/**
+ * send_message
+ * Sends a message to a user
+ * @param  mixed $message
+ * @return void
+ */
+function send_message($message) {
+    $result = sqlQuery(
+        "INSERT INTO messages (message_id, sender_id, receiver_id, listing_id, timestamp, content, is_read) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [
+            $message->message_id,
+            $message->sender_id,
+            $message->receiver_id,
+            $message->listing_id,
+            $message->timestamp,
+            $message->content,
+            $message->is_read
+        ]
+    );
+    
+    return $result;
+}
+
+/**
+ * check_initial_inquiry
+ * Checks if a user has already inquired about a listing
+ * @param  mixed $user_id
+ * @param  mixed $listing_id
+ * @return bool
+ */
+function check_initial_inquiry($user_id, $listing_id) {
+    $result = sqlQuery("SELECT * FROM messages WHERE sender_id = ? AND listing_id = ?", [$user_id, $listing_id]);
+    if($result->rowCount() > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }

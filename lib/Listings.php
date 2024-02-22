@@ -25,6 +25,7 @@ class Listing
     public $timestamp;
     public $view_count;
     public $sponsored_tier;
+    public $status;
 
     function __construct($id = null) 
     {
@@ -48,6 +49,8 @@ class Listing
                 $this->timestamp = $result['timestamp'];
                 $this->view_count = $result['view_count'];
                 $this->sponsored_tier = $result['sponsored_tier'];
+            } else {
+                $this->status = -1; // LISTING_DELETED
             }
         }
     }

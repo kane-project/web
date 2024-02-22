@@ -32,8 +32,8 @@
 		<section class="container py-5">
 			<div class="row d-flex justify-content-center">
 				<div class="col-lg-9 mx-auto">
-					<div class="card p-3 rounded-0 shadow" id="chat1">
-						<div class="card-body">
+					<div class="card p-4 rounded-0 shadow" id="chat1">
+						<div class="card-body" id="chat-container" style="max-height: 500px; overflow-y: auto;">
 
 							<div class="d-flex flex-row justify-content-start mb-4">
 								<img src="/uploads/profiles/default.png" alt="avatar 1" style="width: 45px; height: 100%;">
@@ -67,6 +67,27 @@
 	</main>
 
 	<?php include("footer.php"); ?>
+
+	<script>
+
+    // Function to scroll to the bottom of the chat container
+    function scrollToBottom() {
+        var chatContainer = document.getElementById('chat-container');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Scroll to bottom when the page loads
+    window.onload = function() {
+        scrollToBottom();
+    };
+
+    // Scroll to bottom when a new message is added (you can call this function after adding a new message)
+    function onNewMessageAdded() {
+        scrollToBottom();
+    }
+
+	</script>
+
 
 </body>
 </html>

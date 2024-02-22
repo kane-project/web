@@ -2,12 +2,33 @@
 	
 	require_once("lib/Listings.php");
 	require_once("lib/Users.php");
+	require_once("lib/Messaging.php");
 	session_start();
 
 	$listingID = fetch_listing_id($slug);
 	if(!$listingID) header("Location: /404.php");
 
 	$listing = new Listing($listingID);
+
+	if(isset($_POST['initial_inquiry']))
+	{
+		$message = new Message();
+		$message->message_id = generate_uuid();
+		$message->sender_id = $_SESSION['uid'];
+		$message->receiver_id = $listing->userid;
+		$message->listing_id = $listingID;
+		$message->content = $_POST['message'];
+		$message->timestamp = time();
+		$message->is_read = 0;
+
+		if(send_message($message)) {
+			header("Location: /account/messages?s=1");
+		}
+
+		else {
+			throw new Exception("Error Processing Request", 1);
+		}
+	}
 
 	$page = "$listing->title"; 
 	include("header.php"); 
@@ -97,7 +118,8 @@
 											// if it does, show link to inbox
 											// if it doesn't, show form to send message
 
-											echo '
+											if(!check_initial_inquiry($_SESSION['uid'], $listingID)) {
+												echo '
 									<div class="row">
 										<div class="col-sm-12">
 											<form method="POST" action="/listing/'.$slug.'">
@@ -111,6 +133,18 @@
 										</div>
 									</div>
 											';
+											} else {
+												echo '
+											<div class="row">	
+												<div class="col-sm-12">
+													<div class="alert bg-primary text-light rounded-0">
+														<i class="fa fa-info-circle"></i> You have already inquired about this listing.<br><br><a class="btn btn-sm btn-light rounded-0" href="/account/messages">Open Inbox</a>
+													</div>
+												</div>
+											</div>
+												';
+
+											}
 										}
 									?>
 									<div class="row">

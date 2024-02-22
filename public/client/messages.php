@@ -8,6 +8,8 @@
 		die(header("Location: /account/login"));
 
 	$user = new User($_SESSION['uid']);
+	$threads = fetch_all_threads($user->id, 0, fetch_threads_count($user->id));
+
 	$page = "My Messages";
 	include("header.php");
 ?>
@@ -34,6 +36,11 @@
 				<div class="row">
 					<div class="col-lg-12 mx-auto">
 						
+						<?php if(sizeof($threads)) { 
+							if(isset($_GET['s'])) {
+								echo "<div class='alert bg-success text-light rounded-0'><i class='fa fa-check-circle'></i>&nbsp; Message sent successfully.</div>";	
+							}
+						?>
 						<table class="table">
 							<thead class="table-dark">
 								<th>Listing</th>
@@ -41,16 +48,30 @@
 								<th></th>
 							</thead>
 							<tbody>
-								<tr>
-									<td><a class="text-primary" href="javascript:void()">Listing Message Unread</a>&nbsp; <i class="fa fa-bell text-danger"></i></td>
-									<td><b>Last unread message here</b></td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
-								</tr>
-								<tr>
-									<td><a class="text-primary" href="javascript:void()">Another Listing Name</a></td>
-									<td>The contents of a message that has already been opened...</td>
-									<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open</a></td>
-								</tr>
+								
+								<?php 
+
+									foreach($threads as $thread)
+									{
+										$listingName = "Deleted Listing";
+										$lastmsg = $thread->last_message->content;
+
+										if(!$thread->is_listing_deleted()) {
+											$listing = new Listing($thread->messages[0]->listing_id);
+											$listingName = $listing->title;
+										}
+
+										echo <<<_END
+										<tr>
+											<td>$listingName</td>
+											<td>$lastmsg</td>
+											<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open Chat</a></td>
+										</tr>
+_END;
+									}
+
+								?>					
+								
 							</tbody>
 						</table>
 
@@ -62,7 +83,14 @@
 								<a href="javascript:void()" class="btn btn-sm rounded-0 btn-dark">Next Page &rarr;</a>
 							</div>
 						</div>
+						<?php } else { ?>
 
+						<div class="alert bg-primary text-light rounded-0">
+							<i class="fa fa-info-circle"></i>&nbsp; You have no messages.
+						</div>
+
+						
+						<?php } ?>
 					</div>
 				</div>
 			</div>
