@@ -1,9 +1,17 @@
 <?php 
 	require_once("lib/Users.php");
+	require_once("lib/Listings.php");
+	require_once("lib/Messaging.php");	
 	session_start();
 
 	if(!isset($_SESSION['uid']))
 		die(header("Location: /account/login"));
+
+	
+	$listing = new Listing(fetch_listing_id($slug));
+	$thread = new MessageThread;
+	$thread->user_id = $_SESSION['uid'];
+	$thread->load_thread();
 
 	$user = new User($_SESSION['uid']);
 	$page = "View Message";
@@ -34,20 +42,42 @@
 				<div class="col-lg-9 mx-auto">
 					<div class="card p-4 rounded-0 shadow" id="chat1">
 						<div class="card-body" id="chat-container" style="max-height: 500px; overflow-y: auto;">
+							
+							<?php 
 
-							<div class="d-flex flex-row justify-content-start mb-4">
-								<img src="/uploads/profiles/default.png" alt="avatar 1" style="width: 45px; height: 100%;">
-								<div class="p-2 ms-3 border chat-outgoing">
-									<p class="small mb-0">When can we book?</p>
-								</div>
-							</div>
+								foreach($thread->messages as $msg)
+								{
+									if($msg->sender_id == $_SESSION['uid'])
+									{
+										echo <<<_END
+										<div class="d-flex flex-row justify-content-end mb-4">
+											<div class="p-2 me-3 border chat-incoming">
+												<p class="small mb-0">$msg->content</p>
+											</div>
+											<img src="/uploads/profiles/$user->profile_photo" style="width: 45px; height: 100%;">
+										</div>
+										
+_END;
+									}
+									else
+									{
+										$landlord = new User($msg->sender_id);
+										echo <<<_END
+										<div class="d-flex flex-row justify-content-start mb-4">
+											<img src="/uploads/profiles/$landlord->profile_photo" alt="avatar 1" style="width: 45px; height: 100%;">
+											<div class="p-2 ms-3 border chat-outgoing">
+												<p class="small mb-0">$msg->content</p>
+											</div>
+										</div>
+_END;
+									}
+								}
 
-							<div class="d-flex flex-row justify-content-end mb-4">
-								<div class="p-2 me-3 border chat-incoming">
-									<p class="small mb-0">Tomorrow.</p>
-								</div>
-								<img src="<?php echo "/uploads/profiles/".$user->profile_photo; ?>" alt="avatar 1" style="width: 45px; height: 100%;">
-							</div>
+							?>
+
+							
+
+							
 
 							<div class="form-outline">
 								<form>

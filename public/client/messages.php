@@ -55,23 +55,25 @@
 									{
 										$listingName = "Deleted Listing";
 										$lastmsg = $thread->last_message->content;
+										$listingId = 0;
 
 										if(!$thread->is_listing_deleted()) {
 											$listing = new Listing($thread->messages[0]->listing_id);
 											$listingName = $listing->title;
+											$listingId = $listing->slug;
 										}
 
 										echo <<<_END
 										<tr>
 											<td>$listingName</td>
 											<td>$lastmsg</td>
-											<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/{threadid}">Open Chat</a></td>
+											<td><a class="btn btn-sm rounded-0 btn-dark" href="/account/message/$listingId">Open Chat</a></td>
 										</tr>
 _END;
 									}
 
 								?>					
-								
+
 							</tbody>
 						</table>
 
