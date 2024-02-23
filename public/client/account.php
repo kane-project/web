@@ -7,7 +7,7 @@
 		die(header("Location: /account/login"));
 
 	$user = new User($_SESSION['uid']);
-	$page = "My Account";
+	$page = "Account Dashboard";
 	include("header.php"); 
 
 ?>
@@ -29,8 +29,6 @@
 				</div>
 			</div>
 		</section>
-
-		
 		
 	</main>
 

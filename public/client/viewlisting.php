@@ -10,6 +10,8 @@
 
 	$listing = new Listing($listingID);
 
+	// Update listing Stats here
+
 	if(isset($_POST['initial_inquiry']))
 	{
 		$message = new Message();

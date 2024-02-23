@@ -31,8 +31,8 @@
                                     $notifs = '';
 
                                 echo '
+                                    <a class="dropdown-item" href="/account">Account Dashboard</a>
                                     <a class="dropdown-item" href="/account/messages">Inbox '.$notifs.'</a>
-                                    <a class="dropdown-item" href="/account">Settings</a>
                                     <a class="dropdown-item" href="/account/logout">Logout</a>
                                 ';
                             }

@@ -2,7 +2,7 @@
 
 The KANE Project's website. Real estate listings for newcomers to Canada.
 
-<img src="https://progress-bar.dev/65/?title=Progress">
+<img src="https://progress-bar.dev/65/?title=Project Progress">
 
 # Contribution Guide
 
@@ -13,7 +13,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 # TODO for Kane-Web
 
-## L'chronologie
+## Tier 0
 
 - [x] Landlord Registration + Login Initial Security Audit
 - [x] Landlord Password Reset
@@ -21,30 +21,35 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Client Login
 - [x] Client Registration {Marketing Opt-in, Email Verification}
 - [x] Messaging System {Initial Inquiry, Direct Messaging}
-- [ ] Listing Analytics Backend
+- [ ] Listing Analytics Collection
 - [ ] Listing Stats View Page
-- [ ] Landlord Account Settings
-- [ ] Client Account Settings
+- [ ] Account Settings for Client & Portal
 - [ ] Client Password Reset
 - [ ] Client Account Purchases {Verification Badges}
-- [ ] Add AJAX to Messaging System
 - [ ] Report Submissions {Listings, Users}
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
 - [ ] Administrator Console
+- [ ] Social Media Setup
 - [ ] Marketing Emails
+
+## Tier 1
+
+- [ ] Edit Listing Photos (in Portal)
+- [ ] Delete Conversations
+- [ ] Intuitive Deletion Functions
+- [ ] Add AJAX to Messaging System
+- [ ] UI/UX Optimizations and Testing
 
 ## Pre-Deployment Tasks
 
-- [ ] UI/UX Optimizations and Testing
-- [ ] Optimize Messaging System {Frontend AND Backend}
+- [ ] RDS Setup
+- [ ] CI/CD Setup
 - [ ] Error Logging Management
 - [ ] Initial Security Audit
 - [ ] Site Tests
 - [ ] Google Analytics & reCaptcha Integrations
 - [ ] Add reCaptcha
 - [ ] Periodic Archive Data Cleanup
-- [ ] RDS Setup
-- [ ] CI/CD Setup
 
 ## Pre-Audit Tasks
 
