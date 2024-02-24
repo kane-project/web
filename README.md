@@ -23,7 +23,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Messaging System {Initial Inquiry, Direct Messaging}
 - [x] Listing Analytics Collection
 - [x] Listing Stats View Page
-- [ ] Client Account Settings {Edit Account Info, Opt-out of Marketing}
+- [x] Client Account Settings {Edit Account Info, Opt-out of Marketing}
 - [ ] Portal Account Settings {Edit Account Info}
 - [ ] Client Password Reset
 - [ ] Report Submissions {Listings, Users}
@@ -36,6 +36,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 - [ ] Edit Listing Photos (in Portal)
 - [ ] Delete Conversations
+- [ ] Show deleted profiles in conversations
 - [ ] Intuitive Deletion Functions
 - [ ] Add AJAX to Messaging System
 - [ ] UI/UX Optimizations and Testing

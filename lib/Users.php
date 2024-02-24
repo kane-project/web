@@ -161,6 +161,17 @@ function update_user($id, $newdata) {
 }
 
 /**
+ * delete_user
+ * Cleans up user data
+ * @param  int $userid
+ * @return void
+ */
+function delete_user($userid) {
+    //...
+}
+
+
+/**
  * upload_user_photo
  * Attempts to upload a user photo
  * @param  array $photo
@@ -293,6 +304,36 @@ function add_to_emailist($userid, $email) {
         return false;
 }
 
+/**
+ * is_in_emailist
+ * Checks if an email is in the KANE Project mailing list
+ * @param  mixed $email
+ * @return void
+ */
+function is_in_emailist($email) {
+    $result = sqlQuery("SELECT * FROM emailist WHERE email = ?", [$email]);
+    
+    if($result->rowCount() > 0)
+        return true;
+    else
+        return false;
+}
+
+/**
+ * remove_from_emailist
+ *  Removes a user from the KANE Project mailing list
+ * @param  mixed $email
+ * @return void
+ */
+function remove_from_emailist($email) {
+    $result = sqlQuery("DELETE FROM emailist WHERE email = ?", [$email]);
+    
+    if($result)
+        return true;
+    else
+        return false;
+}
+
 #
 # Administration Functions, mostly for admin use
 #
@@ -331,15 +372,5 @@ function fetch_user_count($type, $verified, $banned) {
  * @return void
  */
 function ban_user($userid) {
-    //...
-}
-
-/**
- * delete_user
- * Cleans up user data
- * @param  mixed $id
- * @return void
- */
-function delete_user($id) {
     //...
 }
