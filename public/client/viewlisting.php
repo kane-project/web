@@ -26,6 +26,7 @@
 		$statinfo = new StatPiece();
 		$statinfo->listing_id = $listingID;
 		$statinfo->is_user = isset($_SESSION['uid']) ? 1 : 0;
+		$statinfo->timestamp = time();
 		
 		try 
 		{

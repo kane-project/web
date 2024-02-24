@@ -9,9 +9,17 @@
     if(!isset($_SESSION['landlord_id']))
         die(header("Location: /portal/login"));
 
+    if(!isset($listingid)) die(header("Location: /portal/listings"));
+    $listing = new Listing(fetch_listing_id($listingid));
+
     $page = "View Listing Statistics";
     $user = new User($_SESSION['landlord_id']);
     include("header.php");
+
+    // Make meaningful use of the data we have here
+    
+    $stats = fetch_listing_views($listingid);
+    $viewCount = fetch_view_count($listingid);
 
 ?>
 <body>
@@ -29,7 +37,6 @@
             </div>
         </section>
 
-        
     </main>
 
     <?php include("footer.php"); ?>

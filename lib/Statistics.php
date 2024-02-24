@@ -9,6 +9,7 @@ class StatPiece
     public $listing_id;
     public $is_user;
     public $geoloc;
+    public $timestamp;
     
     public function __construct($listing_id = 0)
     {
@@ -18,6 +19,7 @@ class StatPiece
                 $this->listing_id = $result['listing_id'];
                 $this->is_user = $result['is_user'];
                 $this->geoloc = $result['geoloc'];
+                $this->timestamp = $result['timestamp'];
             }
         }
     }
@@ -30,8 +32,8 @@ class StatPiece
  * @return bool
  */
 function add_listing_view($statinfo) {
-    $query = "INSERT INTO `listing_views` (listing_id, is_user, geoloc) VALUES (?, ?, ?)";
-    $params = [$statinfo->listing_id, $statinfo->is_user, $statinfo->geoloc];
+    $query = "INSERT INTO `listing_views` (listing_id, is_user, geoloc, timestamp) VALUES (?, ?, ?, ?)";
+    $params = [$statinfo->listing_id, $statinfo->is_user, $statinfo->geoloc, $statinfo->timestamp];
     $result = sqlQuery($query, $params);
     if(!$result) return false;
     return true;
@@ -51,6 +53,7 @@ function fetch_listing_views($listing_id) {
         $view->listing_id = $row['listing_id'];
         $view->is_user = $row['is_user'];
         $view->geoloc = $row['geoloc'];
+        $view->timestamp = $row['timestamp'];
         $views[] = $view;
     }
     return $views;
