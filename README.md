@@ -45,6 +45,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [ ] RDS Setup
 - [ ] CI/CD Setup
 - [ ] Error Logging Management
+- [ ] Google Maps API Key Restriction Management
 - [ ] Initial Security Audit
 - [ ] Site Tests
 - [ ] Google Analytics & reCaptcha Integrations
