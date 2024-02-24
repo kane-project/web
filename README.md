@@ -22,7 +22,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Client Registration {Marketing Opt-in, Email Verification}
 - [x] Messaging System {Initial Inquiry, Direct Messaging}
 - [x] Listing Analytics Collection
-- [ ] Listing Stats View Page
+- [x] Listing Stats View Page
 - [ ] Client Account Settings {Edit Account Info, Opt-out of Marketing}
 - [ ] Portal Account Settings {Edit Account Info}
 - [ ] Client Password Reset

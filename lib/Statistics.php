@@ -46,7 +46,7 @@ function add_listing_view($statinfo) {
  * @return array of StatPiece objects
  */
 function fetch_listing_views($listing_id) {
-    $result = sqlQuery("SELECT * FROM `listing_views` WHERE listing_id = ?", [$listing_id]);
+    $result = sqlQuery("SELECT * FROM `listing_views` WHERE listing_id = ? ORDER BY timestamp DESC", [$listing_id]);
     $views = [];
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $view = new StatPiece();

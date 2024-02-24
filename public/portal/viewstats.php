@@ -37,7 +37,6 @@
     }
 
 ?>
-<head></head>
 <body>
 
     <?php include("navbar.php"); ?>
@@ -56,30 +55,34 @@
         <section class="container">
             <div class="row py-3">
 
-                <div class="col-lg-6">
-                    <div class="card-rounded-0 shadow p-3">
-                        <div class="card-body">
-                            <!-- Show Line Chart here -->
+                <div class="col-lg-6 mx-auto">
+                    <div class="card rounded-0 border-0">
+                        <div class="card-title border-0">
+                            <h3 class="text-center">Top View Locations</h3>
                         </div>
-                    </div>
-                    <div class="card rounded-0 shadow bg-primary text-light p-3">
                         <div class="card-body">
-                            <h1 class="text-light"><?php echo $viewCount; ?></h1>
-                            <h3 class="card-title text-light">Total Listing Views</h3>
+                            <div id="map" style="height: 400px;"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mx-auto">
+                    <div class="row">
+                        <div class="col-lg-8 mt-5 mx-auto">
+                            <div class="card rounded-0 shadow bg-primary text-light p-3">
+                                <div class="card-body">
+                                    <h1 class="text-light"><?php echo $viewCount; ?></h1>
+                                    <h3 class="card-title text-light">Total Listing Views</h3>
+                                    <br><br>
+                                    <p class="text-light">More data and insights on the way!</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <div class="card rounded-0 shadow p-2">
-                        <div class="card-body">
-                            <div id="map" style="height: 400px;"></div>
-                        </div>
-                        <div class="card-footer border-0 bg-light">
-                            <p class="text-center">Top View Locations</p>
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
         </section>
@@ -89,6 +92,7 @@
     <?php include("footer.php"); ?>
     <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>"></script>
     <script>
+    // Initialize Google Maps
     var map;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -105,9 +109,8 @@
         <?php endforeach; ?>
         console.log("Map initialized");
     }
-
-    // Call the initMap function when the page loads
     google.maps.event.addDomListener(window, 'load', initMap);
+
     </script>
 
 </body>
