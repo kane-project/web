@@ -3,6 +3,11 @@
 	require_once("lib/Listings.php");
 	require_once("lib/Users.php");
 	require_once("lib/Messaging.php");
+	require_once("lib/Statistics.php");
+	require_once("vendor/autoload.php");
+
+	use GeoIp2\Database\Reader;
+
 	session_start();
 
 	$listingID = fetch_listing_id($slug);
@@ -11,6 +16,27 @@
 	$listing = new Listing($listingID);
 
 	// Update listing Stats here
+	// If the sponsorship tier is greater than Bronze (Tier 1)
+
+	if($listing->sponsored_tier > 1) 
+	{
+		$databaseFile = 'lib/third_party/GeoLite2-City.mmdb';
+		$reader = new Reader($databaseFile);
+
+		$statinfo = new StatPiece();
+		$statinfo->listing_id = $listingID;
+		$statinfo->is_user = isset($_SESSION['uid']) ? 1 : 0;
+		
+		try 
+		{
+			$geoIpInfo = $reader->city($_SERVER['REMOTE_ADDR']);
+			$statinfo->geoloc = $geoIpInfo->city->name.' '.$geoIpInfo->country->name;
+		} catch (Exception $e) {
+			$statinfo->geoloc = "Unknown Location, Unknown Country";
+		}
+
+		add_listing_view($statinfo);
+	}
 
 	if(isset($_POST['initial_inquiry']))
 	{

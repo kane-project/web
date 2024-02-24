@@ -52,6 +52,12 @@ CREATE TABLE `listing_reports` (
   PRIMARY KEY (`reportid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `listing_views` (
+  `listing_id` varchar(36) DEFAULT NULL,
+  `is_user` tinyint(1) DEFAULT NULL,
+  `geoloc` varchar(255) DEFAULT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `messages` (
   `message_id` varchar(36) NOT NULL,
   `sender_id` varchar(36) DEFAULT NULL,
