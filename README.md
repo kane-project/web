@@ -26,10 +26,11 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Client Account Settings {Edit Account Info, Opt-out of Marketing}
 - [x] Portal Account Settings {Edit Account Info}
 - [x] Client Password Reset
-- [ ] Report Submissions {Listings, Users}
+- [x] Contact Page
+- [ ] Report Listing
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
-- [ ] Administrator Console
-- [ ] Social Media Setup
+- [ ] Site Admin Dashboard
+- [ ] Social Media Accounts
 - [ ] Marketing Emails
 
 ## Tier 1
@@ -39,19 +40,19 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [ ] Messaging Thread Management
 - [ ] Messaging Deleted Profiles & Deleted Listings
 - [ ] Add AJAX to Messaging System
+- [ ] Add reCaptcha to Spam-Prone Forms
 - [ ] Detailed Account Customization & Preferences
 - [ ] UI/UX Optimizations and Testing
 
 ## Pre-Deployment Tasks
 
+- [x] Google Maps API Key Restriction Management
 - [ ] RDS Setup
 - [ ] CI/CD Setup
 - [ ] Error Logging Management
-- [ ] Google Maps API Key Restriction Management
 - [ ] Initial Security Audit
 - [ ] Site Tests
-- [ ] Google Analytics & reCaptcha Integrations
-- [ ] Add reCaptcha
+- [ ] Google Analytics Integration
 - [ ] Periodic Archive Data Cleanup
 
 ## Pre-Audit Tasks

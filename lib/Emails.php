@@ -63,6 +63,47 @@ function send_transactional_email($mailDetails, $name, $to_email, $subject, $mai
 }
 
 /**
+ * send_internal_email
+ * Sends an internal email (mostly contact forms) to the KANE Project team
+ * @return bool
+ */
+function send_internal_email($name, $email, $subject, $message, $uid = 0) {
+	$mail = new PHPMailer(true);
+    loadEnv();
+
+    try 
+    {
+        $mail->isSMTP();
+        $mail->Host       = $_ENV['SMTP_HOST'];
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $_ENV['SMTP_USER'];
+        $mail->Password   = $_ENV['SMTP_PASS'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = $_ENV['SMTP_PORT'];
+        $mail->setFrom('no-reply@kaneproject.ca', 'Contact Form Entry');
+        $mail->addAddress('info@kaneproject.ca', 'info@kaneproject.ca');
+        $mail->addReplyTo('info@kaneproject.ca', 'info@kaneproject.ca');
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+		$uid_context = $uid != 0 ? "User ID: <a target='_blank' style='text-decoration:none;' href='/admin/user/$uid'></a>" : "";
+        $mail->Body    = <<<_END
+		<h3>New Contact Form Entry</h3>
+		<p><strong>Name:</strong> $name</p>
+		<p><strong>Email:</strong> $email</p>
+		<p><strong>Message:</strong> $message</p>
+		<p><strong>$uid_context</strong></p>
+_END;
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        $mail->send();
+    } catch (Exception $e) { 
+        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}"); 
+        return false;
+    }
+
+    return true;
+}
+
+/**
  * build_transactional_email
  * Builds a transactional email
  * @param  KaneMail $mailDetails

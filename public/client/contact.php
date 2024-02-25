@@ -1,10 +1,28 @@
 <?php 
 	
 	require_once("lib/Emails.php");
+	require_once("lib/Users.php");
 
 	session_start();
 	$page = "Contact";
 	include("header.php"); 
+
+	if(isset($_POST['send_message']))
+	{
+		$name = $_POST['name'];
+		$email = $_POST['email'];
+		$subject = $_POST['subject'];
+		$message = $_POST['message'];
+		$uid = 0;
+
+		if(isset($_SESSION['uid'])) $uid = $_SESSION['uid'];
+		if(isset($_SESSION['landlord_id'])) $uid = $_SESSION['landlord_id'];
+
+		if(send_internal_email($name, $email, $subject, $message, $uid))
+			die(header("Location: /contact/?s=1#contact-form"));
+		else
+			die(header("Location: /contact/?e=1#contact-form"));
+	}
 
 ?>
 
@@ -26,7 +44,7 @@
 			</div>
 		</section>
 
-		<section class="contact">
+		<section class="contact" id="contact-form">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
@@ -36,33 +54,45 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="col-sm-12 section-t8">
 						<div class="row">
 							<div class="col-md-7">
 								<form action="/contact" method="POST" role="form">
 									<div class="row">
+										<?php 
+											if(isset($_GET['s']))
+												echo '
+												<div class="col-md-12">
+													<div class="alert bg-success text-light rounded-0" role="alert">
+														<strong>Success!</strong> Your message has been sent.
+													</div>
+												</div>
+											';
+												
+										?>
 										<div class="col-md-6 mb-3">
 											<div class="form-group">
-												<input type="text" name="name" class="form-control form-control-lg form-control-a" placeholder="Your Name" required>
+												<input type="text" name="name" class="form-control rounded-0" placeholder="Your Name" required>
 											</div>
 										</div>
 										<div class="col-md-6 mb-3">
 											<div class="form-group">
-												<input name="email" type="email" class="form-control form-control-lg form-control-a" placeholder="Your Email" required>
+												<input name="email" type="email" class="form-control rounded-0" placeholder="Your Email" required>
 											</div>
 										</div>
 										<div class="col-md-12 mb-3">
 											<div class="form-group">
-												<input type="text" name="subject" class="form-control form-control-lg form-control-a" placeholder="Subject" required>
+												<input type="text" name="subject" class="form-control rounded-0" placeholder="Subject" required>
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="form-group">
-												<textarea name="message" class="form-control" name="message" cols="45" rows="8" placeholder="Message" required></textarea>
+												<textarea name="message" style="resize:none;" class="form-control rounded-0" name="message" cols="45" rows="8" placeholder="Message" required></textarea>
 											</div>
 										</div>
 										<div class="col-md-12 mt-3 text-center">
-											<button type="submit" class="btn rounded-0 btn-lg btn-outline-dark">Send Message</button>
+											<button type="submit" name="send_message" class="btn rounded-0 btn-lg btn-outline-dark">Send Message</button>
 										</div>
 									</div>
 								</form>
@@ -81,7 +111,7 @@
 												<span class="color-a">info@kaneproject.ca</span>
 											</p>
 											<p class="mb-1">Phone -
-												<span class="color-a">{TODO! PHONENUM}</span>
+												<span class="color-a">(647) 000-0000</span>
 											</p>
 										</div>
 									</div>
@@ -140,6 +170,7 @@
 							</div>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</section>
