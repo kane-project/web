@@ -34,6 +34,7 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 ## Tier 1
 
+- [ ] Clean Account Deletion {Client, Portal}
 - [ ] Edit Listing Photos
 - [ ] Messaging Thread Management
 - [ ] Messaging Deleted Profiles & Deleted Listings
