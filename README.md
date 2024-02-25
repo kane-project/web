@@ -2,7 +2,7 @@
 
 The KANE Project's website. Real estate listings for newcomers to Canada.
 
-<img src="https://progress-bar.dev/75/?title=Project Progress">
+<img src="https://progress-bar.dev/80/?title=Project Progress">
 
 # Contribution Guide
 
@@ -37,16 +37,17 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 - [ ] Clean Account Deletion {Client, Portal}
 - [ ] Edit Listing Photos
+- [ ] Detailed Account Customization & Preferences
 - [ ] Messaging Thread Management
 - [ ] Messaging Deleted Profiles & Deleted Listings
 - [ ] Add AJAX to Messaging System
 - [ ] Add reCaptcha to Spam-Prone Forms
-- [ ] Detailed Account Customization & Preferences
 - [ ] UI/UX Optimizations and Testing
 
-## Pre-Deployment Tasks
+## Pre-Release Tasks
 
 - [x] Google Maps API Key Restriction Management
+- [ ] Simulate Multi-Location Listing Views
 - [ ] RDS Setup
 - [ ] CI/CD Setup
 - [ ] Error Logging Management
