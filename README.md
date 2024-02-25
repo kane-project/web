@@ -2,7 +2,7 @@
 
 The KANE Project's website. Real estate listings for newcomers to Canada.
 
-<img src="https://progress-bar.dev/69/?title=Project Progress">
+<img src="https://progress-bar.dev/75/?title=Project Progress">
 
 # Contribution Guide
 
@@ -24,8 +24,8 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Listing Analytics Collection
 - [x] Listing Stats View Page
 - [x] Client Account Settings {Edit Account Info, Opt-out of Marketing}
-- [ ] Portal Account Settings {Edit Account Info}
-- [ ] Client Password Reset
+- [x] Portal Account Settings {Edit Account Info}
+- [x] Client Password Reset
 - [ ] Report Submissions {Listings, Users}
 - [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
 - [ ] Administrator Console
@@ -34,11 +34,11 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 ## Tier 1
 
-- [ ] Edit Listing Photos (in Portal)
-- [ ] Delete Conversations
-- [ ] Show deleted profiles in conversations
-- [ ] Intuitive Deletion Functions
+- [ ] Edit Listing Photos
+- [ ] Messaging Thread Management
+- [ ] Messaging Deleted Profiles & Deleted Listings
 - [ ] Add AJAX to Messaging System
+- [ ] Detailed Account Customization & Preferences
 - [ ] UI/UX Optimizations and Testing
 
 ## Pre-Deployment Tasks

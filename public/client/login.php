@@ -125,11 +125,34 @@
                                             ';
                                         }
 
+                                        if(isset($_GET['ps'])) {
+                                            echo '
+                                                <div class="mb-3">
+                                                    <div class="alert bg-success text-light rounded-0">
+                                                        <i class="fa fa-info-circle"></i>&nbsp; Password reset successfully! Please login.
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }
+
                                         if(isset($_GET['rs'])) {
                                             echo '
                                                 <div class="mb-3">
                                                     <div class="alert bg-success text-light rounded-0">
                                                         <i class="fa fa-info-circle"></i>&nbsp; Registration successful. Please verify your email.
+                                                        <div class="mt-2">
+                                                            Don\'t forget to check your spam folder!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }
+
+                                        if(isset($_GET['prs'])) {
+                                            echo '
+                                                <div class="mb-3">
+                                                    <div class="alert bg-success text-light rounded-0">
+                                                        <i class="fa fa-info-circle"></i>&nbsp; Password reset email sent successfully.
                                                         <div class="mt-2">
                                                             Don\'t forget to check your spam folder!
                                                         </div>

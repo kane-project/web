@@ -1,66 +1,66 @@
 <?php
 
-require_once("lib/Users.php");
-loadEnv();
-session_start();
+	require_once("lib/Users.php");
+	loadEnv();
+	session_start();
 
-if (!isset($_SESSION['uid']))
-	die(header("Location: /account/login"));
+	if (!isset($_SESSION['uid']))
+		die(header("Location: /account/login"));
 
-$user = new User($_SESSION['uid']);
-$page = "Account Dashboard";
-include("header.php");
+	$user = new User($_SESSION['uid']);
+	$page = "Account Dashboard";
+	include("header.php");
 
-// Process Changes Here:
+	// Process Changes Here:
 
-if (isset($_POST['update_info'])) {
-	if (!is_email_phone_registered('NULL', $_POST['phone'])) {
-		$user->first_name = $_POST['first_name'];
-		$user->last_name = $_POST['last_name'];
-		$user->address = $_POST['address'];
-		$user->phone = $_POST['phone'];
-		update_user($user->id, $user);
-		die(header("Location: /account?uis=1"));
-	}
-
-	// I hate redundant code, but I'm not sure how to refactor this without breaking the logic.
-	elseif ($user->phone == $_POST['phone']) {
-		$user->first_name = $_POST['first_name'];
-		$user->last_name = $_POST['last_name'];
-		$user->address = $_POST['address'];
-		$user->phone = $_POST['phone'];
-		update_user($user->id, $user);
-		die(header("Location: /account?uis=1"));
-	} else {
-		die(header("Location: /account?phne=1"));
-	}
-}
-
-if (isset($_POST['update_password'])) {
-	if ($_POST['new_password'] == $_POST['confirm_password']) {
-		if (password_verify($_POST['password'], $user->password)) {
-			$user->password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+	if (isset($_POST['update_info'])) {
+		if (!is_email_phone_registered('NULL', $_POST['phone'])) {
+			$user->first_name = $_POST['first_name'];
+			$user->last_name = $_POST['last_name'];
+			$user->address = $_POST['address'];
+			$user->phone = $_POST['phone'];
 			update_user($user->id, $user);
-			die(header("Location: /account?upwd=1"));
-		} else {
-			die(header("Location: /account?opwd=1"));
+			die(header("Location: /account?uis=1"));
 		}
-	} else {
-		die(header("Location: /account?cpwd=1"));
-	}
-}
 
-if (isset($_POST['update_marketing_prefs'])) {
-	if ($_POST['marketing_prefs'] == "on") {
-		if (!add_to_emailist($user->id, $user->email)) {
-			error_log("Error: Failed to add user " . $user->id . " to email list.");
-		}
-	} else {
-		if (!remove_from_emailist($user->email)) {
-			error_log("Error: Failed to remove user " . $user->id . " from email list.");
+		// I hate redundant code, but I'm not sure how to refactor this without breaking the logic.
+		elseif ($user->phone == $_POST['phone']) {
+			$user->first_name = $_POST['first_name'];
+			$user->last_name = $_POST['last_name'];
+			$user->address = $_POST['address'];
+			$user->phone = $_POST['phone'];
+			update_user($user->id, $user);
+			die(header("Location: /account?uis=1"));
+		} else {
+			die(header("Location: /account?phne=1"));
 		}
 	}
-}
+
+	if (isset($_POST['update_password'])) {
+		if ($_POST['new_password'] == $_POST['confirm_password']) {
+			if (password_verify($_POST['password'], $user->password)) {
+				$user->password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+				update_user($user->id, $user);
+				die(header("Location: /account?upwd=1"));
+			} else {
+				die(header("Location: /account?opwd=1"));
+			}
+		} else {
+			die(header("Location: /account?cpwd=1"));
+		}
+	}
+
+	if (isset($_POST['update_marketing_prefs'])) {
+		if ($_POST['marketing_prefs'] == "on") {
+			if (!add_to_emailist($user->id, $user->email)) {
+				error_log("Error: Failed to add user " . $user->id . " to email list.");
+			}
+		} else {
+			if (!remove_from_emailist($user->email)) {
+				error_log("Error: Failed to remove user " . $user->id . " from email list.");
+			}
+		}
+	}
 
 ?>
 

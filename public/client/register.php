@@ -176,7 +176,7 @@
                                         <button type="submit" name="register" class="btn col-8 btn-dark rounded-0">Register</button>
                                         <br>
                                         <div class="mt-2">
-                                            Already registered? <a href="/reset-password" class="mt-2 text-primary">Login</a>
+                                            Already registered? <a href="/account/login" class="mt-2 text-primary">Login</a>
                                         </div>
                                     </div>
                                 </form>
