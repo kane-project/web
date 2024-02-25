@@ -13,7 +13,7 @@
 		$email = $_POST['email'];
 		$subject = $_POST['subject'];
 		$message = $_POST['message'];
-		$uid = 0;
+		$uid = '0';
 
 		if(isset($_SESSION['uid'])) $uid = $_SESSION['uid'];
 		if(isset($_SESSION['landlord_id'])) $uid = $_SESSION['landlord_id'];

@@ -67,7 +67,7 @@ function send_transactional_email($mailDetails, $name, $to_email, $subject, $mai
  * Sends an internal email (mostly contact forms) to the KANE Project team
  * @return bool
  */
-function send_internal_email($name, $email, $subject, $message, $uid = 0) {
+function send_internal_email($name, $email, $subject, $message, $uid = '0') {
 	$mail = new PHPMailer(true);
     loadEnv();
 
@@ -85,7 +85,7 @@ function send_internal_email($name, $email, $subject, $message, $uid = 0) {
         $mail->addReplyTo('info@kaneproject.ca', 'info@kaneproject.ca');
         $mail->isHTML(true);
         $mail->Subject = $subject;
-		$uid_context = $uid != 0 ? "User ID: <a target='_blank' style='text-decoration:none;' href='/admin/user/$uid'></a>" : "";
+		$uid_context = $uid != '0' ? "User ID: <a target='_blank' style='text-decoration:none;color:#fff;' href='/admin/user/$uid'></a>" : "";
         $mail->Body    = <<<_END
 		<h3>New Contact Form Entry</h3>
 		<p><strong>Name:</strong> $name</p>
