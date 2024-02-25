@@ -13,12 +13,8 @@
 		$email = $_POST['email'];
 		$subject = $_POST['subject'];
 		$message = $_POST['message'];
-		$uid = '0';
 
-		if(isset($_SESSION['uid'])) $uid = $_SESSION['uid'];
-		if(isset($_SESSION['landlord_id'])) $uid = $_SESSION['landlord_id'];
-
-		if(send_internal_email($name, $email, $subject, $message, $uid))
+		if(send_internal_email($name, $email, $subject, $message))
 			die(header("Location: /contact/?s=1#contact-form"));
 		else
 			die(header("Location: /contact/?e=1#contact-form"));
