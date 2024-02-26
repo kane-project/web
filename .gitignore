@@ -1,7 +1,6 @@
 # Folders
 
 .vscode
-.installed
 /uploads
 /templates
 /vendor
@@ -11,3 +10,4 @@
 # Files
 
 .env
+.installed
