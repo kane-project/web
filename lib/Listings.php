@@ -349,6 +349,20 @@ function fetch_listing_photos($listingId) {
     }
 }
 
+function delete_listing_photos($listingId) {
+    // Delete photos
+    $photos = fetch_listing_photos($listingId);
+    foreach ($photos as $photo) {
+        $target_file = "./uploads/listings/" . $photo['photo'];
+        if (!unlink($target_file)) return false;
+    }
+    
+    // Delete photos from database
+    $result = sqlQuery("DELETE FROM `listingphotos` WHERE listingid = ?", [$listingId]);
+    if (!$result) return false;
+    else return true;
+}
+
 /**
  * fetch_listing_id
  * Fetches the id of a listing, needs a URL slug

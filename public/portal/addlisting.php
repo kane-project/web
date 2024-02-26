@@ -30,13 +30,6 @@
         $listing->timestamp = time();
         $listing->view_count = 0;
 
-        
-        if(!add_listing_photos($listing->id, $_FILES['images']))
-        {
-            error_log($_FILES['images']['error']);
-            die(header("Location: /portal/new?phe=1"));
-        }
-
         if ($_POST['sponsored_tier'] !== '0') 
         {
             $stripe_token = isset($_POST['payment_method']) ? $_POST['payment_method'] : null;
@@ -57,13 +50,18 @@
 
             if (!process_payment($stripe_token, $amount))
             {
-                // super sussy way to remove listing photos
-                // needs to be fixed during refactoring
-                delete_listing($listing->id); 
+                delete_listing_photos($listing->id);
                 die(header("Location: /portal/new?pye=1"));
             }
         }
-    
+
+        
+        if(!add_listing_photos($listing->id, $_FILES['images']))
+        {
+            error_log($_FILES['images']['error']);
+            die(header("Location: /portal/new?phe=1"));
+        }
+        
         if (!add_listing($listing))
             die(header("Location: /portal/new?lfe=1"));
         else
