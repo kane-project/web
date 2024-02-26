@@ -65,15 +65,15 @@
                             switch($listing->sponsored_tier) {
                                 case 1:
                                     $sponsorship_tier = "Bronze &nbsp;<i class='text-bronze fa fa-award'></i>";
-                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> View Stats</a>";
+                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> Stats</a>";
                                     break;
                                 case 2:
                                     $sponsorship_tier = "Silver &nbsp;<i class='text-silver fa fa-award'></i>";
-                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> View Stats</a>";
+                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> Stats</a>";
                                     break;
                                 case 3:
                                     $sponsorship_tier = "Gold &nbsp;<i class='text-gold fa fa-award'></i>";
-                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> View Stats</a>";
+                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> Stats</a>";
                                     break;
                             }
 
@@ -87,7 +87,7 @@
                                     <p class="card-text"><i class="fas fa-bath"></i>&nbsp; $listing->num_baths</p>
                                     <p class="card-text"><i class="fas fa-calendar-alt"></i>&nbsp; $listing_date</p>
                                     <p class="card-text"><i class="fas fa-bolt"></i>&nbsp; $sponsorship_tier</p>
-                                    <a href="/portal/listing/$listing->id" class="btn btn-dark rounded-0"><i class="fas fa-pen"></i>&nbsp; Edit Details</a>&nbsp;
+                                    <a href="/portal/listing/$listing->id" class="btn btn-dark rounded-0"><i class="fas fa-pen"></i>&nbsp; Edit</a>&nbsp;
                                     $stats_button&nbsp;
                                     <a href="#" class="btn btn-danger rounded-0" data-bs-toggle="modal" data-listing-id="$listing->id"><i class="fas fa-trash"></i> Delete</a>
                                 </div>
