@@ -32,7 +32,7 @@
 
         if(!add_listing_photos($listing->id, $_FILES['images']))
         {
-            error_log($_FILES['images']['error']);
+            error_log($_FILES['images']['errors']);
             die(header("Location: /portal/new?phe=1"));
         }
 
