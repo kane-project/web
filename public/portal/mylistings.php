@@ -28,7 +28,7 @@
                 </div>
             </div>
             <?php
-                if(isset($_GET['success']))
+                if(isset($_GET['s']))
                 {
                     echo '<div class="row"><div class="col-lg-6 col-sm-12 mx-auto"><div class="alert alert-success rounded-0 alert-dismissible fade show" role="alert">
                             <strong>Success!</strong> Your listing has been successfully published!
