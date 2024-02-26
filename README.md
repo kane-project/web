@@ -28,10 +28,10 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 - [x] Client Password Reset
 - [x] Contact Page
 - [ ] Report Listing
-- [ ] Info Pages {About, Contact, Safety, Terms, Privacy, Refunds, Footer Links}
-- [ ] Site Admin Dashboard
+- [ ] Info Pages {About, Safety Guide, Terms of Service, Privacy Policy, Social Media Links}
+- [ ] Administrator Panel
 - [ ] Social Media Accounts
-- [ ] Marketing Emails
+- [ ] Marketing Emails (CRON Jobs)
 
 ## Tier 1
 
@@ -46,11 +46,9 @@ The KANE Project's website. Real estate listings for newcomers to Canada.
 
 ## Pre-Release Tasks
 
-- [x] Google Maps API Key Restriction Management
-- [ ] Simulate Multi-Location Listing Views
-- [ ] RDS Setup
-- [ ] CI/CD Setup
-- [ ] Error Logging Management
+- [x] Simulate Multi-Location Listing Views
+- [x] CI/CD Setup
+- [x] Error Logging Management
 - [ ] Initial Security Audit
 - [ ] Site Tests
 - [ ] Google Analytics Integration
