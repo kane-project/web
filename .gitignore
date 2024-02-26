@@ -1,6 +1,7 @@
 # Folders
 
 .vscode
+.installed
 /uploads
 /templates
 /vendor
