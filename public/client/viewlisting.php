@@ -238,18 +238,19 @@
 
 								<div class="row">
 									<div class="col-sm-12">
-										<div id="map-container">
+										<div id="map-container" style="overflow:hidden; padding-bottom:56.25%; position:relative; height:0;">
 											<iframe
-												width="600"
-												height="400"
+												width="100%"
+												height="100%"
+												style="position:absolute; top:0; left:0; width:100%; height:100%;"
 												frameborder="0"
-												style="border:0"
 												src="https://www.google.com/maps/embed/v1/place?q=<?php echo urlencode($listing->address); ?>&key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>"
 												allowfullscreen>
 											</iframe>
 										</div>
 									</div>
 								</div>
+
 
 							</div>
 
