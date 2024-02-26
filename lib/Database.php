@@ -35,7 +35,7 @@ function sqlQuery($query, $params = [])
     
     catch (PDOException $e) 
     {
-        // die($e->getMessage());
+        error_log($e->getMessage());
         throw new Exception("DBERROR - Please contact the site administrator!");
     }
 }
@@ -68,7 +68,7 @@ function trashSqlQuery($query, $params = [])
     
     catch (PDOException $e) 
     {
-        // die($e->getMessage());
-        throw new Exception("TRSHDBERROR - Please contact the site administrator!");
+        error_log($e->getMessage());
+        throw new Exception("TRASHERR - Please contact the site administrator!");
     }
 }

@@ -65,6 +65,8 @@
                 {
                     delete_listing($listing->id); // Rollback
                     die(header("Location: /portal/new?pye=1"));
+                } else {
+                    die(header("Location: /portal/listings/?s=1"));
                 }
             }
         }
