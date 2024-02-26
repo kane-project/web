@@ -2,7 +2,7 @@
 
 # Check if the script has already been run
 if [ -f ".installed" ]; then
-    echo "\nError - The installation script has already been run. Exiting...\n"
+    echo "Error - The installation script has already been run. Exiting..."
     exit 1
 fi
 
@@ -13,8 +13,7 @@ mkdir -p uploads/listings uploads/profiles
 # Prompt for environment variables
 read -p "Enter DB_HOST: " DB_HOST
 read -p "Enter DB_USER: " DB_USER
-read -s -p "Enter DB_PASS: " DB_PASS
-echo
+read -p "Enter DB_PASS: " DB_PASS
 read -p "Enter DB_NAME: " DB_NAME
 read -p "Enter GOOGLE_MAPS_API_KEY: " GOOGLE_MAPS_API_KEY
 read -p "Enter STRIPE_TEST_PKEY: " STRIPE_TEST_PKEY
@@ -23,14 +22,12 @@ read -p "Enter STRIPE_LIVE_PKEY: " STRIPE_LIVE_PKEY
 read -p "Enter STRIPE_LIVE_SKEY: " STRIPE_LIVE_SKEY
 read -p "Enter TRASHDB_HOST: " TRASHDB_HOST
 read -p "Enter TRASHDB_USER: " TRASHDB_USER
-read -s -p "Enter TRASHDB_PASS: " TRASHDB_PASS
-echo
+read -p "Enter TRASHDB_PASS: " TRASHDB_PASS
 read -p "Enter TRASHDB_NAME: " TRASHDB_NAME
 read -p "Enter SMTP_HOST: " SMTP_HOST
 read -p "Enter SMTP_PORT: " SMTP_PORT
 read -p "Enter SMTP_USER: " SMTP_USER
-read -s -p "Enter SMTP_PASS: " SMTP_PASS
-echo
+read -p "Enter SMTP_PASS: " SMTP_PASS
 read -p "Enter SUID_SECRET_KEY: " SUID_SECRET_KEY
 
 # Write environment variables to .env file
