@@ -60,12 +60,11 @@
                             $listing_date = date("d M, Y", $listing->timestamp);
                             $listing_price = number_format($listing->price, 2);
                             $sponsorship_tier = "None";
-                            $stats_button = "<a href='javascript:void()' class='btn btn-disabled btn-secondary rounded-0'><i class='fa fa-lock'></i> Stats Unavailable</a>";
+                            $stats_button = "<a href='javascript:void()' class='btn btn-disabled btn-secondary rounded-0'><i class='fa fa-lock'></i> No Stats</a>";
                             
                             switch($listing->sponsored_tier) {
                                 case 1:
                                     $sponsorship_tier = "Bronze &nbsp;<i class='text-bronze fa fa-award'></i>";
-                                    $stats_button = "<a href='/portal/view-stats/$listing->id' class='btn btn-success rounded-0'><i class='fas fa-chart-bar'></i> Stats</a>";
                                     break;
                                 case 2:
                                     $sponsorship_tier = "Silver &nbsp;<i class='text-silver fa fa-award'></i>";
