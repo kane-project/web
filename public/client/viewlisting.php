@@ -31,7 +31,7 @@
 		try 
 		{
 			$geoIpInfo = $reader->city($_SERVER['REMOTE_ADDR']);
-			$statinfo->geoloc = $geoIpInfo->city->name.' '.$geoIpInfo->country->name;
+			$statinfo->geoloc = $geoIpInfo->city->name.','.$geoIpInfo->country->name;
 		} catch (Exception $e) {
 			$statinfo->geoloc = "Unknown Location, Unknown Country";
 		}
