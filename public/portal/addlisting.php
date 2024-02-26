@@ -30,43 +30,44 @@
         $listing->timestamp = time();
         $listing->view_count = 0;
 
-        if ($_POST['sponsored_tier'] !== '0') 
-        {
-            $stripe_token = isset($_POST['payment_method']) ? $_POST['payment_method'] : null;
-            $amount = 0;
-
-            switch ($_POST['sponsored_tier']) 
-            {
-                case '1':
-                    $amount = 299;
-                    break;
-                case '2':
-                    $amount = 499;
-                    break;
-                case '3':
-                    $amount = 999;
-                    break;
-            }
-
-            if (!process_payment($stripe_token, $amount))
-            {
-                delete_listing_photos($listing->id);
-                die(header("Location: /portal/new?pye=1"));
-            }
-        }
-
-        
         if(!add_listing_photos($listing->id, $_FILES['images']))
         {
             error_log($_FILES['images']['error']);
             die(header("Location: /portal/new?phe=1"));
         }
-        
-        if (!add_listing($listing))
-            die(header("Location: /portal/new?lfe=1"));
-        else
-            die(header("Location: /portal/listings?success=1"));
 
+        if (!add_listing($listing)) {
+            delete_listing_photos($listing->id); // Rollback
+            die(header("Location: /portal/new?lfe=1"));
+        }
+
+        else 
+        {
+            if ($_POST['sponsored_tier'] !== '0') 
+            {
+                $stripe_token = isset($_POST['payment_method']) ? $_POST['payment_method'] : null;
+                $amount = 0;
+
+                switch ($_POST['sponsored_tier']) 
+                {
+                    case '1':
+                        $amount = 299;
+                        break;
+                    case '2':
+                        $amount = 499;
+                        break;
+                    case '3':
+                        $amount = 999;
+                        break;
+                }
+
+                if (!process_payment($stripe_token, $amount))
+                {
+                    delete_listing($listing->id); // Rollback
+                    die(header("Location: /portal/new?pye=1"));
+                }
+            }
+        }
     }
 
     $page = "New Listing";
