@@ -429,8 +429,8 @@ function delete_listing($listingId)
     // Move listing to trash database
 
     $listing = new Listing($listingId);
-    $result = trashSqlQuery("INSERT INTO `listings` (id, userid, slug, title, address, description, rental_type, price, num_beds, num_baths, is_furnished, allows_pets, has_parking, timestamp, view_count, sponsored_tier) 
-    VALUES (:id, :userid, :slug, :title, :address, :description, :rental_type, :price, :num_beds, :num_baths, :is_furnished, :allows_pets, :has_parking, :timestamp, :view_count, :sponsored_tier)", [
+    $result = trashSqlQuery("INSERT INTO `listings` (id, userid, slug, title, address, description, rental_type, price, num_beds, num_baths, is_furnished, allows_pets, has_parking, timestamp, deleted_timestamp, view_count, sponsored_tier) 
+    VALUES (:id, :userid, :slug, :title, :address, :description, :rental_type, :price, :num_beds, :num_baths, :is_furnished, :allows_pets, :has_parking, :timestamp, :deleted_timestamp, :view_count, :sponsored_tier)", [
         ':id' => $listing->id,
         ':userid' => $listing->userid,
         ':slug' => $listing->slug,
@@ -445,6 +445,7 @@ function delete_listing($listingId)
         ':allows_pets' => $listing->allows_pets,
         ':has_parking' => $listing->has_parking,
         ':timestamp' => $listing->timestamp,
+        ':deleted_timestamp' => time(), // Set the deleted timestamp to the current time
         ':view_count' => $listing->view_count,
         ':sponsored_tier' => $listing->sponsored_tier
     ]);
